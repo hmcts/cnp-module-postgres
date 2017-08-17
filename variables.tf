@@ -17,3 +17,13 @@ variable "probate_postgresql_user" {
 variable "probate_postgresql_password" {
   type = "string"
 }
+
+variable "postgresql_listen_port" {
+  type    = "string"
+  default = "5432"
+}
+
+variable "postgresql_database" {
+  type    = "string"
+  default = "postgres"
+}
