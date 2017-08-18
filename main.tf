@@ -14,8 +14,8 @@ resource "azurerm_template_deployment" "postgres-paas" {
   deployment_mode     = "Incremental"
 
   parameters = {
-    administratorLogin         = "${var.probate_postgresql_user}"
-    administratorLoginPassword = "${var.probate_postgresql_password}"
+    administratorLogin         = "${var.postgresql_user}"
+    administratorLoginPassword = "${var.postgresql_password}"
     location                   = "${var.location}"
     env                        = "${var.env}"
     serverName                 = "${var.product}-${var.env}"

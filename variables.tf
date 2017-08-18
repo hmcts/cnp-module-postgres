@@ -10,11 +10,11 @@ variable "env" {
   type = "string"
 }
 
-variable "probate_postgresql_user" {
+variable "postgresql_user" {
   type = "string"
 }
 
-variable "probate_postgresql_password" {
+variable "postgresql_password" {
   type = "string"
 }
 
