@@ -9,3 +9,7 @@ output "postgresql_listen_port" {
 output "postgresql_database" {
   value = "${var.postgresql_database}"
 }
+
+output "user_name" {
+  value = "${var.probate_postgresql_user}@${var.product}-${var.env}"
+}
