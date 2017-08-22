@@ -11,5 +11,5 @@ output "postgresql_database" {
 }
 
 output "user_name" {
-  value = "${var.postgresql_user}@${var.product}-${var.env}"
+  value = "${var.postgresql_user}@${azurerm_template_deployment.postgres-paas.name}"
 }
