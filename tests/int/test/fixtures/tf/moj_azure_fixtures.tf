@@ -21,7 +21,7 @@ variable "postgresql_user" {
 
 variable "postgresql_password" {
   type    = "string"
-  default = "0Tk304$9&@6k"
+  default = "0Tk3049&6k"
 }
 
 variable "postgresql_listen_port" {
