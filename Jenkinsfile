@@ -35,7 +35,7 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
                     sh 'cd tests/unit && python tests.py'
                   }
                 }
-
+*/
                 stage('Terraform Integration Testing') {
                   sh 'date|md5sum|base64|head -c 6 > .random_string'
                   RANDOM_STRING = readFile '.random_string'
@@ -43,7 +43,7 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
                     sh 'echo $TF_VAR_random_name'
                     sh 'export PATH=$PATH:/usr/local/bundle/bin:/usr/local/bin && export HOME="$WORKSPACE" && cd tests/int && kitchen test azure'
                   }
-                }*/
+                }
 
                 stage('Tagging'){
                   if (env.BRANCH_NAME == 'master' && currentBuild.result == null || currentBuild.result == 'SUCCESS') {
