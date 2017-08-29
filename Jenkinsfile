@@ -37,7 +37,7 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
                 }
 */
                 stage('Terraform Integration Testing') {
-                  sh 'date|md5sum|base64|head -c 6 > .random_string'
+                  sh 'date|md5sum|base64|head -c 6|awk \'{print tolower($0)}\' > .random_string'
                   RANDOM_STRING = readFile '.random_string'
                   docker.image('dsanabria/azkitchentdi:latest').inside("-e TF_VAR_random_name=inspec${RANDOM_STRING}") {
                     sh 'echo $TF_VAR_random_name'
