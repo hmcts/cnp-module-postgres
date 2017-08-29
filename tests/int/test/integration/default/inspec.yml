@@ -1,11 +1,11 @@
 ---
 name: default
-title: HMCTS Compliance Profile
-maintainer: Gianluca Ciocci
+title: HMCTS Integration Profile
+maintainer: Reform
 copyright: HMCTS.net
 copyright_email: copyright@hmcts.net
 license: All Rights Reserved
-summary: An Hello World InSpec Compliance Profile
+summary: A Basic InSpec Compliance Profile
 version: 0.1.0
 supports:
   - platform: azure
