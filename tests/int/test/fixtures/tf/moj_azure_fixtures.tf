@@ -20,7 +20,7 @@ variable "postgresql_user" {
 }
 
 variable "postgresql_password" {
-  type   = "string"
+  type    = "string"
   default = "0Tk304$9&@6k"
 }
 
