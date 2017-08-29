@@ -9,7 +9,7 @@ control 'azure-postgresql-conn' do
   impact 1.0
   title ' Check that we can connect to postgresql'
   json_obj = json('.kitchen/kitchen-terraform/default-azure/terraform.tfstate')
-  random_name = json_obj['modules'][0]['outputs']['random_name']['value'] + '-db-data-int'
+  random_name = json_obj['modules'][0]['outputs']['random_name']['value'] + '-db-int'
   # Create a PostgreSQL session:
   sql = postgres_session('inspec', '0Tk304$9&@6k', random_name + ".postgres.database.azure.com")
 
