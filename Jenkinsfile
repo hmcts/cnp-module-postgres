@@ -1,5 +1,7 @@
 #!groovy
-@Library('Infrastructure@further-improvememnts') _
+@Library('Infrastructure') _
+import uk.gov.hmcts.contino.Testing
+import uk.gov.hmcts.contino.Tagging
 
 properties(
     [[$class: 'GithubProjectProperty', projectUrlStr: 'https://www.github.com/contino/moj-module-postgres/'],
