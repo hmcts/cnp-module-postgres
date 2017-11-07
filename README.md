@@ -12,7 +12,7 @@ Refer to the following links for a detailed explanation of the Azure Database fo
 The following parameters are required by this module
 
 - `product` the name of the product or project i.e. probate, divorce etc
-- `location` the azure region for this service
+- `location` the azure region for this service. _Note:_ Check to ensure the service is available in the region.
 - `env` this is used to differentiate the environments e.g dev, prod, test etc
 - `postgresql_user` the username for the admin database login.
 - `postgresql_password` the password for the admin login
@@ -23,8 +23,8 @@ The following variables are provided by the module for use in other modules
 
 - `host_name` the host name which can be used to connect to PostgreSQL
 - `postgresql_listen_port` the port to connect to
+- `user_name` the username given in `postgresql_user` combined with the server name in the format postgresql_user@postgres-paas.name
 - `postgresql_database`
-- `user_name`  
 
 ## Usage
 
