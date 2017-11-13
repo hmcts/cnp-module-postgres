@@ -14,8 +14,8 @@ The following parameters are required by this module
 - `product` the name of the product or project i.e. probate, divorce etc
 - `location` the azure region for this service. _Note:_ Check to ensure the service is available in the region.
 - `env` this is used to differentiate the environments e.g dev, prod, test etc
-- `postgresql_user` the username for the admin database login.
-- `postgresql_password` the password for the admin login
+- `postgresql_user` the username for the admin database login. Cannot be 'azure_superuser', 'azure_pg_admin', 'admin', 'administrator', 'postgres', 'root', 'guest', or 'public'. It can't start with 'pg_'.
+- `postgresql_password` the password for the admin login.  Must be 8 to 128 characters and must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers (0 through 9), and nonalphanumeric characters (!, $, #, %, etc.).
 
 ### Output
 
