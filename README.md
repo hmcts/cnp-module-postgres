@@ -28,8 +28,7 @@ The following variables are provided by the module for use in other modules
 
 ## Usage
 
-The following example shows how to use the module to create a Redis PaaS instance and expose
-the host, port and access key as environment variables in another module.
+The following example shows how to use the module to create an Azure Database for PostgreSQL instance and expose the host and port as environment variables in another module.
 
 ```terraform
 module "database" {
