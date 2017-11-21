@@ -3,12 +3,6 @@
 import uk.gov.hmcts.contino.Testing
 import uk.gov.hmcts.contino.Tagging
 
-GITHUB_REPO = "github.com/contino/moj-module-postgres/"
-
-properties(
-    [[$class: 'GithubProjectProperty', projectUrlStr: 'https://www.github.com/contino/moj-module-postgres/'],
-     pipelineTriggers([[$class: 'GitHubPushTrigger']])]
-)
 try {
   node {
     platformSetup {
