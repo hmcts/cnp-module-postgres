@@ -24,6 +24,7 @@ The following variables are provided by the module for use in other modules
 - `host_name` the host name which can be used to connect to PostgreSQL
 - `postgresql_listen_port` the port to connect to
 - `user_name` the username given in `postgresql_user` combined with the server name in the format postgresql_user@postgres-paas.name
+- `postgresql_password` password to access database
 - `postgresql_database`
 
 ## Usage
