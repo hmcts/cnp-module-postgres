@@ -9,7 +9,7 @@ This is a terraform module for deploying a postgres database using Azure PaaS
 
 ## Before contributing
 
-Any ideas on the user journeys and general service experience you may have **should be first consulted
+Any ideas you may have **should be first consulted
 with us by submitting a new issue** to this repository. Ideas are always welcome, but if something is divergent or unrelated
 to what we're trying to achieve we won't be able to accept it. Please keep this in mind as we don't want to waste anybody's time.
 
