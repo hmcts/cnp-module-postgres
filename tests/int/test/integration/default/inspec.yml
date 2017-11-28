@@ -11,4 +11,4 @@ supports:
   - platform: azure
 depends:
   - name: git-profile
-    git: ssh://git@github.com:contino/moj-azure-inspec.git
+    git: git://git@github.com:contino/moj-azure-inspec.git
