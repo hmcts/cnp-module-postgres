@@ -15,7 +15,6 @@ The following parameters are required by this module
 - `location` the azure region for this service. _Note:_ Check to ensure the service is available in the region.
 - `env` this is used to differentiate the environments e.g dev, prod, test etc
 - `postgresql_user` the username for the admin database login. Cannot be 'azure_superuser', 'azure_pg_admin', 'admin', 'administrator', 'postgres', 'root', 'guest', or 'public'. It can't start with 'pg_'.
-- `postgresql_password` the password for the admin login.  Must be 8 to 128 characters and must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers (0 through 9), and nonalphanumeric characters (!, $, #, %, etc.).
 
 ### Output
 
@@ -25,6 +24,7 @@ The following variables are provided by the module for use in other modules
 - `postgresql_listen_port` the port to connect to
 - `user_name` the username given in `postgresql_user` combined with the server name in the format postgresql_user@postgres-paas.name
 - `postgresql_database`
+- `postgresql_password` the randomly generated password for the admin login. It will be 16 characters and contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers (0 through 9), and nonalphanumeric characters (!, $, #, %, etc.).
 
 ## Usage
 
@@ -37,7 +37,6 @@ module "database" {
   location            = "${var.location}"
   env                 = "${var.env}"
   postgresql_user     = "${var.postgresql_user}"
-  postgresql_password = "${var.postgresql_password}"
 }
 
 module "backend" {

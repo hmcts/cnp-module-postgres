@@ -10,6 +10,10 @@ output "postgresql_database" {
   value = "${var.postgresql_database}"
 }
 
+output "postgresql_password" {
+  value = "${random_string.password.result}"
+}
+
 output "user_name" {
   value = "${var.postgresql_user}@${azurerm_template_deployment.postgres-paas.name}"
 }
