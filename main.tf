@@ -3,6 +3,14 @@ resource "azurerm_resource_group" "data-resourcegroup" {
   location = "${var.location}"
 }
 
+resource "random_string" "password" {
+  length  = 16
+  special = true
+  upper   = true
+  lower   = true
+  number  = true
+}
+
 data "template_file" "postgrestemplate" {
   template = "${file("${path.module}/templates/postgres-paas.json")}"
 }
@@ -15,7 +23,7 @@ resource "azurerm_template_deployment" "postgres-paas" {
 
   parameters = {
     administratorLogin         = "${var.postgresql_user}"
-    administratorLoginPassword = "${var.postgresql_password}"
+    administratorLoginPassword = "${random_string.password.result}"
     location                   = "${var.location}"
     env                        = "${var.env}"
     serverName                 = "${var.product}-${var.env}"
