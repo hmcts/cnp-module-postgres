@@ -32,11 +32,6 @@
       "minLength":2,
       "maxLength":63
     },
-    "databaseName":{
-      "type":"string",
-      "minLength":2,
-      "maxLength":128
-    },
     "skuCapacityDTU":{
       "type":"int",
       "allowedValues":[
@@ -154,18 +149,6 @@
             "startIpAddress":"[parameters('firewallStartIpAddress')]",
             "endIpAddress":"[parameters('firewallEndIpAddress')]"
           }
-        },
-        {
-          "name":"[parameters('databaseName')]",
-          "type":"databases",
-          "apiVersion":"[variables('DBforPostgreSQLapiVersion')]",
-          "properties":{
-            "charset":"utf8",
-            "collation":"en_GB.UTF8"
-          },
-          "dependsOn":[
-            "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
-          ]
         }
       ]
     }
