@@ -1,7 +1,5 @@
 #!groovy
 @Library('Infrastructure') _
-import uk.gov.hmcts.contino.Testing
-import uk.gov.hmcts.contino.Tagging
 
 try {
   node {
@@ -10,8 +8,12 @@ try {
       checkout scm
     }
 
+    stage('Terraform init') {
+      sh 'terraform init'
+    }
+
     stage('Terraform Linting Checks') {
-      sh "terraform lint"
+      sh 'terraform validate'
     }
   }
 }
