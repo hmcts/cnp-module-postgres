@@ -3,6 +3,8 @@
 
 try {
   node {
+    env.PATH = "$env.PATH:/usr/local/bin"
+
     stage('Checkout') {
       deleteDir()
       checkout scm
