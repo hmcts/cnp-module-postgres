@@ -99,13 +99,6 @@
       "metadata": {
         "description": "The tag"
       }
-    },
-    "sslmode": {
-      "type": "string",
-      "metadata": {
-        "description": "The tag"
-      },
-      "defaultValue": "Disabled"
     }
   },
   "variables":{
@@ -125,7 +118,7 @@
         "version":"[parameters('version')]",
         "administratorLogin":"[parameters('administratorLogin')]",
         "administratorLoginPassword":"[parameters('administratorLoginPassword')]",
-        "sslEnforcement":"[parameters('sslmode')]",
+        "sslEnforcement":"Enabled",
         "storageMB":"[parameters('skuSizeMB')]"
       },
       "sku":{
