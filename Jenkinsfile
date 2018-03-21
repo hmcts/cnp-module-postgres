@@ -15,7 +15,7 @@ try {
     }
 
     stage('Terraform Linting Checks') {
-      sh "terraform validate -var 'product=product' -var 'location=location' -var 'env=env' -var 'postgresql_user=user'"
+      sh 'terraform validate -check-variables=false -no-color'
     }
   }
 }
