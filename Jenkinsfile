@@ -10,9 +10,8 @@ try {
       checkout scm
     }
 
-    terraform.ini(this)
     stage('Terraform Linting Checks') {
-      terraform.lint()
+      sh "terraform lint"
     }
   }
 }
