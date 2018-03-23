@@ -1,31 +1,21 @@
 #!groovy
 @Library('Infrastructure') _
-import uk.gov.hmcts.contino.Testing
-import uk.gov.hmcts.contino.Tagging
 
 try {
   node {
-    platformSetup {
+    env.PATH = "$env.PATH:/usr/local/bin"
 
-      stage('Checkout') {
-        deleteDir()
-        checkout scm
-      }
+    stage('Checkout') {
+      deleteDir()
+      checkout scm
+    }
 
-      terraform.ini(this)
-      stage('Terraform Linting Checks') {
-        terraform.lint()
-      }
+    stage('Terraform init') {
+      sh 'terraform init'
+    }
 
-      testLib = new Testing(this)
-      stage('Terraform Integration Testing') {
-        testLib.moduleIntegrationTests()
-      }
-
-      stage('Tagging') {
-        def tag = new Tagging(this)
-        printf tag.applyTag(tag.nextTag())
-      }
+    stage('Terraform Linting Checks') {
+      sh 'terraform validate -check-variables=false -no-color'
     }
   }
 }
