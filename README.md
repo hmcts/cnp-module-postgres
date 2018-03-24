@@ -32,7 +32,7 @@ The following example shows how to use the module to create an Azure Database fo
 
 ```terraform
 module "database" {
-  source              = "git::https://23a108ab5ea17c28372a130d72aa60ea0761839b@github.com/contino/moj-module-postgres?ref=master"
+  source              = "github.com/contino/moj-module-postgres?ref=master"
   product             = "${var.product}"
   location            = "${var.location}"
   env                 = "${var.env}"
@@ -40,7 +40,7 @@ module "database" {
 }
 
 module "backend" {
-  source   = "git::https://23a108ab5ea17c28372a130d72aa60ea0761839b@github.com/contino/moj-module-webapp?ref=0.0.78"
+  source   = "github.com/contino/moj-module-webapp?ref=0.0.78"
   product  = "${var.product}-backend"
   location = "${var.location}"
   env      = "${var.env}"
