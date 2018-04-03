@@ -23,9 +23,10 @@
     "South Central US",
     "Southeast Asia",
     "West Europe",
-    "West US"
+    "West US",
+    "UK South"
       ],
-      "defaultValue":"North Europe"
+      "defaultValue":"UK South"
     },
     "serverName":{
       "type":"string",
@@ -36,7 +37,10 @@
       "type":"int",
       "allowedValues":[
         50,
-        100
+        100,
+        200,
+        400,
+        800
       ],
       "defaultValue":50
     },
@@ -51,20 +55,25 @@
       "type":"string",
       "allowedValues":[
         "PGSQLB50",
-        "PGSQLB100"
+        "PGSQLB100",
+        "PGSQLS100",
+        "PGSQLS200",
+        "PGSQLS400",
+        "PGSQLS800"
       ],
       "defaultValue":"PGSQLB50"
     },
     "skuSizeMB":{
       "type":"int",
       "minValue":51200,
-      "maxValue":102400,
+      "maxValue":1024000,
       "defaultValue":51200
     },
     "skuTier":{
       "type":"string",
       "allowedValues":[
-        "Basic"
+        "Basic",
+        "Standard"
       ],
       "defaultValue":"Basic"
     },
