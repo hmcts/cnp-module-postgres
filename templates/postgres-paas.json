@@ -2,86 +2,98 @@
   "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "administratorLogin":{
-      "type":"string",
+    "administratorLogin": {
+      "type": "string",
       "minLength":1,
       "maxLength":16
     },
-    "administratorLoginPassword":{
-      "type":"securestring"
+    "administratorLoginPassword": {
+      "type": "securestring"
     },
-    "location":{
+    "location": {
       "type":"string",
       "allowedValues":[
-    "East Asia",
-    "East US 2",
-    "East US",
-    "Japan East",
-    "Japan West",
-    "North Central US",
-    "North Europe",
-    "South Central US",
-    "Southeast Asia",
-    "West Europe",
-    "West US",
-    "UK South"
+        "East Asia",
+        "East US 2",
+        "East US",
+        "Japan East",
+        "Japan West",
+        "North Central US",
+        "North Europe",
+        "South Central US",
+        "Southeast Asia",
+        "West Europe",
+        "West US",
+        "UK South"
       ],
       "defaultValue":"UK South"
     },
-    "serverName":{
-      "type":"string",
+    "serverName": {
+      "type": "string",
       "minLength":2,
       "maxLength":63
     },
-    "skuCapacityDTU":{
+    "skuCapacity": {
+      "type":"int",
+      "defaultValue": 2
+    },
+    "skuFamily": {
       "type":"string",
       "allowedValues":[
-        "50",
-        "100",
-        "200",
-        "400",
-        "800"
+        "Gen5"
       ],
-      "defaultValue":"50"
+      "defaultValue":"Gen5"
     },
-    "skuFamily":{
+    "skuName": {
       "type":"string",
       "allowedValues":[
-        "SkuFamily"
+        "B_Gen5_1",
+        "B_Gen5_2",
+        "GP_Gen5_2",
+        "GP_Gen5_4",
+        "GP_Gen5_8",
+        "GP_Gen5_16",
+        "GP_Gen5_32",
+        "MO_Gen5_2",
+        "MO_Gen5_4",
+        "MO_Gen5_8",
+        "MO_Gen5_16",
+        "MO_Gen5_32"
       ],
-      "defaultValue":"SkuFamily"
+      "defaultValue":"GP_Gen5_2"
     },
-    "skuName":{
-      "type":"string",
-      "allowedValues":[
-        "PGSQLB50",
-        "PGSQLB100",
-        "PGSQLS100",
-        "PGSQLS200",
-        "PGSQLS400",
-        "PGSQLS800"
-      ],
-      "defaultValue":"PGSQLB50"
-    },
-    "skuSizeMB":{
+    "skuSizeMB": {
       "type":"string",
       "defaultValue":"51200"
     },
-    "skuTier":{
+    "skuTier": {
       "type":"string",
       "allowedValues":[
         "Basic",
-        "Standard"
+        "GeneralPurpose",
+        "MemoryOptimized"
       ],
-      "defaultValue":"Basic"
+      "defaultValue":"GeneralPurpose"
     },
-    "version":{
+    "version": {
       "type":"string",
       "allowedValues":[
         "9.5",
         "9.6"
       ],
       "defaultValue":"9.6"
+    },
+    "backupRetentionDays": {
+      "type": "string",
+      "defaultValue": 7
+    },
+    "geoRedundantBackup": {
+      "type": "string",
+      "defaultValue": "Enabled"
+    },
+    "sslEnforcement": {
+      "type": "string",
+      "defaultValue": "Enabled"
     },
     "firewallRuleName":{
       "type":"string",
@@ -99,55 +111,44 @@
       "type":"string",
       "minLength":1,
       "maxLength":15,
-    "defaultValue":"255.255.255.255"
+    "defaultValue":"0.0.0.0"
     },
     "env": {
       "type": "string",
       "metadata": {
         "description": "The tag"
       }
-    },
-    "sslEnforcement": {
-      "type": "string",
-      "allowedValues":[
-        "Enabled",
-        "Disabled"
-      ],
-      "defaultValue":"Enabled"
     }
   },
-  "variables":{
-    "DBforPostgreSQLapiVersion":"2016-02-01-privatepreview"
-  },
-  "resources":[
+  "resources": [
     {
-      "apiVersion":"[variables('DBforPostgreSQLapiVersion')]",
-      "tags": {
-          "displayName": "Postgres Database",
-          "environment": "[parameters('env')]"
+      "apiVersion": "2017-12-01-preview",
+      "kind": "",
+      "location": "[parameters('location')]",
+      "name": "[parameters('serverName')]",
+      "properties": {
+        "version": "[parameters('version')]",
+        "administratorLogin": "[parameters('administratorLogin')]",
+        "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
+        "sslEnforcement": "[parameters('sslEnforcement')]",
+        "storageProfile": {
+          "storageMB": "[parameters('skuSizeMB')]",
+          "backupRetentionDays": "[int(parameters('backupRetentionDays'))]",
+          "geoRedundantBackup": "[parameters('geoRedundantBackup')]"
+        }
       },
-      "kind":"",
-      "location":"[parameters('location')]",
-      "name":"[parameters('serverName')]",
-      "properties":{
-        "version":"[parameters('version')]",
-        "administratorLogin":"[parameters('administratorLogin')]",
-        "administratorLoginPassword":"[parameters('administratorLoginPassword')]",
-        "sslEnforcement":"[parameters('sslEnforcement')]",
-        "storageMB":"[parameters('skuSizeMB')]"
+      "sku": {
+        "name": "[parameters('skuName')]",
+        "tier": "[parameters('skuTier')]",
+        "capacity": "[parameters('skuCapacity')]",
+        "size": "[parameters('skuSizeMB')]",
+        "family": "[parameters('skuFamily')]"
       },
-      "sku":{
-        "name":"[parameters('skuName')]",
-        "tier":"[parameters('skuTier')]",
-        "capacity":"[int(parameters('skuCapacityDTU'))]",
-        "size":"[int(parameters('skuSizeMB'))]",
-        "family":"[parameters('skuFamily')]"
-      },
-      "type":"Microsoft.DBforPostgreSQL/servers",
+      "type": "Microsoft.DBforPostgreSQL/servers",
       "resources":[
         {
           "type":"firewallrules",
-          "apiVersion":"[variables('DBforPostgreSQLapiVersion')]",
+          "apiVersion": "2017-12-01-preview",
           "dependsOn":[
             "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
           ],
@@ -160,5 +161,6 @@
         }
       ]
     }
-  ]
+  ],
+  "variables": {}
 }

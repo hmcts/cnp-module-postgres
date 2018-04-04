@@ -10,50 +10,40 @@ variable "env" {
   type = "string"
 }
 
-variable "postgresql_user" {
-  type = "string"
-}
-
 variable "postgresql_listen_port" {
   type    = "string"
   default = "5432"
 }
 
-variable "postgresql_database" {
-  type    = "string"
-  default = "postgres"
+variable "postgresql_user" {
+  type = "string"
 }
 
 # sku supports the following:
-# - name     : (Optional) Specifies the SKU Name for this PostgreSQL Server. 
-#              Possible values are: PGSQLB50 
-#                                   PGSQLB100
-#                                   PGSQLS100
-#                                   PGSQLS200
-#                                   PGSQLS400
-#                                   PGSQLS800
-# - capacity : (Optional) Specifies the DTU's for this PostgreSQL Server.
-#              Possible values (basic):    50
-#                                          100
-#              Possible values (standard): 100
-#                                          200
-#                                          400
-#                                          800
-# - tier     : (Optional) Specifies the SKU Tier for this PostgreSQL Server.
-#              Possible values are Basic and Standard.
+# - skuName: Possible values are:         
+#            B_Gen5_1    (Basic)
+#            B_Gen5_2    (Basic)
+#            GP_Gen5_2   (GeneralPurpose)
+#            GP_Gen5_4   (GeneralPurpose)
+#            GP_Gen5_8   (GeneralPurpose)
+#            GP_Gen5_16  (GeneralPurpose)
+#            GP_Gen5_32  (GeneralPurpose)
+#            MO_Gen5_2   (MemoryOptimised)
+#            MO_Gen5_4   (MemoryOptimised)
+#            MO_Gen5_8   (MemoryOptimised)
+#            MO_Gen5_16  (MemoryOptimised)
+#            MO_Gen5_32  (MemoryOptimised)
+
+# - tier     : Specifies the SKU Tier for this PostgreSQL Server.
+#              Possible values are "Basic", "GeneralPurpose", "MemoryOptimized".
 variable "sku_name" {
   type    = "string"
-  default = "PGSQLB50"
-}
-
-variable "sku_capacity" {
-  type = "string"
-  default = "50"
+  default = "GP_Gen5_2"
 }
 
 variable "sku_tier" {
   type    = "string"
-  default = "Basic"
+  default = "GeneralPurpose"
 }
 
 # Valid values are 9.5 and 9.6.
@@ -63,22 +53,18 @@ variable "version" {
 }
 
 # storage_mb supports the following
-# When using a SKU Name of Basic:    51200 (50GB)
-#                                    179200 (175GB)
-#                                    307200 (300GB)
-#                                    435200 (425GB)
-#                                    563200 (550GB)
-#                                    691200 (675GB)
-#                                    819200 (800GB)
-#                                    947200 (925GB)
-# When using a SKU Name of Standard: 128000 (125GB)
-#                                    256000 (256GB)
-#                                    384000 (384GB)
-#                                    512000 (512GB)
-#                                    640000 (640GB)
-#                                    768000 (768GB)
-#                                    896000 (896GB)
-#                                    1024000 (1TB)
+# When using a SKU Name of Basic: 
+# min: 5120
+# max: 1048576
+#
+# When using a SKU Name of GeneralPurpose: 
+# min: 5120
+# max: 2097152
+#
+# When using a SKU Name of MemoryOptimized:
+# min: 5120
+# max: 2097152
+
 variable "storage_mb" {
   type = "string"
   default = "51200"
@@ -88,6 +74,18 @@ variable "storage_mb" {
 variable "ssl_enforcement" {
   type    = "string"
   default = "Disabled"
+}
+
+# Min 7 days, max 35 days
+variable "backup_retention_days" {
+  type    = "string"
+  default = "7"
+}
+
+# Possible values are Enabled and Disabled.
+variable "georedundant_backup" {
+  type    = "string"
+  default = "Enabled"
 }
 
 variable "firewall_start_ip" {

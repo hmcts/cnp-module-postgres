@@ -28,11 +28,12 @@ resource "azurerm_template_deployment" "postgres-paas" {
     env                        = "${var.env}"
     serverName                 = "${var.product}-${var.env}"
     skuName                    = "${var.sku_name}"
-    skuCapacityDTU             = "${var.sku_capacity}"
     skuTier                    = "${var.sku_tier}"
     version                    = "${var.version}"
     skuSizeMB                  = "${var.storage_mb}"
     sslEnforcement             = "${var.ssl_enforcement}"
+    backupRetentionDays        = "${var.backup_retention_days}"
+    geoRedundantBackup         = "${var.georedundant_backup}"
     firewallStartIpAddress     = "${var.firewall_start_ip}"
     firewallEndIpAddress       = "${var.firewall_end_ip}"
   }
