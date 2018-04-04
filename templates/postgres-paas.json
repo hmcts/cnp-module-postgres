@@ -23,9 +23,10 @@
     "South Central US",
     "Southeast Asia",
     "West Europe",
-    "West US"
+    "West US",
+    "UK South"
       ],
-      "defaultValue":"North Europe"
+      "defaultValue":"UK South"
     },
     "serverName":{
       "type":"string",
@@ -33,12 +34,15 @@
       "maxLength":63
     },
     "skuCapacityDTU":{
-      "type":"int",
+      "type":"string",
       "allowedValues":[
-        50,
-        100
+        "50",
+        "100",
+        "200",
+        "400",
+        "800"
       ],
-      "defaultValue":50
+      "defaultValue":"50"
     },
     "skuFamily":{
       "type":"string",
@@ -51,20 +55,23 @@
       "type":"string",
       "allowedValues":[
         "PGSQLB50",
-        "PGSQLB100"
+        "PGSQLB100",
+        "PGSQLS100",
+        "PGSQLS200",
+        "PGSQLS400",
+        "PGSQLS800"
       ],
       "defaultValue":"PGSQLB50"
     },
     "skuSizeMB":{
-      "type":"int",
-      "minValue":51200,
-      "maxValue":102400,
-      "defaultValue":51200
+      "type":"string",
+      "defaultValue":"51200"
     },
     "skuTier":{
       "type":"string",
       "allowedValues":[
-        "Basic"
+        "Basic",
+        "Standard"
       ],
       "defaultValue":"Basic"
     },
@@ -99,6 +106,14 @@
       "metadata": {
         "description": "The tag"
       }
+    },
+    "sslEnforcement": {
+      "type": "string",
+      "allowedValues":[
+        "Enabled",
+        "Disabled"
+      ],
+      "defaultValue":"Enabled"
     }
   },
   "variables":{
@@ -118,14 +133,14 @@
         "version":"[parameters('version')]",
         "administratorLogin":"[parameters('administratorLogin')]",
         "administratorLoginPassword":"[parameters('administratorLoginPassword')]",
-        "sslEnforcement":"Enabled",
+        "sslEnforcement":"[parameters('sslEnforcement')]",
         "storageMB":"[parameters('skuSizeMB')]"
       },
       "sku":{
         "name":"[parameters('skuName')]",
         "tier":"[parameters('skuTier')]",
-        "capacity":"[parameters('skuCapacityDTU')]",
-        "size":"[parameters('skuSizeMB')]",
+        "capacity":"[int(parameters('skuCapacityDTU'))]",
+        "size":"[int(parameters('skuSizeMB'))]",
         "family":"[parameters('skuFamily')]"
       },
       "type":"Microsoft.DBforPostgreSQL/servers",

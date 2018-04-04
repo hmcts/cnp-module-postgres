@@ -27,5 +27,13 @@ resource "azurerm_template_deployment" "postgres-paas" {
     location                   = "${var.location}"
     env                        = "${var.env}"
     serverName                 = "${var.product}-${var.env}"
+    skuName                    = "${var.sku_name}"
+    skuCapacityDTU             = "${var.sku_capacity}"
+    skuTier                    = "${var.sku_tier}"
+    version                    = "${var.version}"
+    skuSizeMB                  = "${var.storage_mb}"
+    sslEnforcement             = "${var.ssl_enforcement}"
+    firewallStartIpAddress     = "${var.firewall_start_ip}"
+    firewallEndIpAddress       = "${var.firewall_end_ip}"
   }
 }
