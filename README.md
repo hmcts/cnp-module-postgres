@@ -16,6 +16,19 @@ The following parameters are required by this module
 - `env` this is used to differentiate the environments e.g dev, prod, test etc
 - `postgresql_user` the username for the admin database login. Cannot be 'azure_superuser', 'azure_pg_admin', 'admin', 'administrator', 'postgres', 'root', 'guest', or 'public'. It can't start with 'pg_'.
 
+The following parameters are optional
+
+- `sku_name` the size of the postgres instance, specifically cores. Default is "GP_Gen5_2".
+- `sku_tier` Basic, Generanl Purpose or Memory Optimised.  Note that the sku_name chosen must belong to the sku_tier. Default is "GeneralPurpose"
+- `version` the postgres version. Currently only 9.5 and 9.6. Default is 9.6.
+- `storage_mb` the amount of storage available to the DB instance.  Default is "51200".
+- `ssl_enforcement` specifies whether SSL is enabled on the DB endpoint.  Default is "Enabled".
+- `backup_retention_days` number of days to retain a backup. Default is 7.
+- `georedundant_backup` specifies whether to use geo-redundant backup over local. Default is "Enabled".
+- `firewall_rule_name` name of the firewall rule. Default is "allow_all".
+- `firewall_start_ip` start ip for the firewall rule. Default is "0.0.0.0".
+- `firewall_end_ip` end ip for the firewall rule. Default is "0.0.0.0".
+
 ### Output
 
 The following variables are provided by the module for use in other modules
