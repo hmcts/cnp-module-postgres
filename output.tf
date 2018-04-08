@@ -7,7 +7,7 @@ output "postgresql_listen_port" {
 }
 
 output "postgresql_database" {
-  value = "${var.product}-${var.env}"
+  value = "${var.product}${var.env}"
 }
 
 output "postgresql_password" {

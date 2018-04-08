@@ -105,11 +105,10 @@ variable "firewall_end_ip" {
 
 variable "charset" {
   type    = "string"
-  default = "UTF8"
+  default = "utf8"
 }
 
-# Note that Microsoft uses different notation - en-US instead of en_US.
 variable "collation" {
   type    = "string"
-  default = "en-GB"
+  default = "en_GB"
 }
