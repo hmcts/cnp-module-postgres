@@ -73,7 +73,7 @@ variable "storage_mb" {
 # Possible values are Enabled and Disabled.
 variable "ssl_enforcement" {
   type    = "string"
-  default = "Disabled"
+  default = "Enabled"
 }
 
 # Min 7 days, max 35 days
@@ -86,6 +86,11 @@ variable "backup_retention_days" {
 variable "georedundant_backup" {
   type    = "string"
   default = "Enabled"
+}
+
+variable "firewall_rule_name" {
+  type    = "string"
+  default = "allow_all"
 }
 
 variable "firewall_start_ip" {
