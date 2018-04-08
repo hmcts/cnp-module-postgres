@@ -118,6 +118,15 @@
       "metadata": {
         "description": "The tag"
       }
+    },
+    "dbName": {
+      "type": "string",
+    },
+    "charset": {
+      "type": "string",
+    },
+    "collation": {
+      "type": "string",
     }
   },
   "resources": [
