@@ -158,6 +158,18 @@
             "startIpAddress":"[parameters('firewallStartIpAddress')]",
             "endIpAddress":"[parameters('firewallEndIpAddress')]"
           }
+        },
+        {
+            "name": "[variables('dbName')]",
+            "type": "databases",
+            "apiVersion": "2017-12-01-preview",
+            "properties": {
+                "charset": "[parameters('charset')]",
+                "collation": "[parameters('collation')]"
+            },
+            "dependsOn": [
+                "[concat('Microsoft.DBforPostgreSQL/servers/', variables('serverName'))]"
+            ]
         }
       ]
     }

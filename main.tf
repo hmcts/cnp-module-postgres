@@ -27,6 +27,7 @@ resource "azurerm_template_deployment" "postgres-paas" {
     location                   = "${var.location}"
     env                        = "${var.env}"
     serverName                 = "${var.product}-${var.env}"
+    dbName                     = "${var.product}-${var.env}"
     skuName                    = "${var.sku_name}"
     skuTier                    = "${var.sku_tier}"
     version                    = "${var.version}"
@@ -36,5 +37,7 @@ resource "azurerm_template_deployment" "postgres-paas" {
     geoRedundantBackup         = "${var.georedundant_backup}"
     firewallStartIpAddress     = "${var.firewall_start_ip}"
     firewallEndIpAddress       = "${var.firewall_end_ip}"
+    charset                    = "${var.charset}"
+    collation                  = "${var.collation}"
   }
 }
