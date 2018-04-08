@@ -120,13 +120,13 @@
       }
     },
     "dbName": {
-      "type": "string",
+      "type": "string"
     },
     "charset": {
-      "type": "string",
+      "type": "string"
     },
     "collation": {
-      "type": "string",
+      "type": "string"
     }
   },
   "resources": [
