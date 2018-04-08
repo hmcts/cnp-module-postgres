@@ -177,7 +177,7 @@
                 "collation": "[parameters('collation')]"
             },
             "dependsOn": [
-                "[concat('Microsoft.DBforPostgreSQL/servers/', variables('serverName'))]"
+                "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
             ]
         }
       ]
