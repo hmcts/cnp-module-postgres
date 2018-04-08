@@ -169,7 +169,7 @@
           }
         },
         {
-            "name": "[variables('dbName')]",
+            "name": "[parameters('dbName')]",
             "type": "databases",
             "apiVersion": "2017-12-01-preview",
             "properties": {
