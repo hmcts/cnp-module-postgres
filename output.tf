@@ -7,7 +7,7 @@ output "postgresql_listen_port" {
 }
 
 output "postgresql_database" {
-  value = "${replace(var.product, "-", "")}"
+  value = "${replace(var.database_name, "-", "")}"
 }
 
 output "postgresql_password" {

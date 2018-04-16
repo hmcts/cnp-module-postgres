@@ -27,7 +27,7 @@ resource "azurerm_template_deployment" "postgres-paas" {
     location                   = "${var.location}"
     env                        = "${var.env}"
     serverName                 = "${var.product}-${var.env}"
-    dbName                     = "${replace(var.product, "-", "")}"
+    dbName                     = "${replace(var.database_name, "-", "")}"
     skuName                    = "${var.sku_name}"
     skuTier                    = "${var.sku_tier}"
     version                    = "${var.version}"

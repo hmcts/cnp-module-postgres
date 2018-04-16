@@ -15,6 +15,7 @@ The following parameters are required by this module
 - `location` the azure region for this service. _Note:_ Check to ensure the service is available in the region.
 - `env` this is used to differentiate the environments e.g dev, prod, test etc
 - `postgresql_user` the username for the admin database login. Cannot be 'azure_superuser', 'azure_pg_admin', 'admin', 'administrator', 'postgres', 'root', 'guest', or 'public'. It can't start with 'pg_'.
+- `database_name` the name of the database to create within the Postgres server.  Please note currently, hyphens are NOT allowed in the database name and will be removed automatically to ensure a successful deployment.
 
 The following parameters are optional
 
@@ -50,6 +51,7 @@ module "database" {
   location            = "${var.location}"
   env                 = "${var.env}"
   postgresql_user     = "${var.postgresql_user}"
+  database_name       = "moj"
 }
 
 module "backend" {

@@ -112,3 +112,7 @@ variable "collation" {
   type    = "string"
   default = "en_GB"
 }
+
+variable "database_name" {
+  type    = "string"
+}
