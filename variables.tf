@@ -100,7 +100,7 @@ variable "firewall_start_ip" {
 
 variable "firewall_end_ip" {
   type    = "string"
-  default = "0.0.0.0"
+  default = "255.255.255.255"
 }
 
 variable "charset" {
