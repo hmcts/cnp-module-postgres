@@ -1,6 +1,10 @@
 resource "azurerm_resource_group" "data-resourcegroup" {
   name     = "${var.product}-data-${var.env}"
   location = "${var.location}"
+
+  tags {
+    environment = "${var.env}"
+  }
 }
 
 resource "random_string" "password" {
