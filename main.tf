@@ -37,13 +37,6 @@ resource "azurerm_postgresql_database" "postgresql-database" {
   server_name         = "${azurerm_postgresql_server.postgres_server.name}"
   charset             = "${var.charset}"
   collation           = "${var.collation}"
-
-  tags {
-    "Deployment Environment" = "${var.env}"
-    "Team Name"              = "${var.team_name}"
-    "Team Contact"           = "${var.team_contact}"
-    "Destroy Me"             = "${var.destroy_me}"
-  }
 }
 
 //TODO ADD SERVER FIREWALL RULES HERE
