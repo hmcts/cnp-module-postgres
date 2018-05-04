@@ -21,6 +21,15 @@ variable "resource_group_name" {
 }
 
 //POSTGRES MODULE SPECIFIC VARIABLES
+variable "postgres_server_name" {
+  type = "string"
+  description = "The name of your PostgreSQL Server"
+}
+
+variable "postgresql_database_name" {
+  type = "string"
+  description = "The name of your PostgreSQL Database"
+}
 variable "postgresql_server_sku_name" {
   type        = "string"
   description = "(Optional) Specifies the SKU Name for this PostgreSQL Server. Possible values are: PGSQLB50, PGSQLB100, PGSQLS100, PGSQLS200, PGSQLS400 and PGSQLS800"

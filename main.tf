@@ -7,7 +7,7 @@ resource "random_string" "password" {
 }
 
 resource "azurerm_postgresql_server" "postgres_server" {
-  name                = "${var.product}-${var.env}"
+  name                = "${var.postgres_server_name}"
   location            = "${var.location}"
   resource_group_name = "${var.resource_group_name}"
 
@@ -32,7 +32,7 @@ resource "azurerm_postgresql_server" "postgres_server" {
 }
 
 resource "azurerm_postgresql_database" "postgresql-database" {
-  name                = ""
+  name                = "${var.postgresql_database_name}"
   resource_group_name = "${var.resource_group_name}"
   server_name         = "${azurerm_postgresql_server.postgres_server.name}"
   charset             = "${var.charset}"
