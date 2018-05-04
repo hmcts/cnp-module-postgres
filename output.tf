@@ -1,19 +1,14 @@
-output "host_name" {
-  value = "${azurerm_template_deployment.postgres-paas.name}.postgres.database.azure.com"
+output "postgresql_server_id" {
+  value       = "${azurerm_postgresql_server.postgres_server.id}"
+  description = "The ID of the PostGresSQL Server."
 }
 
-output "postgresql_listen_port" {
-  value = "${var.postgresql_listen_port}"
+output "postgresql_server_fqdn" {
+  value       = "${azurerm_postgresql_server.postgres_server.fqdn}"
+  description = "The fully qualified domain name of the PostGresSQL Server."
 }
 
-output "postgresql_database" {
-  value = "${var.postgresql_database}"
-}
-
-output "postgresql_password" {
-  value = "${random_string.password.result}"
-}
-
-output "user_name" {
-  value = "${var.postgresql_user}@${azurerm_template_deployment.postgres-paas.name}"
+output "postgresql_database_id" {
+  value       = "${azurerm_postgresql_database.postgresql-database.id}"
+  description = "The ID of the PostGreSQL Database."
 }

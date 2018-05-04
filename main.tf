@@ -1,12 +1,3 @@
-resource "azurerm_resource_group" "data-resourcegroup" {
-  name     = "${var.product}-data-${var.env}"
-  location = "${var.location}"
-
-  tags {
-    environment = "${var.env}"
-  }
-}
-
 resource "random_string" "password" {
   length  = 16
   special = true
@@ -15,21 +6,45 @@ resource "random_string" "password" {
   number  = true
 }
 
-data "template_file" "postgrestemplate" {
-  template = "${file("${path.module}/templates/postgres-paas.json")}"
-}
-
-resource "azurerm_template_deployment" "postgres-paas" {
-  template_body       = "${data.template_file.postgrestemplate.rendered}"
+resource "azurerm_postgresql_server" "postgres_server" {
   name                = "${var.product}-${var.env}"
-  resource_group_name = "${azurerm_resource_group.data-resourcegroup.name}"
-  deployment_mode     = "Incremental"
+  location            = "${var.location}"
+  resource_group_name = "${var.resource_group_name}"
 
-  parameters = {
-    administratorLogin         = "${var.postgresql_user}"
-    administratorLoginPassword = "${random_string.password.result}"
-    location                   = "${var.location}"
-    env                        = "${var.env}"
-    serverName                 = "${var.product}-${var.env}"
+  sku {
+    name     = "${var.postgresql_server_sku_name}"
+    capacity = "${var.postgresql_server_sku_capacity}"
+    tier     = "${var.postgresql_server_sku_tier}"
+  }
+
+  administrator_login          = "${var.administrator_login}"
+  administrator_login_password = "${random_string.password.result}"
+  version                      = "${var.version}"
+  storage_mb                   = "${var.storage_mb}"
+  ssl_enforcement              = "${var.ssl_enforcement}"
+
+  tags {
+    "Deployment Environment" = "${var.env}"
+    "Team Name"              = "${var.team_name}"
+    "Team Contact"           = "${var.team_contact}"
+    "Destroy Me"             = "${var.destroy_me}"
   }
 }
+
+resource "azurerm_postgresql_database" "postgresql-database" {
+  name                = ""
+  resource_group_name = "${var.resource_group_name}"
+  server_name         = "${azurerm_postgresql_server.postgres_server.name}"
+  charset             = "${var.charset}"
+  collation           = "${var.collation}"
+
+  tags {
+    "Deployment Environment" = "${var.env}"
+    "Team Name"              = "${var.team_name}"
+    "Team Contact"           = "${var.team_contact}"
+    "Destroy Me"             = "${var.destroy_me}"
+  }
+}
+
+//TODO ADD SERVER FIREWALL RULES HERE
+
