@@ -21,7 +21,7 @@ variable "resource_group_name" {
 }
 
 //POSTGRES MODULE SPECIFIC VARIABLES
-variable "postgres_server_name" {
+variable "postgresql_server_name" {
   type        = "string"
   description = "The name of your PostgreSQL Server"
 }
