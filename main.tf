@@ -15,6 +15,7 @@ resource "azurerm_postgresql_server" "postgres_server" {
     name     = "${var.postgresql_server_sku_name}"
     capacity = "${var.postgresql_server_sku_capacity}"
     tier     = "${var.postgresql_server_sku_tier}"
+    family   = "${var.postgresql_server_sku_family}"
   }
   
   storage_profile {
@@ -26,7 +27,6 @@ resource "azurerm_postgresql_server" "postgres_server" {
   administrator_login          = "${var.administrator_login}"
   administrator_login_password = "${random_string.password.result}"
   version                      = "${var.version}"
-  storage_mb                   = "${var.storage_mb}"
   ssl_enforcement              = "${var.ssl_enforcement}"
 
   tags {
