@@ -65,6 +65,15 @@ variable "version" {
   default     = "9.6"
 }
 
+variable "backup_retention_days" {
+  description = "(Optional) Backup retention days for the server, supported values are between 7 and 35 days."
+  default     = 7
+}
+
+variable "geo_redundant_backup" {
+  description = "(Optional) Enable Geo-redundant or not for server backup. Valid values for this property are Enabled or Disabled, not supported for the basic tier."
+  default     = "Enabled"
+ }
 variable "storage_mb" {
   type        = "string"
   description = "(Required) Max storage allowed for a server, possible values are between 5120 MB (5GB) and 1048576 MB (1TB). The step for this value must be in 1024 MB (1GB) increments. For more information see the product documentation."
