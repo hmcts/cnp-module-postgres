@@ -16,6 +16,12 @@ resource "azurerm_postgresql_server" "postgres_server" {
     capacity = "${var.postgresql_server_sku_capacity}"
     tier     = "${var.postgresql_server_sku_tier}"
   }
+  
+  storage_profile {
+    storage_mb = "${var.storage_mb}"
+    backup_retention_days = "${var.backup_retention_days}"
+    geo_redundant_backup = "${var.geo_redundant_backup}"
+  }
 
   administrator_login          = "${var.administrator_login}"
   administrator_login_password = "${random_string.password.result}"
