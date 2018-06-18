@@ -21,7 +21,7 @@ The following parameters are optional
 
 - `sku_name` the size of the postgres instance, specifically cores. Default is "GP_Gen5_2".
 - `sku_tier` Basic, Generanl Purpose or Memory Optimised.  Note that the sku_name chosen must belong to the sku_tier. Default is "GeneralPurpose"
-- `version` the postgres version. Currently 9.5, 9.6 and 10. Default is 9.6.
+- `postgresql_version` the postgres version. Currently 9.5, 9.6 and 10. Default is 9.6.
 - `storage_mb` the amount of storage available to the DB instance.  Default is "51200".
 - `ssl_enforcement` specifies whether SSL is enabled on the DB endpoint.  Default is "Enabled".
 - `backup_retention_days` number of days to retain a backup. Default is 7.
@@ -46,16 +46,17 @@ The following example shows how to use the module to create an Azure Database fo
 
 ```terraform
 module "database" {
-  source              = "git::https://23a108ab5ea17c28372a130d72aa60ea0761839b@github.com/contino/moj-module-postgres?ref=master"
+  source              = "git@github.com:hmcts/moj-module-postgres?ref=cnp-449-tactical"
   product             = "${var.product}"
   location            = "${var.location}"
   env                 = "${var.env}"
   postgresql_user     = "${var.postgresql_user}"
-  database_name       = "moj"
+  database_name       = "myproduct"
+  postgresql_version  = "10"
 }
 
 module "backend" {
-  source   = "git::https://23a108ab5ea17c28372a130d72aa60ea0761839b@github.com/contino/moj-module-webapp?ref=0.0.78"
+  source   = "git@github.com:hmcts/moj-module-webapp?ref=master"
   product  = "${var.product}-backend"
   location = "${var.location}"
   env      = "${var.env}"
