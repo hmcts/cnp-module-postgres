@@ -46,8 +46,8 @@ variable "sku_tier" {
   default = "GeneralPurpose"
 }
 
-# Valid values are 9.5 and 9.6.
-variable "version" {
+# Valid values are 9.5, 9.6 and 10.
+variable "postgresql_version" {
   type    = "string"
   default = "9.6"
 }
