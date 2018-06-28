@@ -23,3 +23,8 @@ variable "postgresql_database" {
   type    = "string"
   default = "postgres"
 }
+
+variable "common_tags" {
+  type = "map"
+  default = {}
+}

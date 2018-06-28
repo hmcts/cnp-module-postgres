@@ -2,10 +2,9 @@ resource "azurerm_resource_group" "data-resourcegroup" {
   name     = "${var.product}-data-${var.env}"
   location = "${var.location}"
 
-  tags {
-    environment = "${var.env}",
-    lastUpdated = "${timestamp()}"
-  }
+  tags = "${merge(var.common_tags,
+    map("lastUpdated", "${timestamp()}")
+    )}"
 }
 
 resource "random_string" "password" {
