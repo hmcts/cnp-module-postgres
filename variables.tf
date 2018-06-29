@@ -116,3 +116,8 @@ variable "collation" {
 variable "database_name" {
   type    = "string"
 }
+
+variable "common_tags" {
+  type = "map"
+  default = {}
+}
