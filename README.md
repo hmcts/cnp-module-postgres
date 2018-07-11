@@ -16,6 +16,7 @@ The following parameters are required by this module
 - `env` this is used to differentiate the environments e.g dev, prod, test etc
 - `postgresql_user` the username for the admin database login. Cannot be 'azure_superuser', 'azure_pg_admin', 'admin', 'administrator', 'postgres', 'root', 'guest', or 'public'. It can't start with 'pg_'.
 - `database_name` the name of the database to create within the Postgres server.  Please note currently, hyphens are NOT allowed in the database name and will be removed automatically to ensure a successful deployment.
+- `common_tags` tags that need to be applied to every resource group, passed through by the jenkins-library
 
 The following parameters are optional
 
@@ -53,14 +54,16 @@ module "database" {
   postgresql_user     = "${var.postgresql_user}"
   database_name       = "myproduct"
   postgresql_version  = "10"
+  common_tags         = "${var.common_tags}"
 }
 
 module "backend" {
-  source   = "git@github.com:hmcts/moj-module-webapp?ref=master"
-  product  = "${var.product}-backend"
-  location = "${var.location}"
-  env      = "${var.env}"
-  asename  = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
+  source      = "git@github.com:hmcts/moj-module-webapp?ref=master"
+  product     = "${var.product}-backend"
+  location    = "${var.location}"
+  env         = "${var.env}"
+  asename     = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
+  common_tags = "${var.common_tags}"
 
   app_settings = {
     POSTGRES_HOST     = "${module.database.host_name}"
