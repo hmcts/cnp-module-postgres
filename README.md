@@ -30,6 +30,8 @@ The following parameters are optional
 - `firewall_rule_name` name of the firewall rule. Default is "allow_all".
 - `firewall_start_ip` start ip for the firewall rule. Default is "0.0.0.0".
 - `firewall_end_ip` end ip for the firewall rule. Default is "0.0.0.0".
+- `log_min_duration_statement` log SQL statements that take more than this many
+  milliseconds to execute. Default is to not log slow statements.
 
 ### Output
 

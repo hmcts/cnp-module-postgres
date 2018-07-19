@@ -44,5 +44,6 @@ resource "azurerm_template_deployment" "postgres-paas" {
     firewallEndIpAddress       = "${var.firewall_end_ip}"
     charset                    = "${var.charset}"
     collation                  = "${var.collation}.${var.charset}"
+    log_min_duration_statement = "${var.log_min_duration_statement}"
   }
 }

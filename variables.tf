@@ -119,3 +119,8 @@ variable "database_name" {
 variable "common_tags" {
   type = "map"
 }
+
+variable "log_min_duration_statement" {
+  description = "Queries running longer than this time will be logged (ms) (-1 to disable)"
+  default = "-1"
+}
