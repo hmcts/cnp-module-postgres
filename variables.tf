@@ -33,14 +33,13 @@ variable "postgresql_user" {
 #            MO_Gen5_8   (MemoryOptimised)
 #            MO_Gen5_16  (MemoryOptimised)
 #            MO_Gen5_32  (MemoryOptimised)
-
-# - tier     : Specifies the SKU Tier for this PostgreSQL Server.
-#              Possible values are "Basic", "GeneralPurpose", "MemoryOptimized".
 variable "sku_name" {
   type    = "string"
   default = "GP_Gen5_2"
 }
 
+# - tier     : Specifies the SKU Tier for this PostgreSQL Server.
+#              Possible values are "Basic", "GeneralPurpose", "MemoryOptimized".
 variable "sku_tier" {
   type    = "string"
   default = "GeneralPurpose"
