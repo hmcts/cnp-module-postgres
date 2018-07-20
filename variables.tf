@@ -33,14 +33,13 @@ variable "postgresql_user" {
 #            MO_Gen5_8   (MemoryOptimised)
 #            MO_Gen5_16  (MemoryOptimised)
 #            MO_Gen5_32  (MemoryOptimised)
-
-# - tier     : Specifies the SKU Tier for this PostgreSQL Server.
-#              Possible values are "Basic", "GeneralPurpose", "MemoryOptimized".
 variable "sku_name" {
   type    = "string"
   default = "GP_Gen5_2"
 }
 
+# - tier     : Specifies the SKU Tier for this PostgreSQL Server.
+#              Possible values are "Basic", "GeneralPurpose", "MemoryOptimized".
 variable "sku_tier" {
   type    = "string"
   default = "GeneralPurpose"
@@ -119,4 +118,9 @@ variable "database_name" {
 
 variable "common_tags" {
   type = "map"
+}
+
+variable "log_min_duration_statement" {
+  description = "Queries running longer than this time will be logged (ms) (-1 to disable)"
+  default = "-1"
 }
