@@ -128,6 +128,9 @@
     },
     "collation": {
       "type": "string"
+    },
+    "teamName": {
+      "type": "string"
     }
   },
   "resources": [
@@ -155,6 +158,9 @@
         "family": "[parameters('skuFamily')]"
       },
       "type": "Microsoft.DBforPostgreSQL/servers",
+      "tags": {
+        "Team Name": "[parameters('teamName')]"
+      },
       "resources":[
         {
           "type":"firewallrules",
