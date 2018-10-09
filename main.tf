@@ -42,6 +42,7 @@ resource "azurerm_template_deployment" "postgres-paas" {
     firewallRuleName           = "${var.firewall_rule_name}"
     firewallStartIpAddress     = "${var.firewall_start_ip}"
     firewallEndIpAddress       = "${var.firewall_end_ip}"
+    vnetSubnetId               = "${var.vnet_subnet_id}"
     charset                    = "${var.charset}"
     collation                  = "${var.collation}.${var.charset}"
     vnetSubnetId               = "${var.vnet_subnet_id}"

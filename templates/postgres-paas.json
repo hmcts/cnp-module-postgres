@@ -126,6 +126,11 @@
     "charset": {
       "type": "string"
     },
+
+    "vnetSubnetId": {
+      "type": "string"
+    },
+
     "collation": {
       "type": "string"
     }
@@ -180,7 +185,7 @@
           "location": "[parameters('location')]",
           "properties": {
             "ignoreMissingVnetServiceEndpoint": false,
-            "virtualNetworkSubnetId":"[parameters('vnetSubnetId')"
+            "virtualNetworkSubnetId":"[parameters('vnetSubnetId')]"
           }
         },
 
