@@ -66,7 +66,7 @@ variable "postgresql_version" {
 # max: 2097152
 
 variable "storage_mb" {
-  type = "string"
+  type    = "string"
   default = "51200"
 }
 
@@ -114,9 +114,14 @@ variable "collation" {
 }
 
 variable "database_name" {
-  type    = "string"
+  type = "string"
 }
 
 variable "common_tags" {
   type = "map"
+}
+
+variable "vnet_subnet_id" {
+  type    = "string"
+  default = "/subscriptions/bf308a5c-0624-4334-8ff8-8dca9fd43783/resourceGroups/core-infra-sandbox/providers/Microsoft.Network/virtualNetworks/core-infra-vnet-sandbox/subnets/core-infra-subnet-1-sandbox"
 }

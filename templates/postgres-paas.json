@@ -169,6 +169,21 @@
             "endIpAddress":"[parameters('firewallEndIpAddress')]"
           }
         },
+
+        {
+          "type": "virtualNetworkRules",
+          "apiVersion": "2017-12-01-preview",
+          "dependsOn": [
+            "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
+          ],
+          "name": "vnet-firewall-module",
+          "location": "[parameters('location')]",
+          "properties": {
+            "ignoreMissingVnetServiceEndpoint": false,
+            "virtualNetworkSubnetId":"[parameters('vnetSubnetId')"
+          }
+        },
+
         {
           "name": "[parameters('dbName')]",
           "type": "databases",
