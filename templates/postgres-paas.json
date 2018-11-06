@@ -96,24 +96,6 @@
       "type": "string",
       "defaultValue": "Enabled"
     },
-    "firewallRuleName":{
-      "type":"string",
-      "minLength":1,
-      "maxLength":128,
-    "defaultValue":"AllowAll"
-    },
-    "firewallStartIpAddress":{
-      "type":"string",
-      "minLength":1,
-      "maxLength":15,
-    "defaultValue":"0.0.0.0"
-    },
-    "firewallEndIpAddress":{
-      "type":"string",
-      "minLength":1,
-      "maxLength":15,
-    "defaultValue":"0.0.0.0"
-    },
     "env": {
       "type": "string",
       "metadata": {
@@ -133,7 +115,26 @@
 
     "collation": {
       "type": "string"
+    },
+    "AseVnetRuleName": {
+      "type": "string"
+    },
+    "AseSubnetId": {
+      "type": "string"
+    },
+    "BastionVnetRuleName": {
+      "type": "string"
+    },
+    "BastionSubnetId": {
+      "type": "string"
+    },
+    "JenkinsVnetRuleName": {
+      "type": "string"
+    },
+    "JenkinsSubnetId": {
+      "type": "string"
     }
+
   },
   "resources": [
     {
@@ -162,30 +163,42 @@
       "type": "Microsoft.DBforPostgreSQL/servers",
       "resources":[
         {
-          "type":"firewallrules",
+          "type": "virtualNetworkRules",
           "apiVersion": "2017-12-01-preview",
-          "dependsOn":[
+          "dependsOn": [
             "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
           ],
-          "location":"[parameters('location')]",
-          "name":"[parameters('firewallRuleName')]",
-          "properties":{
-            "startIpAddress":"[parameters('firewallStartIpAddress')]",
-            "endIpAddress":"[parameters('firewallEndIpAddress')]"
+          "name":"[parameters('AseVnetRuleName')]",
+          "location": "[parameters('location')]",
+          "properties": {
+            "ignoreMissingVnetServiceEndpoint": true,
+            "virtualNetworkSubnetId":"[parameters('AseSubnetId')]"
           }
         },
-
         {
           "type": "virtualNetworkRules",
           "apiVersion": "2017-12-01-preview",
           "dependsOn": [
             "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
           ],
-          "name": "vnet-firewall-module",
+          "name": "[parameters('BastionVnetRuleName')]",
           "location": "[parameters('location')]",
           "properties": {
-            "ignoreMissingVnetServiceEndpoint": false,
-            "virtualNetworkSubnetId":"[parameters('vnetSubnetId')]"
+            "ignoreMissingVnetServiceEndpoint": true,
+            "virtualNetworkSubnetId": "[parameters('BastionSubnetId')]"
+          }
+        },
+        {
+          "type": "virtualNetworkRules",
+          "apiVersion": "2017-12-01-preview",
+          "dependsOn": [
+            "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
+          ],
+          "name": "[parameters('JenkinsVnetRuleName')]",
+          "location": "[parameters('location')]",
+          "properties": {
+            "ignoreMissingVnetServiceEndpoint": true,
+            "virtualNetworkSubnetId": "[parameters('JenkinsSubnetId')]"
           }
         },
 

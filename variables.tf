@@ -88,21 +88,6 @@ variable "georedundant_backup" {
   default = "Enabled"
 }
 
-variable "firewall_rule_name" {
-  type    = "string"
-  default = "allow_all"
-}
-
-variable "firewall_start_ip" {
-  type    = "string"
-  default = "0.0.0.0"
-}
-
-variable "firewall_end_ip" {
-  type    = "string"
-  default = "255.255.255.255"
-}
-
 variable "charset" {
   type    = "string"
   default = "utf8"
@@ -121,7 +106,27 @@ variable "common_tags" {
   type = "map"
 }
 
-variable "vnet_subnet_id" {
-  type    = "string"
-  default = "/subscriptions/bf308a5c-0624-4334-8ff8-8dca9fd43783/resourceGroups/core-infra-sandbox/providers/Microsoft.Network/virtualNetworks/core-infra-vnet-sandbox/subnets/core-infra-subnet-1-sandbox"
+#vnet rules
+variable "ase_vnet_rule_name" {
+  type = "string"
+}
+
+variable "ase_subnet_id" {
+  type = "string"
+}
+
+variable "bastion_vnet_rule_name" {
+  type = "string"
+}
+
+variable "bastion_subnet_id" {
+  type = "string"
+}
+
+variable "jenkins_vnet_rule_name" {
+  type = "string"
+}
+
+variable "jenkins_subnet_id" {
+  type = "string"
 }

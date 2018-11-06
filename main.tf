@@ -39,12 +39,13 @@ resource "azurerm_template_deployment" "postgres-paas" {
     sslEnforcement             = "${var.ssl_enforcement}"
     backupRetentionDays        = "${var.backup_retention_days}"
     geoRedundantBackup         = "${var.georedundant_backup}"
-    firewallRuleName           = "${var.firewall_rule_name}"
-    firewallStartIpAddress     = "${var.firewall_start_ip}"
-    firewallEndIpAddress       = "${var.firewall_end_ip}"
-    vnetSubnetId               = "${var.vnet_subnet_id}"
     charset                    = "${var.charset}"
     collation                  = "${var.collation}.${var.charset}"
-    vnetSubnetId               = "${var.vnet_subnet_id}"
+    AseVnetRuleName            = "${var.ase_vnet_rule_name}"
+    AseSubnetId                = "${var.ase_subnet_id}"
+    BastionVnetRuleName        = "${var.bastion_vnet_rule_name}"
+    BastionSubnetId            = "${var.bastion_subnet_id}"
+    JenkinsVnetRuleName        = "${var.jenkins_vnet_rule_name}"
+    JenkinsSubnetId            = "${var.jenkins_subnet_id}"
   }
 }
