@@ -19,6 +19,35 @@ data "template_file" "postgrestemplate" {
   template = "${file("${path.module}/templates/postgres-paas.json")}"
 }
 
+locals {
+  mgmt_network_name = "${var.subscription == "prod" || var.subscription == "nonprod" ? "mgmt-infra-prod" : "mgmt-infra-sandbox"}"
+  ASE_network_name = "${"core-infra-vnet-"var.env}"
+  bastion_network_name = "reformMgmtCoreVNet"
+  bation_rg_name = "reformMgmtCoreRG"
+}
+
+data "azurerm_subnet" "jenkins_subnet" {
+  provider             = "azurerm.mgmt"
+  name                 = "jenkins-subnet"
+  virtual_network_name = "${local.mgmt_network_name}"
+  resource_group_name  = "${local.mgmt_network_name}"
+}
+
+data "azurerm_subnet" "bastion_subnet" {
+  provider             = "azurerm.mgmt"
+  name                 = "reformMgmtDmzSN"
+  virtual_network_name = "${local.bastion_network_name}"
+  resource_group_name  = "${local.bation_rg_name}"
+}
+
+data "azurerm_subnet" "ase_subnet" {
+  provider             = "azurerm.mgmt"
+  name                 = "core-infra-subnet-3-aat"
+  virtual_network_name = "${local.ASE_network_name }"
+  resource_group_name  = "${"core-infra-"var.env}"
+}
+
+
 resource "azurerm_template_deployment" "postgres-paas" {
   template_body       = "${data.template_file.postgrestemplate.rendered}"
   name                = "${var.product}-${var.env}"
