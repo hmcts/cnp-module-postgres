@@ -1,3 +1,7 @@
+provider "azurerm" {
+  alias           = "mgmt"
+}
+
 resource "azurerm_resource_group" "data-resourcegroup" {
   name     = "${var.product}-data-${var.env}"
   location = "${var.location}"
