@@ -20,7 +20,7 @@ data "template_file" "postgrestemplate" {
 }
 
 locals {
-  mgmt_network_name = "${var.subscription == "prod" || var.subscription == "nonprod" ? "mgmt-infra-prod" : "mgmt-infra-sandbox"}"
+  mgmt_network_name = "${var.subscription == "prod" || var.subscription == "hmctsdemo" ? "mgmt-infra-prod" : "mgmt-infra-sandbox"}"
   ASE_network_name = "core-infra-vnet-${var.env}"
   bastion_network_name = "reformMgmtCoreVNet"
   bation_rg_name = "reformMgmtCoreRG"
