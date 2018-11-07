@@ -79,6 +79,6 @@ resource "azurerm_template_deployment" "postgres-paas" {
     BastionVnetRuleName        = "${var.env}BastionVNET"
     BastionSubnetId            = "${data.azurerm_subnet.bastion_subnet.id}"
     JenkinsVnetRuleName        = "${var.env}JenkinsVNET"
-    JenkinsSubnetId            = "${data.azurerm_subnet.jenkins_subnet}"
+    JenkinsSubnetId            = "${data.azurerm_subnet.jenkins_subnet.id}"
   }
 }
