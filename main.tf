@@ -1,5 +1,5 @@
 provider "azurerm" {
-  alias           = "mgmt"
+  alias = "mgmt"
 }
 
 resource "azurerm_resource_group" "data-resourcegroup" {
@@ -24,17 +24,18 @@ data "template_file" "postgrestemplate" {
 }
 
 locals {
-  mgmt_network_name = "${var.subscription == "prod" || var.subscription == "hmctsdemo" ? "mgmt-infra-prod" : "mgmt-infra-sandbox"}"
-  ASE_network_name = "core-infra-vnet-${var.env}"
+  mgmt_network_name    = "${var.subscription == "prod" || var.subscription == "hmctsdemo" ? "mgmt-infra-prod" : "mgmt-infra-sandbox"}"
+  mgmt_network_rg_name    = "${var.subscription == "prod" || var.subscription == "hmctsdemo" ? "mgmt-infra-prod" : "mgmt-infra-sandbox"}"
+  ASE_network_name     = "core-infra-vnet-${var.env}"
   bastion_network_name = "reformMgmtCoreVNet"
-  bation_rg_name = "reformMgmtCoreRG"
+  bation_rg_name       = "reformMgmtCoreRG"
 }
 
 data "azurerm_subnet" "jenkins_subnet" {
   provider             = "azurerm.mgmt"
   name                 = "jenkins-subnet"
   virtual_network_name = "${local.mgmt_network_name}"
-  resource_group_name  = "${local.mgmt_network_name}"
+  resource_group_name  = "${local.mgmt_network_rg_name}"
 }
 
 data "azurerm_subnet" "bastion_subnet" {
@@ -50,19 +51,6 @@ data "azurerm_subnet" "ase_subnet" {
   virtual_network_name = "${local.ASE_network_name }"
   resource_group_name  = "core-infra-${var.env}"
 }
-
-output "jenkins_subnet_id" {
-  value = "${data.azurerm_subnet.jenkins_subnet.id}"
-}
-
-output "bastion_subnet_id" {
-  value = "${data.azurerm_subnet.bastion_subnet.id}"
-}
-
-output "ase_subnet_id" {
-  value = "${data.azurerm_subnet.ase_subnet.id}"
-}
-
 
 resource "azurerm_template_deployment" "postgres-paas" {
   template_body       = "${data.template_file.postgrestemplate.rendered}"
@@ -87,10 +75,10 @@ resource "azurerm_template_deployment" "postgres-paas" {
     charset                    = "${var.charset}"
     collation                  = "${var.collation}.${var.charset}"
     AseVnetRuleName            = "${var.env}ASEVNET"
-    AseSubnetId                = "${output.ase_subnet_id.id}"
+    AseSubnetId                = "${data.azurerm_subnet.ase_subnet.id}"
     BastionVnetRuleName        = "${var.env}BastionVNET"
-    BastionSubnetId            = "${output.bastion_subnet_id.id}"
+    BastionSubnetId            = "${data.azurerm_subnet.bastion_subnet.id}"
     JenkinsVnetRuleName        = "${var.env}JenkinsVNET"
-    JenkinsSubnetId            = "${output.jenkins_subnet_id.id}"
+    JenkinsSubnetId            = "${data.azurerm_subnet.jenkins_subnet}"
   }
 }
