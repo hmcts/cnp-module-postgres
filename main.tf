@@ -21,7 +21,7 @@ data "template_file" "postgrestemplate" {
 
 locals {
   mgmt_network_name = "${var.subscription == "prod" || var.subscription == "nonprod" ? "mgmt-infra-prod" : "mgmt-infra-sandbox"}"
-  ASE_network_name = "${"core-infra-vnet-"var.env}"
+  ASE_network_name = "core-infra-vnet-${var.env}"
   bastion_network_name = "reformMgmtCoreVNet"
   bation_rg_name = "reformMgmtCoreRG"
 }
@@ -44,7 +44,7 @@ data "azurerm_subnet" "ase_subnet" {
   provider             = "azurerm.mgmt"
   name                 = "core-infra-subnet-3-aat"
   virtual_network_name = "${local.ASE_network_name }"
-  resource_group_name  = "${"core-infra-"var.env}"
+  resource_group_name  = "core-infra-${var.env}"
 }
 
 
