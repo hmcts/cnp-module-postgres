@@ -47,15 +47,15 @@ data "azurerm_subnet" "ase_subnet" {
   resource_group_name  = "core-infra-${var.env}"
 }
 
-output "subnet_id" {
+output "jenkins_subnet_id" {
   value = "${data.azurerm_subnet.jenkins_subnet.id}"
 }
 
-output "subnet_id" {
+output "bastion_subnet_id" {
   value = "${data.azurerm_subnet.bastion_subnet.id}"
 }
 
-output "subnet_id" {
+output "ase_subnet_id" {
   value = "${data.azurerm_subnet.ase_subnet.id}"
 }
 
@@ -83,10 +83,10 @@ resource "azurerm_template_deployment" "postgres-paas" {
     charset                    = "${var.charset}"
     collation                  = "${var.collation}.${var.charset}"
     AseVnetRuleName            = "${var.ase_vnet_rule_name}"
-    AseSubnetId                = "${var.ase_subnet_id}"
+    AseSubnetId                = "${output.ase_subnet_id}"
     BastionVnetRuleName        = "${var.bastion_vnet_rule_name}"
-    BastionSubnetId            = "${var.bastion_subnet_id}"
+    BastionSubnetId            = "${output.bastion_subnet_id}"
     JenkinsVnetRuleName        = "${var.jenkins_vnet_rule_name}"
-    JenkinsSubnetId            = "${var.jenkins_subnet_id}"
+    JenkinsSubnetId            = "${output.jenkins_subnet_id}"
   }
 }
