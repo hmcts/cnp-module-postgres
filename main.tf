@@ -47,6 +47,18 @@ data "azurerm_subnet" "ase_subnet" {
   resource_group_name  = "core-infra-${var.env}"
 }
 
+output "subnet_id" {
+  value = "${data.azurerm_subnet.jenkins_subnet.id}"
+}
+
+output "subnet_id" {
+  value = "${data.azurerm_subnet.bastion_subnet.id}"
+}
+
+output "subnet_id" {
+  value = "${data.azurerm_subnet.ase_subnet.id}"
+}
+
 
 resource "azurerm_template_deployment" "postgres-paas" {
   template_body       = "${data.template_file.postgrestemplate.rendered}"
