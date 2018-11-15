@@ -4,7 +4,8 @@ provider "azurerm" {
 
 locals { 
   ase_subnet_id          = "${data.azurerm_subnet.ase_subnet.id}"
-  bastion_subnet_id      = "${data.azurerm_subnet.bastion_subnet.id}"
+  
+  #bastion_subnet_id      = "${data.azurerm_subnet.bastion_subnet.id}"
   jenkins_subnet_id      = "${data.azurerm_subnet.jenkins_subnet.id}"
   ase_vnet_rule_name     = "${var.env}ASEVNET"
   bastion_vnet_rule_name = "${var.env}BastionVNET"
