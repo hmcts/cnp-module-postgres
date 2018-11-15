@@ -130,6 +130,10 @@
     "JenkinsSubnetId": {
       "type": "string"
     }
+    },
+    "subscription": {
+      "type": "string"
+    }
 
   },
   "resources": [
