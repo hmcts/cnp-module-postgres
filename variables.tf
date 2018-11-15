@@ -107,3 +107,27 @@ variable "common_tags" {
 }
 
 #vnet rules
+
+variable "ase_vnet_rule_name" {
+  type = "string"
+}
+
+variable "ase_subnet_id" {
+  type = "string"
+}
+
+variable "bastion_vnet_rule_name" {
+  type = "string"
+}
+
+variable "bastion_subnet_id" {
+  type = "string"
+}
+
+variable "jenkins_vnet_rule_name" {
+  type = "string"
+}
+
+variable "jenkins_subnet_id" {
+  type = "string"
+}
