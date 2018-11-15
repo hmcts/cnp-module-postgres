@@ -131,3 +131,7 @@ variable "jenkins_vnet_rule_name" {
 variable "jenkins_subnet_id" {
   type = "string"
 }
+
+variable "subscription" {
+  type = "string"
+}
