@@ -49,7 +49,7 @@ data "azurerm_subnet" "bastion_subnet" {
 
 data "azurerm_subnet" "ase_subnet" {
   provider             = "azurerm.mgmt"
-  name                 = "core-infra-subnet-3-aat"
+  name                 = "core-infra-subnet-3-${var.env}"
   virtual_network_name = "${local.ASE_network_name}"
   resource_group_name  = "core-infra-${var.env}"
 }
