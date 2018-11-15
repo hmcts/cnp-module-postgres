@@ -118,12 +118,6 @@
     "AseSubnetId": {
       "type": "string"
     },
-    "BastionVnetRuleName": {
-      "type": "string"
-    },
-    "BastionSubnetId": {
-      "type": "string"
-    },
     "JenkinsVnetRuleName": {
       "type": "string"
     },
