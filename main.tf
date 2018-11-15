@@ -49,6 +49,10 @@ data "azurerm_subnet" "ase_subnet" {
   resource_group_name  = "core-infra-${var.env}"
 }
 
+data "template_file" "postgrestemplate" {
+  template = "${file("${path.module}/templates/postgres-paas.json")}"
+}
+
 resource "azurerm_template_deployment" "postgres-paas" {
   template_body       = "${data.template_file.postgrestemplate.rendered}"
   name                = "${var.product}-${var.env}"
