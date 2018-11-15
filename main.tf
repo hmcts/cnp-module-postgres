@@ -41,7 +41,6 @@ data "azurerm_subnet" "jenkins_subnet" {
 }
 
 data "azurerm_subnet" "bastion_subnet" {
-  subsription          = "Reform-CFT-Mgmt"
   provider             = "azurerm.mgmt"
   name                 = "reformMgmtDmzSN"
   virtual_network_name = "${local.bastion_network_name}"
