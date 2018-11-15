@@ -71,11 +71,11 @@ resource "azurerm_template_deployment" "postgres-paas" {
     geoRedundantBackup         = "${var.georedundant_backup}"
     charset                    = "${var.charset}"
     collation                  = "${var.collation}.${var.charset}"
-    AseVnetRuleName            = "${locals.ase_vnet_rule_name}"
-    AseSubnetId                = "${locals.ase_subnet_id}"
-    BastionVnetRuleName        = "${locals.bastion_vnet_rule_name}"
-    BastionSubnetId            = "${locals.bastion_subnet_id}"
-    JenkinsVnetRuleName        = "${locals.jenkins_vnet_rule_name}"
-    JenkinsSubnetId            = "${locals.jenkins_subnet_id}"
+    AseVnetRuleName            = "${local.ase_vnet_rule_name}"
+    AseSubnetId                = "${local.ase_subnet_id}"
+    BastionVnetRuleName        = "${local.bastion_vnet_rule_name}"
+    BastionSubnetId            = "${local.bastion_subnet_id}"
+    JenkinsVnetRuleName        = "${local.jenkins_vnet_rule_name}"
+    JenkinsSubnetId            = "${local.jenkins_subnet_id}"
   }
 }
