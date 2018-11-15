@@ -40,12 +40,12 @@ data "azurerm_subnet" "jenkins_subnet" {
   resource_group_name  = "${local.mgmt_network_rg_name}"
 }
 
-data "azurerm_subnet" "bastion_subnet" {
-  provider             = "azurerm.mgmt"
-  name                 = "reformMgmtDmzSN"
-  virtual_network_name = "${local.bastion_network_name}"
-  resource_group_name  = "${local.bation_rg_name}"
-}
+#data "azurerm_subnet" "bastion_subnet" {
+#  provider             = "azurerm.mgmt"
+#  name                 = "reformMgmtDmzSN"
+#  virtual_network_name = "${local.bastion_network_name}"
+#  resource_group_name  = "${local.bation_rg_name}"
+#}
 
 data "azurerm_subnet" "ase_subnet" {
   provider             = "azurerm.mgmt"
