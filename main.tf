@@ -41,6 +41,7 @@ data "azurerm_subnet" "jenkins_subnet" {
 }
 
 data "azurerm_subnet" "bastion_subnet" {
+  subsription          = "Reform-CFT-Mgmt"
   provider             = "azurerm.mgmt"
   name                 = "reformMgmtDmzSN"
   virtual_network_name = "${local.bastion_network_name}"
@@ -83,8 +84,8 @@ resource "azurerm_template_deployment" "postgres-paas" {
     collation                  = "${var.collation}.${var.charset}"
     AseVnetRuleName            = "${local.ase_vnet_rule_name}"
     AseSubnetId                = "${local.ase_subnet_id}"
-    BastionVnetRuleName        = "${local.bastion_vnet_rule_name}"
-    BastionSubnetId            = "${local.bastion_subnet_id}"
+    #BastionVnetRuleName        = "${local.bastion_vnet_rule_name}"
+    #BastionSubnetId            = "${local.bastion_subnet_id}"
     JenkinsVnetRuleName        = "${local.jenkins_vnet_rule_name}"
     JenkinsSubnetId            = "${local.jenkins_subnet_id}"
   }
