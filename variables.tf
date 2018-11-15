@@ -107,3 +107,7 @@ variable "common_tags" {
 }
 
 #vnet rules
+
+variable "subscription" {
+  type = "string"
+}
