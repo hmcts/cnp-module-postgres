@@ -112,10 +112,6 @@ variable "ase_vnet_rule_name" {
   type = "string"
 }
 
-variable "ase_subnet_id" {
-  type = "string"
-}
-
 variable "bastion_vnet_rule_name" {
   type = "string"
 }
