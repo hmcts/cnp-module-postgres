@@ -171,19 +171,6 @@
             "virtualNetworkSubnetId":"[parameters('AseSubnetId')]"
           }
         },
-//        {
-//          "type": "virtualNetworkRules",
-//          "apiVersion": "2017-12-01-preview",
-//          "dependsOn": [
-//            "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
-//          ],
-//          "name": "[parameters('BastionVnetRuleName')]",
-//          "location": "[parameters('location')]",
-//          "properties": {
-//            "ignoreMissingVnetServiceEndpoint": true,
-//            "virtualNetworkSubnetId": "[parameters('BastionSubnetId')]"
-//          }
-//        },
         {
           "type": "virtualNetworkRules",
           "apiVersion": "2017-12-01-preview",
