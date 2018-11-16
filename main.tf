@@ -45,5 +45,5 @@ resource "azurerm_template_deployment" "postgres-paas" {
     charset                    = "${var.charset}"
     collation                  = "${var.collation}.${var.charset}"
     teamName                   = "${lookup(var.common_tags, "Team Name")}"
-   }
+  }
 }
