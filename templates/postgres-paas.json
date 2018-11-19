@@ -120,6 +120,12 @@
         "description": "The tag"
       }
     },
+    "teamName": {
+      "type": "string",
+      "metadata": {
+        "description": "Development team name"
+      }
+    },
     "dbName": {
       "type": "string"
     },
@@ -155,6 +161,11 @@
         "family": "[parameters('skuFamily')]"
       },
       "type": "Microsoft.DBforPostgreSQL/servers",
+      "tags": {
+        "displayName": "PostgreSQL Server",
+        "environment": "[parameters('env')]",
+        "Team Name": "[parameters('teamName')]"
+      },
       "resources":[
         {
           "type":"firewallrules",
