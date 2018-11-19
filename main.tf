@@ -3,7 +3,7 @@ provider "azurerm" {
 }
 
 locals {
-  ase_subnet_id          = "${data.azurerm_key_vault_secret.ase_subnet_id.valuet}"
+  ase_subnet_id          = "${data.azurerm_key_vault_secret.ase_subnet_id.value}"
   jenkins_subnet_id      = "${data.azurerm_key_vault_secret.jenkins_subnet_id.value}"
   bastion_subnet_id      = "${data.azurerm_key_vault_secret.bastion_subnet_id.value}"
   ase_vnet_rule_name     = "${var.env}ASEVNET"
