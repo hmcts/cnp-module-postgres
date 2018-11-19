@@ -124,6 +124,12 @@
     "JenkinsSubnetId": {
       "type": "string"
     },
+    "BastionVnetRuleName": {
+      "type": "string"
+    },
+    "BastionSubnetId": {
+      "type": "string"
+    },
     "subscription": {
       "type": "string"
     }
@@ -178,6 +184,19 @@
           "properties": {
             "ignoreMissingVnetServiceEndpoint": true,
             "virtualNetworkSubnetId": "[parameters('JenkinsSubnetId')]"
+          }
+        },
+        {
+          "type": "virtualNetworkRules",
+          "apiVersion": "2017-12-01-preview",
+          "dependsOn": [
+            "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
+          ],
+          "name": "[parameters('BastionVnetRuleName')]",
+          "location": "[parameters('location')]",
+          "properties": {
+            "ignoreMissingVnetServiceEndpoint": true,
+            "virtualNetworkSubnetId": "[parameters('BastionSubnetId')]"
           }
         },
 
