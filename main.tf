@@ -1,12 +1,8 @@
-provider "azurerm" {
-  alias = "mgmt"
-}
-
 locals {
-  jenkins_subscription_id = "${(var.env == "prod" || var.env == "aat" || var.env == "hmctsdemo") ? "8999dec3-0104-4a27-94ee-6588559729d1" : "bf308a5c-0624-4334-8ff8-8dca9fd43783"}"
+  jenkins_subscription_id = "${(var.env == "prod" || var.env == "aat" || var.env == "hmctsdemo") ? "${var.DCD-CNP-Prod_subscirption_id}" : "${var.DCD-CFT-Sandbox_subscirption_id}"}"
   jenkins_rg              = "${(var.env == "prod" || var.env == "aat") ? "mgmt-infra-prod" : "mgmt-infra-sandbox"}"
   jenkins_vnet            = "${(var.env == "sandbox" || var.env == "saat" || var.env == "sprod") ? "mgmt-infra-sandbox" : "mgmt-infra-prod"}"
-  bastion_subscription_id = "${(var.env == "prod" || var.env == "aat") ? "3682dd80-1150-444a-868d-4879d6605399" : "ed302caf-ec27-4c64-a05e-85731c3ce90e"}"
+  bastion_subscription_id = "${(var.env == "prod" || var.env == "aat") ? "${var.Reform-CFT-Prod_subscirption_id}" : "${var.Reform-CFT-Mgmt_subscirption_id}"}"
   bastion_rg              = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdCoreRG" : "betaPreProdCoreRG" : "reformMgmtCoreRG"}"
   bastion_vnet            = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdVNet" : "betaPreProdVNet" : "reformMgmtCoreVNet"}"
   bastion_subnet_name     = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdDataSN" : "betaPreProdDataSN" : "reformMgmtDmzSN"}"
