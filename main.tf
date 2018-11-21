@@ -12,7 +12,10 @@ locals {
   bastion_subnet_name     = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdDataSN" : "betaPreProdDataSN" : "reformMgmtDmzSN"}"
   jenkins_subnet_id       = "/subscriptions/${local.jenkins_subscription_id}/resourceGroups/${local.jenkins_rg}/providers/Microsoft.Network/virtualNetworks/${local.jenkins_vnet}subnets/${var.jenkins_subnet_name}"
   bastion_subnet_id       = "/subscriptions/${local.bastion_subscription_id}/resourceGroups/${local.bastion_rg}/providers/Microsoft.Network/virtualNetworks/${local.bastion_vnet}/subnets/${local.bastion_subnet_name}"
-  ase_subnet_id           = "/subscriptions/${data.azurerm_subscription.current.id}/resourceGroups/core-infra-${var.env}/providers/Microsoft.Network/virtualNetworks/core-infra-vnet-${var.env}/subnets/core-infra-subnet-3-${var.env}"
+
+  ase_subnet_id           = "${data.azurerm_subnet.ase.id}"
+
+  #ase_subnet_id           = "/subscriptions/${data.azurerm_subscription.current.id}/resourceGroups/core-infra-${var.env}/providers/Microsoft.Network/virtualNetworks/core-infra-vnet-${var.env}/subnets/core-infra-subnet-3-${var.env}"
   ase_vnet_rule_name      = "${var.env}ASEVNET"
   bastion_vnet_rule_name  = "${var.env}BastionVNET"
   jenkins_vnet_rule_name  = "${var.env}JenkinsVNET"
@@ -40,6 +43,12 @@ data "template_file" "postgrestemplate" {
 }
 
 data "azurerm_subscription" "current" {}
+
+data "azurerm_subnet" "ase" {
+  name                 = "core-infra-subnet-3-${var.env}"
+  virtual_network_name = "core-infra-vnet-${var.env}"
+  resource_group_name  = "core-infra-${var.env}"
+}
 
 resource "azurerm_template_deployment" "postgres-paas" {
   template_body       = "${data.template_file.postgrestemplate.rendered}"
