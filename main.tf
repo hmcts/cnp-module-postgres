@@ -52,7 +52,6 @@ resource "azurerm_template_deployment" "postgres-paas" {
     administratorLoginPassword = "${random_string.password.result}"
     location                   = "${var.location}"
     env                        = "${var.env}"
-    subscription               = "${var.subscription}"
     serverName                 = "${var.product}-${var.env}"
     dbName                     = "${replace(var.database_name, "-", "")}"
     skuName                    = "${var.sku_name}"
