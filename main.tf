@@ -10,7 +10,8 @@ locals {
   bastion_rg              = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdCoreRG" : "betaPreProdCoreRG" : "reformMgmtCoreRG"}"
   bastion_vnet            = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdVNet" : "betaPreProdVNet" : "reformMgmtCoreVNet"}"
   bastion_subnet_name     = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdDataSN" : "betaPreProdDataSN" : "reformMgmtDmzSN"}"
-  jenkins_subnet_id       = "/subscriptions/${local.jenkins_subscription_id}/resourceGroups/${local.jenkins_rg}/providers/Microsoft.Network/virtualNetworks/${local.jenkins_vnet}subnets/${var.jenkins_subnet_name}"  bastion_subnet_id       = "/subscriptions/${local.bastion_subscription_id}/resourceGroups/${local.bastion_rg}/providers/Microsoft.Network/virtualNetworks/${local.bastion_vnet}/subnets/${local.bastion_subnet_name}"
+  jenkins_subnet_id       = "/subscriptions/${local.jenkins_subscription_id}/resourceGroups/${local.jenkins_rg}/providers/Microsoft.Network/virtualNetworks/${local.jenkins_vnet}subnets/${var.jenkins_subnet_name}"
+  bastion_subnet_id       = "/subscriptions/${local.bastion_subscription_id}/resourceGroups/${local.bastion_rg}/providers/Microsoft.Network/virtualNetworks/${local.bastion_vnet}/subnets/${local.bastion_subnet_name}"
   ase_subnet_id           = "${data.azurerm_subnet.ase.id}"
 
   #ase_subnet_id           = "/subscriptions/${data.azurerm_subscription.current.id}/resourceGroups/core-infra-${var.env}/providers/Microsoft.Network/virtualNetworks/core-infra-vnet-${var.env}/subnets/core-infra-subnet-3-${var.env}"
