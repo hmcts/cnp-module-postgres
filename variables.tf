@@ -107,11 +107,6 @@ variable "common_tags" {
 }
 
 #vnet rules
-
-variable "subscription" {
-  type = "string"
-}
-
 variable "jenkins_subnet_name" {
   type = "string"
   default = "jenkins-subnet"
