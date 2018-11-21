@@ -3,12 +3,19 @@ provider "azurerm" {
 }
 
 locals {
-  ase_subnet_id          = "${data.azurerm_key_vault_secret.ase_subnet_id.value}"
-  jenkins_subnet_id      = "${data.azurerm_key_vault_secret.jenkins_subnet_id.value}"
-  bastion_subnet_id      = "${data.azurerm_key_vault_secret.bastion_subnet_id.value}"
-  ase_vnet_rule_name     = "${var.env}ASEVNET"
-  bastion_vnet_rule_name = "${var.env}BastionVNET"
-  jenkins_vnet_rule_name = "${var.env}JenkinsVNET"
+  jenkins_subscription_id = "${(var.env == "prod" || var.env == "aat" || var.env == "hmctsdemo") ? "8999dec3-0104-4a27-94ee-6588559729d1" : "bf308a5c-0624-4334-8ff8-8dca9fd43783"}"
+  jenkins_rg              = "${(var.env == "prod" || var.env == "aat") ? "mgmt-infra-prod" : "mgmt-infra-sandbox"}"
+  jenkins_vnet            = "${(var.env == "sandbox" || var.env == "saat" || var.env == "sprod") ? "mgmt-infra-sandbox" : "mgmt-infra-prod"}"
+  bastion_subscription_id = "${(var.env == "prod" || var.env == "aat") ? "3682dd80-1150-444a-868d-4879d6605399" : "ed302caf-ec27-4c64-a05e-85731c3ce90e"}"
+  bastion_rg              = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdCoreRG" : "betaPreProdCoreRG" : "reformMgmtCoreRG"}"
+  bastion_vnet            = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdVNet" : "betaPreProdVNet" : "reformMgmtCoreVNet"}"
+  bastion_subnet_name     = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdDataSN" : "betaPreProdDataSN" : "reformMgmtDmzSN"}"
+  jenkins_subnet_id       = "/subscriptions/${local.jenkins_subscription_id}/resourceGroups/${local.jenkins_rg}/providers/Microsoft.Network/virtualNetworks/${local.jenkins_vnet}subnets/${var.jenkins_subnet_name}"
+  bastion_subnet_id       = "/subscriptions/${local.bastion_subscription_id}/resourceGroups/${local.bastion_rg}/providers/Microsoft.Network/virtualNetworks/${local.bastion_vnet}/subnets/${local.bastion_subnet_name}"
+  ase_subnet_id           = "/subscriptions/${data.azurerm_subscription.current.id}/resourceGroups/core-infra-${var.env}/providers/Microsoft.Network/virtualNetworks/core-infra-vnet-${var.env}/subnets/core-infra-subnet-3-${var.env}"
+  ase_vnet_rule_name      = "${var.env}ASEVNET"
+  bastion_vnet_rule_name  = "${var.env}BastionVNET"
+  jenkins_vnet_rule_name  = "${var.env}JenkinsVNET"
 }
 
 resource "azurerm_resource_group" "data-resourcegroup" {
@@ -28,24 +35,11 @@ resource "random_string" "password" {
   number  = true
 }
 
-data "azurerm_key_vault_secret" "jenkins_subnet_id" {
-  name      = "jenkins-subnet-id"
-  vault_uri = "https://infra-vault-${var.subscription}.vault.azure.net/"
-}
-
-data "azurerm_key_vault_secret" "ase_subnet_id" {
-  name      = "ase-${var.env}-subnet-id"
-  vault_uri = "https://infra-vault-${var.subscription}.vault.azure.net/"
-}
-
-data "azurerm_key_vault_secret" "bastion_subnet_id" {
-  name      = "bastion-subnet-id"
-  vault_uri = "https://infra-vault-${var.subscription}.vault.azure.net/"
-}
-
 data "template_file" "postgrestemplate" {
   template = "${file("${path.module}/templates/postgres-paas.json")}"
 }
+
+data "azurerm_subscription" "current" {}
 
 resource "azurerm_template_deployment" "postgres-paas" {
   template_body       = "${data.template_file.postgrestemplate.rendered}"
