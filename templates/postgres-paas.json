@@ -129,9 +129,6 @@
     },
     "BastionSubnetId": {
       "type": "string"
-    },
-    "subscription": {
-      "type": "string"
     }
   },
   "resources": [
