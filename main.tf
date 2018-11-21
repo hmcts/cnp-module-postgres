@@ -1,8 +1,8 @@
 locals {
-  jenkins_subscription_id = "${(var.env == "prod" || var.env == "aat" || var.env == "hmctsdemo") ? "${var.DCD-CNP-Prod_subscirption_id}" : "${var.DCD-CFT-Sandbox_subscirption_id}"}"
+  jenkins_subscription_id = "${(var.env == "prod" || var.env == "aat" || var.env == "hmctsdemo") ? "${var.DCD-CNP-Prod_subscription_id}" : "${var.DCD-CFT-Sandbox_subscription_id}"}"
   jenkins_rg              = "${(var.env == "prod" || var.env == "aat") ? "mgmt-infra-prod" : "mgmt-infra-sandbox"}"
   jenkins_vnet            = "${(var.env == "sandbox" || var.env == "saat" || var.env == "sprod") ? "mgmt-infra-sandbox" : "mgmt-infra-prod"}"
-  bastion_subscription_id = "${(var.env == "prod" || var.env == "aat") ? "${var.Reform-CFT-Prod_subscirption_id}" : "${var.Reform-CFT-Mgmt_subscirption_id}"}"
+  bastion_subscription_id = "${(var.env == "prod" || var.env == "aat") ? "${var.Reform-CFT-Prod_subscription_id}" : "${var.Reform-CFT-Mgmt_subscription_id}"}"
   bastion_rg              = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdCoreRG" : "betaPreProdCoreRG" : "reformMgmtCoreRG"}"
   bastion_vnet            = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdVNet" : "betaPreProdVNet" : "reformMgmtCoreVNet"}"
   bastion_subnet_name     = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdDataSN" : "betaPreProdDataSN" : "reformMgmtDmzSN"}"

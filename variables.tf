@@ -112,22 +112,22 @@ variable "jenkins_subnet_name" {
   default = "jenkins-subnet"
 }
 
-variable "DCD-CNP-Prod_subscirption_id" {
+variable "DCD-CNP-Prod_subscription_id" {
   type = "string"
   default = "8999dec3-0104-4a27-94ee-6588559729d1"
 }
 
-variable "DCD-CFT-Sandbox_subscirption_id" {
+variable "DCD-CFT-Sandbox_subscription_id" {
   type = "string"
   default = "bf308a5c-0624-4334-8ff8-8dca9fd43783"
 }
 
-variable "Reform-CFT-Prod_subscirption_id" {
+variable "Reform-CFT-Prod_subscription_id" {
   type = "string"
   default = "3682dd80-1150-444a-868d-4879d6605399"
 }
 
-variable "Reform-CFT-Mgmt_subscirption_id" {
+variable "Reform-CFT-Mgmt_subscription_id" {
   type = "string"
   default = "ed302caf-ec27-4c64-a05e-85731c3ce90e"
 }
