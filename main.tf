@@ -41,8 +41,6 @@ data "template_file" "postgrestemplate" {
   template = "${file("${path.module}/templates/postgres-paas.json")}"
 }
 
-data "azurerm_subscription" "current" {}
-
 data "azurerm_subnet" "ase" {
   name                 = "core-infra-subnet-3-${var.env}"
   virtual_network_name = "core-infra-vnet-${var.env}"
