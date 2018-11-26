@@ -1,6 +1,6 @@
 locals {
-  jenkins_subscription_id = "${(var.env == "prod" || var.env == "aat" || var.env == "hmctsdemo") ? "${data.azurerm_key_vault_secret.DCD-CNP-Prod-subscription-id.value}" : "${data.azurerm_key_vault_secret.DCD-CFT-Sandbox-subscription-id.value}"}"
-  jenkins_rg              = "${(var.env == "prod" || var.env == "aat") ? "mgmt-infra-prod" : "mgmt-infra-sandbox"}"
+  jenkins_subscription_id = "${(var.env == "sandbox" || var.env == "saat" || var.env == "sprod") ? "${data.azurerm_key_vault_secret.DCD-CFT-Sandbox-subscription-id.value}" : "${data.azurerm_key_vault_secret.DCD-CNP-Prod-subscription-id.value}"}"
+  jenkins_rg              = "${(var.env == "sandbox" || var.env == "saat" || var.env == "sprod") ? "mgmt-infra-sandbox" : "mgmt-infra-prod"}"
   jenkins_vnet            = "${(var.env == "sandbox" || var.env == "saat" || var.env == "sprod") ? "mgmt-infra-sandbox" : "mgmt-infra-prod"}"
   bastion_subscription_id = "${(var.env == "prod" || var.env == "aat") ? "${data.Reform-CFT-Prod-subscription-id.value}" : "${var.Reform-CFT-Mgmt_subscription_id}"}"
   bastion_rg              = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdCoreRG" : "betaPreProdCoreRG" : "reformMgmtCoreRG"}"
