@@ -105,3 +105,9 @@ variable "database_name" {
 variable "common_tags" {
   type = "map"
 }
+
+#vnet rules
+variable "jenkins_subnet_name" {
+  type = "string"
+  default = "jenkins-subnet"
+}
