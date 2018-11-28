@@ -1,20 +1,22 @@
 locals {
-  jenkins_subscription_id = "${(var.env == "sandbox" || var.env == "saat" || var.env == "sprod") ? "${data.azurerm_key_vault_secret.DCD-CFT-Sandbox-subscription-id.value}" : "${data.azurerm_key_vault_secret.DCD-CNP-Prod-subscription-id.value}"}"
-  jenkins_rg              = "${(var.env == "sandbox" || var.env == "saat" || var.env == "sprod") ? "mgmt-infra-sandbox" : "mgmt-infra-prod"}"
-  jenkins_vnet            = "${(var.env == "sandbox" || var.env == "saat" || var.env == "sprod") ? "mgmt-infra-sandbox" : "mgmt-infra-prod"}"
-  bastion_subscription_id = "${(var.env == "prod" || var.env == "aat") ? "${data.Reform-CFT-Prod-subscription-id.value}" : "${var.Reform-CFT-Mgmt_subscription_id}"}"
-  bastion_rg              = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdCoreRG" : "betaPreProdCoreRG" : "reformMgmtCoreRG"}"
-  bastion_vnet            = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdVNet" : "betaPreProdVNet" : "reformMgmtCoreVNet"}"
-  bastion_subnet_name     = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdDataSN" : "betaPreProdDataSN" : "reformMgmtDmzSN"}"
-  vaultname = "${(var.env == "prod") ? (var.env == "aat") ? (var.env == "hmcts-demo") ? "infra-vault-prod" : "infra-vault-nonprod" : "infra-vault-hmctsdemo" : "infra-vault-sandbox"}"
-  core_infra_subnet_no = "${(var.env == "idam") ? "2" : "3"}"
+  jenkins_subscription_id = "${(var.env == "*sandbox" || var.env == "*saat" || var.env == "*sprod") ? "${data.azurerm_key_vault_secret.DCD-CFT-Sandbox-subscription-id.value}" : "${data.azurerm_key_vault_secret.DCD-CNP-Prod-subscription-id.value}"}"
+  jenkins_rg              = "${(var.env == "*sandbox" || var.env == "*saat" || var.env == "*sprod") ? "mgmt-infra-sandbox" : "mgmt-infra-prod"}"
+  jenkins_vnet            = "${(var.env == "*sandbox" || var.env == "*saat" || var.env == "sprod") ? "mgmt-infra-sandbox" : "mgmt-infra-prod"}"
+  bastion_subscription_id = "${(var.env == "*prod" || var.env == "*aat") ? "${data.Reform-CFT-Prod-subscription-id.value}" : "${data.azurerm_key_vault_secret.Reform-CFT-Mgmt-subscription-id}"}"
+  bastion_rg              = "${(var.env == "*prod") ? (var.env == "*aat" ) ? "betaProdCoreRG" : "betaPreProdCoreRG" : "reformMgmtCoreRG"}"
+  bastion_vnet            = "${(var.env == "*prod") ? (var.env == "*aat" ) ? "betaProdVNet" : "betaPreProdVNet" : "reformMgmtCoreVNet"}"
+  bastion_subnet_name     = "${(var.env == "*prod") ? (var.env == "*aat" ) ? "betaProdDataSN" : "betaPreProdDataSN" : "reformMgmtDmzSN"}"
+  vaultname               = "${(var.env == "*prod") ? (var.env == "*aat" || var.env == "*demo" || var.env == "*preview") ? (var.env == "hmcts-demo") ? "infra-vault-prod" : "infra-vault-nonprod" : "infra-vault-hmctsdemo" : "infra-vault-sandbox"}"
+  core_infra_subnet_no    = "${(var.env == "idam") ? "2" : "3"}"
   ase_subnet_id           = "${data.azurerm_subnet.ase.id}"
+  asev2_subnet_id         = "${data.azurerm_subnet.asev2.id}"
   jenkins_subnet_id       = "/subscriptions/${local.jenkins_subscription_id}/resourceGroups/${local.jenkins_rg}/providers/Microsoft.Network/virtualNetworks/${local.jenkins_vnet}/subnets/${var.jenkins_subnet_name}"
   bastion_subnet_id       = "/subscriptions/${local.bastion_subscription_id}/resourceGroups/${local.bastion_rg}/providers/Microsoft.Network/virtualNetworks/${local.bastion_vnet}/subnets/${local.bastion_subnet_name}"
 
-  ase_vnet_rule_name      = "${var.env}ASEVNET"
-  bastion_vnet_rule_name  = "${var.env}BastionVNET"
-  jenkins_vnet_rule_name  = "${var.env}JenkinsVNET"
+  ase_vnet_rule_name     = "${var.env}ASEVNET"
+  asev2_vnet_rule_name     = "${var.env}ASEv2VNET"
+  bastion_vnet_rule_name = "${var.env}BastionVNET"
+  jenkins_vnet_rule_name = "${var.env}JenkinsVNET"
 }
 
 resource "azurerm_resource_group" "data-resourcegroup" {
@@ -44,6 +46,12 @@ data "azurerm_subnet" "ase" {
   resource_group_name  = "core-infra-${var.env}"
 }
 
+data "azurerm_subnet" "asev2" {
+  name                 = "core-infra-subnet-ase-${var.env}v2"
+  virtual_network_name = "core-infra-vnet-${var.env}v2"
+  resource_group_name  = "core-infra-${var.env}v2"
+}
+
 data "azurerm_key_vault_secret" "DCD-CNP-Prod-subscription-id" {
   name      = "DCD-CNP-Prod-subscription-id"
   vault_uri = "https://${local.vaultname}.vault.azure.net/"
@@ -59,8 +67,8 @@ data "azurerm_key_vault_secret" "Reform-CFT-Prod-subscription-id" {
   vault_uri = "https://${local.vaultname}.vault.azure.net/"
 }
 
-data "azurerm_key_vault_secret" "bastion_subnet_id" {
-  name      = "bastion-subnet-id"
+data "azurerm_key_vault_secret" "Reform-CFT-Mgmt-subscription-id" {
+  name      = "Reform-CFT-Mgmt-subscription-id"
   vault_uri = "https://${local.vaultname}.vault.azure.net/"
 }
 
@@ -88,6 +96,8 @@ resource "azurerm_template_deployment" "postgres-paas" {
     collation                  = "${var.collation}.${var.charset}"
     AseVnetRuleName            = "${local.ase_vnet_rule_name}"
     AseSubnetId                = "${local.ase_subnet_id}"
+    Asev2VnetRuleName          = "${local.asev2_vnet_rule_name}"
+    Asev2SubnetId              = "${local.asev2_subnet_id}"
     BastionVnetRuleName        = "${local.bastion_vnet_rule_name}"
     BastionSubnetId            = "${local.bastion_subnet_id}"
     JenkinsVnetRuleName        = "${local.jenkins_vnet_rule_name}"

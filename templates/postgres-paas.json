@@ -118,6 +118,12 @@
     "AseSubnetId": {
       "type": "string"
     },
+    "Asev2VnetRuleName": {
+      "type": "string"
+    },
+    "Asev2SubnetId": {
+      "type": "string"
+    },
     "JenkinsVnetRuleName": {
       "type": "string"
     },
@@ -168,6 +174,19 @@
           "properties": {
             "ignoreMissingVnetServiceEndpoint": true,
             "virtualNetworkSubnetId":"[parameters('AseSubnetId')]"
+          }
+        },
+        {
+          "type": "virtualNetworkRules",
+          "apiVersion": "2017-12-01-preview",
+          "dependsOn": [
+            "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
+          ],
+          "name": "[parameters('Asev2VnetRuleName')]",
+          "location": "[parameters('location')]",
+          "properties": {
+            "ignoreMissingVnetServiceEndpoint": true,
+            "virtualNetworkSubnetId": "[parameters('Asev2SubnetId')]"
           }
         },
         {
