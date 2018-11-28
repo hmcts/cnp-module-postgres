@@ -2,7 +2,7 @@ locals {
   jenkins_subscription_id = "${(var.env == "*sandbox" || var.env == "*saat" || var.env == "*sprod") ? "${data.azurerm_key_vault_secret.DCD-CFT-Sandbox-subscription-id.value}" : "${data.azurerm_key_vault_secret.DCD-CNP-Prod-subscription-id.value}"}"
   jenkins_rg              = "${(var.env == "*sandbox" || var.env == "*saat" || var.env == "*sprod") ? "mgmt-infra-sandbox" : "mgmt-infra-prod"}"
   jenkins_vnet            = "${(var.env == "*sandbox" || var.env == "*saat" || var.env == "sprod") ? "mgmt-infra-sandbox" : "mgmt-infra-prod"}"
-  bastion_subscription_id = "${(var.env == "*prod" || var.env == "*aat") ? "${data.azurerm_key_vault_secret.Reform-CFT-Prod-subscription-id.value}" : "${data.azurerm_key_vault_secret.Reform-CFT-Mgmt-subscription-id}"}"
+  bastion_subscription_id = "${(var.env == "*prod" || var.env == "*aat") ? "${data.azurerm_key_vault_secret.Reform-CFT-Prod-subscription-id.value}" : "${data.azurerm_key_vault_secret.Reform-CFT-Mgmt-subscription-id.value}"}"
   bastion_rg              = "${(var.env == "*prod") ? (var.env == "*aat" ) ? "betaProdCoreRG" : "betaPreProdCoreRG" : "reformMgmtCoreRG"}"
   bastion_vnet            = "${(var.env == "*prod") ? (var.env == "*aat" ) ? "betaProdVNet" : "betaPreProdVNet" : "reformMgmtCoreVNet"}"
   bastion_subnet_name     = "${(var.env == "*prod") ? (var.env == "*aat" ) ? "betaProdDataSN" : "betaPreProdDataSN" : "reformMgmtDmzSN"}"
@@ -14,7 +14,7 @@ locals {
   bastion_subnet_id       = "/subscriptions/${local.bastion_subscription_id}/resourceGroups/${local.bastion_rg}/providers/Microsoft.Network/virtualNetworks/${local.bastion_vnet}/subnets/${local.bastion_subnet_name}"
 
   ase_vnet_rule_name     = "${var.env}ASEVNET"
-  asev2_vnet_rule_name     = "${var.env}ASEv2VNET"
+  asev2_vnet_rule_name   = "${var.env}ASEv2VNET"
   bastion_vnet_rule_name = "${var.env}BastionVNET"
   jenkins_vnet_rule_name = "${var.env}JenkinsVNET"
 }
