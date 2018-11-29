@@ -50,7 +50,7 @@ data "azurerm_subnet" "asev2" {
   name                 = "core-infra-subnet-ase-${var.env}v2"
   virtual_network_name = "core-infra-vnet-${var.env}v2"
   resource_group_name  = "core-infra-${var.env}v2"
-  depends_on = ["${var.asev2_presence == "present"}"]
+  depends_on = ["${var.asev2_presence}"]
 }
 
 data "azurerm_key_vault_secret" "DCD-CNP-Prod-subscription-id" {
