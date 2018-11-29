@@ -122,7 +122,8 @@
       "type": "string"
     },
     "Asev2SubnetId": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": "null"
     },
     "AseV2Presence": {
       "type": "string",
