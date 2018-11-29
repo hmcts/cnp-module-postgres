@@ -125,7 +125,11 @@
       "type": "string"
     },
     "AseV2Presence": {
-      "type": "string"
+      "type": "string",
+      "allowedValues": [
+        "present",
+        "absent"
+      ]
     },
     "JenkinsVnetRuleName": {
       "type": "string"
