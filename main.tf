@@ -1,7 +1,7 @@
 locals {
-  jenkins_subscription_id = "${(var.env == "sandbox" || var.env == "saat" || var.env == "sprod") ? "${data.azurerm_key_vault_secret.DCD-CFT-Sandbox-subscription-id.value}" : "${data.azurerm_key_vault_secret.DCD-CNP-Prod-subscription-id.value}"}"
-  jenkins_rg              = "${(var.env == "sandbox" || var.env == "saat" || var.env == "sprod") ? "mgmt-infra-sandbox" : "mgmt-infra-prod"}"
-  jenkins_vnet            = "${(var.env == "sandbox" || var.env == "saat" || var.env == "sprod") ? "mgmt-infra-sandbox" : "mgmt-infra-prod"}"
+  jenkins_subscription_id = "${(var.env == "sandbox" || var.env == "saat" || var.env == "sprod" || var.env == "idam-sandbox" || var.env == "idam-saat" || var.env == "idam-sprod") ? "${data.azurerm_key_vault_secret.DCD-CFT-Sandbox-subscription-id.value}" : "${data.azurerm_key_vault_secret.DCD-CNP-Prod-subscription-id.value}"}"
+  jenkins_rg              = "${(var.env == "sandbox" || var.env == "saat" || var.env == "sprod" || var.env == "idam-sandbox" || var.env == "idam-saat" || var.env == "idam-sprod") ? "mgmt-infra-sandbox" : "mgmt-infra-prod"}"
+  jenkins_vnet            = "${(var.env == "sandbox" || var.env == "saat" || var.env == "sprod" || var.env == "idam-sandbox" || var.env == "idam-saat" || var.env == "idam-sprod") ? "mgmt-infra-sandbox" : "mgmt-infra-prod"}"
   bastion_subscription_id = "${(var.env == "prod" || var.env == "aat") ? "${data.azurerm_key_vault_secret.Reform-CFT-Prod-subscription-id.value}" : "${data.azurerm_key_vault_secret.Reform-CFT-Mgmt-subscription-id.value}"}"
   bastion_rg              = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdCoreRG" : "betaPreProdCoreRG" : "reformMgmtCoreRG"}"
   bastion_vnet            = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdVNet" : "betaPreProdVNet" : "reformMgmtCoreVNet"}"
