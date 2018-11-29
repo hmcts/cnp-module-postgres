@@ -112,7 +112,7 @@ variable "jenkins_subnet_name" {
   default = "jenkins-subnet"
 }
 
-variable "asev2_presence" {
+variable "is_asev2_present" {
   type    = "string"
-  default = "present"
+  default = "true"
 }

@@ -125,11 +125,11 @@
       "type": "string",
       "defaultValue": "null"
     },
-    "AseV2Presence": {
+    "isAseV2Present": {
       "type": "string",
       "allowedValues": [
-        "present",
-        "absent"
+        "true",
+        "false"
       ]
     },
     "JenkinsVnetRuleName": {
@@ -187,7 +187,7 @@
         {
           "type": "virtualNetworkRules",
           "apiVersion": "2017-12-01-preview",
-          "condition": "[equals(parameters('AseV2Presence'),'present')]",
+          "condition": "[equals(parameters('isAseV2Present'),'true')]",
           "dependsOn": [
             "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
           ],

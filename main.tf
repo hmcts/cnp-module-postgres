@@ -47,11 +47,12 @@ data "azurerm_subnet" "ase" {
 }
 
 data "azurerm_subnet" "asev2" {
-  count                = "${var.asev2_presence == "present" ? 1 : 0}"
+  count                = "${var.is_asev2_present == "true" ? 1 : 0}"
   name                 = "core-infra-subnet-ase-${var.env}v2"
   virtual_network_name = "core-infra-vnet-${var.env}v2"
   resource_group_name  = "core-infra-${var.env}v2"
 }
+
 output "asev2_subnet_id" {
   value = "${element(concat(data.azurerm_subnet.asev2.*.id, list("")), 0)}"
 }
@@ -102,7 +103,7 @@ resource "azurerm_template_deployment" "postgres-paas" {
     AseSubnetId                = "${local.ase_subnet_id}"
     Asev2VnetRuleName          = "${local.asev2_vnet_rule_name}"
     Asev2SubnetId              = "${local.asev2_subnet_id}"
-    AseV2Presence              = "${var.asev2_presence}"
+    isAseV2Present             = "${var.is_asev2_present}"
     BastionVnetRuleName        = "${local.bastion_vnet_rule_name}"
     BastionSubnetId            = "${local.bastion_subnet_id}"
     JenkinsVnetRuleName        = "${local.jenkins_vnet_rule_name}"
