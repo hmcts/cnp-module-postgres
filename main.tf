@@ -97,7 +97,7 @@ resource "azurerm_template_deployment" "postgres-paas" {
     AseVnetRuleName            = "${local.ase_vnet_rule_name}"
     AseSubnetId                = "${data.azurerm_subnet.ase.id}"
     Asev2VnetRuleName          = "${local.asev2_vnet_rule_name}"
-    Asev2SubnetId              = "${data.azurerm_subnet.asev2}"
+    Asev2SubnetId              = "${data.azurerm_subnet.asev2.id}"
     AseV2Presence              = "${var.asev2_presence}"
     BastionVnetRuleName        = "${local.bastion_vnet_rule_name}"
     BastionSubnetId            = "${local.bastion_subnet_id}"
