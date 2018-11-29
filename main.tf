@@ -7,7 +7,7 @@ locals {
   bastion_vnet            = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdVNet" : "betaPreProdVNet" : "reformMgmtCoreVNet"}"
   bastion_subnet_name     = "${(var.env == "prod") ? (var.env == "aat" ) ? "betaProdDataSN" : "betaPreProdDataSN" : "reformMgmtDmzSN"}"
   vaultname               = "${(var.env == "prod") ? (var.env == "aat" || var.env == "demo" || var.env == "preview") ? (var.env == "hmcts-demo") ? "infra-vault-prod" : "infra-vault-nonprod" : "infra-vault-hmctsdemo" : "infra-vault-sandbox"}"
-  core_infra_subnet_no    = "${(var.env != "idam-*") ? "3" : "2"}"
+  core_infra_subnet_no    = "${(var.env != "idam-sandbox" || var.env != "idam-saat" || var.env != "idam-sprod") ? "3" : "2"}"
   ase_subnet_id           = "${data.azurerm_subnet.ase.id}"
   asev2_subnet_id         = "${element(concat(data.azurerm_subnet.asev2.*.id, list("")), 0)}"
   jenkins_subnet_id       = "/subscriptions/${local.jenkins_subscription_id}/resourceGroups/${local.jenkins_rg}/providers/Microsoft.Network/virtualNetworks/${local.jenkins_vnet}/subnets/${var.jenkins_subnet_name}"
