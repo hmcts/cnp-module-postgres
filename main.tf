@@ -9,7 +9,7 @@ locals {
   vaultname               = "${(var.env == "prod") ? (var.env == "aat" || var.env == "demo" || var.env == "preview") ? (var.env == "hmcts-demo") ? "infra-vault-prod" : "infra-vault-nonprod" : "infra-vault-hmctsdemo" : "infra-vault-sandbox"}"
   core_infra_subnet_no    = "${(var.env == "idam") ? "2" : "3"}"
   ase_subnet_id           = "${data.azurerm_subnet.ase.id}"
-  asev2_subnet_id         = "${var.asev2_presence == "present" ? data.azurerm_subnet.asev2.id : "null"}"
+  asev2_subnet_id         = "${var.asev2_presence == "absent" ? "null" : data.azurerm_subnet.asev2.id}"
   jenkins_subnet_id       = "/subscriptions/${local.jenkins_subscription_id}/resourceGroups/${local.jenkins_rg}/providers/Microsoft.Network/virtualNetworks/${local.jenkins_vnet}/subnets/${var.jenkins_subnet_name}"
   bastion_subnet_id       = "/subscriptions/${local.bastion_subscription_id}/resourceGroups/${local.bastion_rg}/providers/Microsoft.Network/virtualNetworks/${local.bastion_vnet}/subnets/${local.bastion_subnet_name}"
 
