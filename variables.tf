@@ -108,11 +108,11 @@ variable "common_tags" {
 
 #vnet rules
 variable "jenkins_subnet_name" {
-  type = "string"
+  type    = "string"
   default = "jenkins-subnet"
 }
 
 variable "asev2_presence" {
-  type = "string"
+  type    = "string"
   default = "present"
 }
