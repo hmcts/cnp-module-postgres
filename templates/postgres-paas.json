@@ -132,6 +132,48 @@
         "false"
       ]
     },
+    "IdamAPIVnetRuleName": {
+      "type": "string"
+    },
+    "IdamAPISubnetId": {
+      "type": "string",
+      "defaultValue": "null"
+    },
+    "isIdamAPI": {
+      "type": "string",
+      "allowedValues": [
+        "true",
+        "false"
+      ]
+    },
+    "IdamIdmVnetRuleName": {
+      "type": "string"
+    },
+    "IdamIdmSubnetId": {
+      "type": "string",
+      "defaultValue": "null"
+    },
+    "isIdamIdm": {
+      "type": "string",
+      "allowedValues": [
+        "true",
+        "false"
+      ]
+    },
+    "IdamJumpboxVnetRuleName": {
+      "type": "string"
+    },
+    "IdamJumpboxSubnetId": {
+      "type": "string",
+      "defaultValue": "null"
+    },
+    "isIdam": {
+      "type": "string",
+      "allowedValues": [
+        "true",
+        "false"
+      ]
+    },
     "JenkinsVnetRuleName": {
       "type": "string"
     },
@@ -174,6 +216,7 @@
         {
           "type": "virtualNetworkRules",
           "apiVersion": "2017-12-01-preview",
+          "condition": "[equals(parameters('isIdamAPI'),'false')]",
           "dependsOn": [
             "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
           ],
@@ -196,6 +239,48 @@
           "properties": {
             "ignoreMissingVnetServiceEndpoint": true,
             "virtualNetworkSubnetId": "[parameters('Asev2SubnetId')]"
+          }
+        },
+        {
+          "type": "virtualNetworkRules",
+          "apiVersion": "2017-12-01-preview",
+          "condition": "[equals(parameters('isIdamAPI'),'true')]",
+          "dependsOn": [
+            "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
+          ],
+          "name": "[parameters('IdamAPIVnetRuleName')]",
+          "location": "[parameters('location')]",
+          "properties": {
+            "ignoreMissingVnetServiceEndpoint": true,
+            "virtualNetworkSubnetId": "[parameters('IdamAPISubnetId')]"
+          }
+        },
+        {
+          "type": "virtualNetworkRules",
+          "apiVersion": "2017-12-01-preview",
+          "condition": "[equals(parameters('isIdamIdm'),'true')]",
+          "dependsOn": [
+            "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
+          ],
+          "name": "[parameters('IdamIdmVnetRuleName')]",
+          "location": "[parameters('location')]",
+          "properties": {
+            "ignoreMissingVnetServiceEndpoint": true,
+            "virtualNetworkSubnetId": "[parameters('IdamIdmSubnetId')]"
+          }
+        },
+        {
+          "type": "virtualNetworkRules",
+          "apiVersion": "2017-12-01-preview",
+          "condition": "[equals(parameters('isIdam'),'true')]",
+          "dependsOn": [
+            "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
+          ],
+          "name": "[parameters('IdamJumpboxVnetRuleName')]",
+          "location": "[parameters('location')]",
+          "properties": {
+            "ignoreMissingVnetServiceEndpoint": true,
+            "virtualNetworkSubnetId": "[parameters('IdamJumpboxSubnetId')]"
           }
         },
         {

@@ -116,3 +116,18 @@ variable "is_asev2_present" {
   type    = "string"
   default = "true"
 }
+
+variable "is_idam_idm" {
+  type    = "string"
+  default = "false"
+}
+
+variable "is_idam_api" {
+  type    = "string"
+  default = "false"
+}
+
+variable "is_idam" {
+  type    = "string"
+  default = "false"
+}
