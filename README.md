@@ -7,6 +7,7 @@ Refer to the following links for a detailed explanation of the Azure Database fo
 
 ## Variables
 
+
 ### Configuration
 
 The following parameters are required by this module
@@ -27,9 +28,12 @@ The following parameters are optional
 - `ssl_enforcement` specifies whether SSL is enabled on the DB endpoint.  Default is "Enabled".
 - `backup_retention_days` number of days to retain a backup. Default is 7.
 - `georedundant_backup` specifies whether to use geo-redundant backup over local. Default is "Enabled".
-- `firewall_rule_name` name of the firewall rule. Default is "allow_all".
-- `firewall_start_ip` start ip for the firewall rule. Default is "0.0.0.0".
-- `firewall_end_ip` end ip for the firewall rule. Default is "0.0.0.0".
+- `is_asev2_present` at present the ASEv2 is not present in any of the Sidam environemnts. This variable will stop the Vnet rule from being created.   default value is "true"
+
+Sidam only vars:
+- `is_idam_idm` this variable will create the VNET rule which allows traffic from the IDM Scalesets to the DB that it's being deployed.  default value is "false"
+- `is_idam_api` this variable will create the VNET rule which will allow traffic from the APPs inside the specific ASE for that env to the DB that's being deployed. default value is "false"
+- `idam_jumpbox` this variable will create the VNET rule which allows traffic from the JUMPBOX to the DB that's being deployed. default value is "false"
 
 ### Output
 
@@ -55,6 +59,8 @@ module "database" {
   database_name       = "myproduct"
   postgresql_version  = "10"
   common_tags         = "${var.common_tags}"
+  is_asev2_present    = "false"
+
 }
 
 module "backend" {
