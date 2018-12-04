@@ -110,13 +110,13 @@ variable "common_tags" {
 variable "jenkins_subnet_name" {
   type    = "string"
   default = "jenkins-subnet"
-  decription = "used to build the jenkins-subnet subnetid"
+  description = "used to build the jenkins-subnet subnetid"
 }
 
 variable "is_asev2_present" {
   type    = "string"
   default = "true"
-  decription = "will create the rule for apps hosted insde ASEv2"
+  description = "will create the rule for apps hosted insde ASEv2"
 }
 
 variable "is_idam_idm" {
@@ -134,5 +134,5 @@ variable "is_idam_api" {
 variable "idam_jumpbox" {
   type    = "string"
   default = "false"
-  decription = "will create the vnet rule for sidam's Jumpbox"
+  description = "will create the vnet rule for sidam's Jumpbox"
 }
