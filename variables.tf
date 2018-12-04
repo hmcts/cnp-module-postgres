@@ -106,27 +106,27 @@ variable "common_tags" {
   type = "map"
 }
 
-#vnet rules
+#variable used to build the jenkins-subnet subnetid.
 variable "jenkins_subnet_name" {
   type    = "string"
   default = "jenkins-subnet"
 }
-
+#is_asev2_present will create the rule that will allow apps inside ASEv2 to access the deployed DB.
 variable "is_asev2_present" {
   type    = "string"
   default = "true"
 }
-
+#is_idam_idm variable will create the vnet rule that will allow sidam's IDM scalesets to connect to their db when the value is set to "true".
 variable "is_idam_idm" {
   type    = "string"
   default = "false"
 }
-
+#is_idam_api variable will create the vnet rule that will allow apps hosted inside sidam's ASE to connect to their db when the value is set to "true".
 variable "is_idam_api" {
   type    = "string"
   default = "false"
 }
-
+#is_idam variable will create the vnet rule that will allow sidam's Jumpbox to connect to sidam's dbs when the vaule is set to "true".
 variable "is_idam" {
   type    = "string"
   default = "false"
