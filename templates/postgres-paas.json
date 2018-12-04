@@ -167,7 +167,7 @@
       "type": "string",
       "defaultValue": "null"
     },
-    "isIdam": {
+    "IdamJumpbox": {
       "type": "string",
       "allowedValues": [
         "true",
@@ -272,7 +272,7 @@
         {
           "type": "virtualNetworkRules",
           "apiVersion": "2017-12-01-preview",
-          "condition": "[equals(parameters('isIdam'),'true')]",
+          "condition": "[equals(parameters('IdamJumpbox'),'true')]",
           "dependsOn": [
             "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
           ],
@@ -299,7 +299,7 @@
         {
           "type": "virtualNetworkRules",
           "apiVersion": "2017-12-01-preview",
-          "condition": "[equals(parameters('isIdamAPI'),'false')]",
+          "condition": "[equals(parameters('IdamJumpbox'),'false')]",
           "dependsOn": [
             "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
           ],

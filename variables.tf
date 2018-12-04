@@ -126,8 +126,8 @@ variable "is_idam_api" {
   type    = "string"
   default = "false"
 }
-#is_idam variable will create the vnet rule that will allow sidam's Jumpbox to connect to sidam's dbs when the vaule is set to "true".
-variable "is_idam" {
+#idam_jumpbox variable will create the vnet rule that will allow sidam's Jumpbox to connect to sidam's dbs when the vaule is set to "true".
+variable "idam_jumpbox" {
   type    = "string"
   default = "false"
 }

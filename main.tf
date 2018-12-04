@@ -73,7 +73,7 @@ data "azurerm_subnet" "idam_idm" {
 }
 
 data "azurerm_subnet" "idam_jumpbox" {
-  count                = "${var.is_idam == "true" ? 1 : 0}"
+  count                = "${var.idam_jumpbox == "true" ? 1 : 0}"
   name                 = "core-infra-subnet-15-${var.env}"
   virtual_network_name = "core-infra-vnet-${var.env}"
   resource_group_name  = "core-infra-${var.env}"
@@ -134,7 +134,7 @@ resource "azurerm_template_deployment" "postgres-paas" {
     isIdamIdm                  = "${var.is_idam_idm}"
     IdamJumpboxVnetRuleName    = "${local.idam_jumpbox_vnet_rule_name}"
     IdamJumpboxSubnetId        = "${local.idam_jumpbox_subnet_id}"
-    isIdam                     = "${var.is_idam}"
+    IdamJumpbox                = "${var.idam_jumpbox}"
     BastionVnetRuleName        = "${local.bastion_vnet_rule_name}"
     BastionSubnetId            = "${local.bastion_subnet_id}"
     JenkinsVnetRuleName        = "${local.jenkins_vnet_rule_name}"
