@@ -216,7 +216,7 @@
         {
           "type": "virtualNetworkRules",
           "apiVersion": "2017-12-01-preview",
-          "condition": "[or(equals(parameters('isIdamAPI'),'false'), equals(parameters('isIdamAPI'),'false'))]",
+          "condition": "[and(equals(parameters('isIdamAPI'),'false'), equals(parameters('isIdamIdm'),'false'))]",
           "dependsOn": [
             "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
           ],
