@@ -28,7 +28,7 @@ The following parameters are optional
 - `ssl_enforcement` specifies whether SSL is enabled on the DB endpoint.  Default is "Enabled".
 - `backup_retention_days` number of days to retain a backup. Default is 7.
 - `georedundant_backup` specifies whether to use geo-redundant backup over local. Default is "Enabled".
-- `is_asev2_present` at present the ASEv2 is not present in any of the Sidam environemnts. This variable will stop the Vnet rule from being created.   default value is "true"
+- `is_asev2_present` at present the ASEv2 is not present in any of the Sidam environments. This variable will stop the Vnet rule from being created. The default value is "true". If S-IDAM is running this module this module then they would need to set this to false.
 
 Sidam only vars:
 - `is_idam_idm` this variable will create the VNET rule which allows traffic from the IDM Scalesets to the DB that it's being deployed.  default value is "false"
