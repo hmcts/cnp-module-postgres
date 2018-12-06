@@ -96,24 +96,6 @@
       "type": "string",
       "defaultValue": "Enabled"
     },
-    "firewallRuleName":{
-      "type":"string",
-      "minLength":1,
-      "maxLength":128,
-    "defaultValue":"AllowAll"
-    },
-    "firewallStartIpAddress":{
-      "type":"string",
-      "minLength":1,
-      "maxLength":15,
-    "defaultValue":"0.0.0.0"
-    },
-    "firewallEndIpAddress":{
-      "type":"string",
-      "minLength":1,
-      "maxLength":15,
-    "defaultValue":"0.0.0.0"
-    },
     "env": {
       "type": "string",
       "metadata": {
@@ -127,6 +109,9 @@
       "type": "string"
     },
     "collation": {
+      "type": "string"
+    },
+    "dbRules": {
       "type": "string"
     }
   },
@@ -157,19 +142,6 @@
       "type": "Microsoft.DBforPostgreSQL/servers",
       "resources":[
         {
-          "type":"firewallrules",
-          "apiVersion": "2017-12-01-preview",
-          "dependsOn":[
-            "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
-          ],
-          "location":"[parameters('location')]",
-          "name":"[parameters('firewallRuleName')]",
-          "properties":{
-            "startIpAddress":"[parameters('firewallStartIpAddress')]",
-            "endIpAddress":"[parameters('firewallEndIpAddress')]"
-          }
-        },
-        {
           "name": "[parameters('dbName')]",
           "type": "databases",
           "apiVersion": "2017-12-01-preview",
@@ -182,7 +154,26 @@
           ]
         }
       ]
+    },
+    {
+      "type": "Microsoft.DBforPostgreSQL/servers/virtualNetworkRules",
+      "apiVersion": "2017-12-01-preview",
+      "dependsOn": [
+        "[concat('Microsoft.DBforPostgreSQL/servers/', parameters('serverName'))]"
+      ],
+      "name": "[concat(parameters('serverName'), '/', variables('dbRules')[copyIndex()].rule_name)]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "ignoreMissingVnetServiceEndpoint": true,
+        "virtualNetworkSubnetId": "[variables('dbRules')[copyIndex()].subnet_id]"
+      },
+      "copy": {
+        "name": "storagecopy",
+        "count": "[length(variables('dbRules'))]"
+      }
     }
   ],
-  "variables": {}
+  "variables": {
+      "dbRules": "[base64ToJson(parameters('dbRules'))]"
+  }
 }

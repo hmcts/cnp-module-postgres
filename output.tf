@@ -17,3 +17,7 @@ output "postgresql_password" {
 output "user_name" {
   value = "${var.postgresql_user}@${azurerm_template_deployment.postgres-paas.name}"
 }
+
+output "db_subnet_rules" {
+  value = "${local.db_rules}"
+}

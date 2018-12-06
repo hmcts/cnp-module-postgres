@@ -66,7 +66,7 @@ variable "postgresql_version" {
 # max: 2097152
 
 variable "storage_mb" {
-  type = "string"
+  type    = "string"
   default = "51200"
 }
 
@@ -88,21 +88,6 @@ variable "georedundant_backup" {
   default = "Enabled"
 }
 
-variable "firewall_rule_name" {
-  type    = "string"
-  default = "allow_all"
-}
-
-variable "firewall_start_ip" {
-  type    = "string"
-  default = "0.0.0.0"
-}
-
-variable "firewall_end_ip" {
-  type    = "string"
-  default = "255.255.255.255"
-}
-
 variable "charset" {
   type    = "string"
   default = "utf8"
@@ -114,7 +99,7 @@ variable "collation" {
 }
 
 variable "database_name" {
-  type    = "string"
+  type = "string"
 }
 
 variable "common_tags" {

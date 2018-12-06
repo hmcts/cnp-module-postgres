@@ -1,3 +1,29 @@
+locals {
+  list_of_subnets = "${split(";", data.external.subnet_rules.result.subnets)}"
+  list_of_rules   = "${split(";", data.external.subnet_rules.result.rule_names)}"
+
+  db_rules = "${null_resource.subnet_mappings.*.triggers}"
+}
+
+# https://gist.github.com/brikis98/f3fe2ae06f996b40b55eebcb74ed9a9e
+resource "null_resource" "subnet_mappings" {
+  count = "${length(local.list_of_subnets)}"
+
+  triggers {
+    rule_name = "${element(local.list_of_rules, count.index)}"
+    subnet_id = "${element(local.list_of_subnets, count.index)}"
+  }
+}
+
+data "external" "subnet_rules" {
+  program = ["python3", "${path.module}/find-subnets.py"]
+
+  query = {
+    env     = "${var.env}"
+    product = "${var.product}"
+  }
+}
+
 resource "azurerm_resource_group" "data-resourcegroup" {
   name     = "${var.product}-data-${var.env}"
   location = "${var.location}"
@@ -39,10 +65,8 @@ resource "azurerm_template_deployment" "postgres-paas" {
     sslEnforcement             = "${var.ssl_enforcement}"
     backupRetentionDays        = "${var.backup_retention_days}"
     geoRedundantBackup         = "${var.georedundant_backup}"
-    firewallRuleName           = "${var.firewall_rule_name}"
-    firewallStartIpAddress     = "${var.firewall_start_ip}"
-    firewallEndIpAddress       = "${var.firewall_end_ip}"
     charset                    = "${var.charset}"
     collation                  = "${var.collation}.${var.charset}"
+    dbRules                    = "${base64encode(jsonencode(local.db_rules))}"
   }
 }

@@ -4,3 +4,4 @@
 *tfstate*
 *.swp
 *.kitchen/
+.vscode
