@@ -27,9 +27,22 @@ The following parameters are optional
 - `ssl_enforcement` specifies whether SSL is enabled on the DB endpoint.  Default is "Enabled".
 - `backup_retention_days` number of days to retain a backup. Default is 7.
 - `georedundant_backup` specifies whether to use geo-redundant backup over local. Default is "Enabled".
-- `firewall_rule_name` name of the firewall rule. Default is "allow_all".
-- `firewall_start_ip` start ip for the firewall rule. Default is "0.0.0.0".
-- `firewall_end_ip` end ip for the firewall rule. Default is "0.0.0.0".
+
+### Access to databases
+
+Databases are restricted to access from specific subnets, these can be updated [here](link tbd)
+Typically you will need to setup an SSH tunnel to access the database you want to
+
+```
+$ ssh bastion.reform -L 5440:rhubarb-sandbox.postgres.database.azure.com:5432
+
+$ psql -p 5440 -h localhost -U rhubarbadmin@rhubarb-sandbox -d rhubarb
+```
+
+The password can be retrieved from vault if you've stored it there, or if you view your applications settings.
+
+Currently developers can only access databases in the sandbox subscription
+The DevOps team can access nonprod databases from the preprod backup box and production databases from the production backup box
 
 ### Output
 
