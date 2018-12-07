@@ -5,12 +5,16 @@ locals {
   db_rules = "${null_resource.subnet_mappings.*.triggers}"
 
   # ideally we would do a breaking change to enforce subscription being passed through as vault is subscription scoped
-  vaultname               = "${(var.env == "prod") ? (var.env == "aat" || var.env == "demo" || var.env == "preview") ? (var.env == "hmcts-demo") ? "infra-vault-prod" : "infra-vault-nonprod" : "infra-vault-hmctsdemo" : "infra-vault-sandbox"}"
+  prod_vault      = "${(var.env == "prod" || var.env == "prodv2") ? "infra-vault-prod" : ""}"
+  nonprod_vault   = "${(var.env == "demov2" || var.env == "aatv2" || var.env == "previewv2" || var.env == "demov2" || var.env == "aat" || var.env == "preview" || var.env == "demo" || var.env == "aat" || var.env == "preview" || var.env == "idam-demo" || var.env == "idam-aat" || var.env == "idam-preview") ? "infra-vault-nonprod" : ""}"
+  sandbox_vault   = "${(var.env == "sandboxv2" || var.env == "saatv2" || var.env == "sprodv2" || var.env == "sandbox" || var.env == "saat" || var.env == "sprod" || var.env == "idam-sandbox" || var.env == "idam-saat" || var.env == "idam-sprod") ? "infra-vault-sandbox" : ""}"
+  hmctsdemo_vault = "${var.env == "hmctsdemo" ? "infra-vault-hmctsdemo" : ""}"
+  vaultName       = "${format("%s%s%s%s", local.prod_vault, local.nonprod_vault, local.sandbox_vault, local.hmctsdemo_vault)}"
 }
 
 data "azurerm_key_vault_secret" "github_api_key" {
   name      = "hmcts-github-apikey"
-  vault_uri = "https://${local.vaultname}.vault.azure.net/"
+  vault_uri = "https://${local.vaultName}.vault.azure.net/"
 }
 
 # https://gist.github.com/brikis98/f3fe2ae06f996b40b55eebcb74ed9a9e
@@ -27,8 +31,8 @@ data "external" "subnet_rules" {
   program = ["python3", "${path.module}/find-subnets.py"]
 
   query = {
-    env     = "${var.env}"
-    product = "${var.product}"
+    env          = "${var.env}"
+    product      = "${var.product}"
     github_token = "${data.azurerm_key_vault_secret.github_api_key.value}"
   }
 }
