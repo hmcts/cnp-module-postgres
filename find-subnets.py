@@ -4,17 +4,12 @@ import sys
 import json
 import urllib.request
 
-def get_rule_names(x): return x['rule_name']
-
-
-def get_subnet_ids(x): return x['subnet_id']
-
 
 def find_subnet_rules(env, product, subnets):
     all_subnets = get_all_subnets(env, product, subnets)
 
-    rule_names = list(map(get_rule_names, all_subnets))
-    subnet_ids = list(map(get_subnet_ids, all_subnets))
+    rule_names = [x['rule_name'] for x in all_subnets]
+    subnet_ids = [x['subnet_id'] for x in all_subnets]
 
     result = {}
     result['subnets'] = ';'.join(subnet_ids)
@@ -37,9 +32,10 @@ def get_all_subnets(env, product, subnets):
         print('No subnets found')
         sys.exit(1)
 
-    # get first element or empty list if none
-    env_subnets = next(iter(env_subnets_list_of_lists), [])
-    app_subs = next(iter(app_subnets_list_of_lists), [])
+    env_subnets = env_subnets_list_of_lists[0] if len(
+        env_subnets_list_of_lists) > 0 else []
+    app_subs = app_subnets_list_of_lists[0] if len(
+        app_subnets_list_of_lists) > 0 else []
 
     all_subnets = env_subnets + app_subs
     return all_subnets
@@ -54,7 +50,8 @@ github_token = query['github_token']
 
 url = 'https://raw.githubusercontent.com/hmcts/cnp-database-subnet-whitelisting/master/subnets.json'
 
-req = urllib.request.Request(url=url, headers = {'Authorization': 'Bearer ' + github_token})
+req = urllib.request.Request(
+    url=url, headers={'Authorization': 'Bearer ' + github_token})
 
 with urllib.request.urlopen(req) as f:
     subnets_str = f.read().decode('utf-8')
