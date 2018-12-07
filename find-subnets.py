@@ -2,6 +2,7 @@
 
 import sys
 import json
+import urllib.request
 
 def get_rule_names(x): return x['rule_name']
 
@@ -45,12 +46,20 @@ def get_all_subnets(env, product, subnets):
 
 
 # always only one line from terraform
-# {"env":"idam-aat","product":"idam-idm-aat"}
+# {"env":"idam-aat","product":"idam-idm-aat", "github_token": "example"}
 line = sys.stdin.readline()
 query = json.loads(line)
 
-with open(sys.path[0] + '/subnets.json', 'r') as subnets_string:
-    subnets = json.load(subnets_string)
+github_token = query['github_token']
+
+url = 'https://raw.githubusercontent.com/hmcts/cnp-database-subnet-whitelisting/master/subnets.json'
+
+req = urllib.request.Request(url=url, headers = {'Authorization': 'Bearer ' + github_token})
+
+with urllib.request.urlopen(req) as f:
+    subnets_str = f.read().decode('utf-8')
+    subnets = json.loads(subnets_str)
+
     env = query['env']
     product = query['product']
 
