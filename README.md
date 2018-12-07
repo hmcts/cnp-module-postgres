@@ -30,7 +30,7 @@ The following parameters are optional
 
 ### Access to databases
 
-Databases are restricted to access from specific subnets, these can be updated [here](link tbd)
+Databases are restricted to access from specific subnets, these can be updated [here](https://github.com/hmcts/cnp-database-subnet-whitelisting)
 Typically you will need to setup an SSH tunnel to access the database you want to
 
 ```
