@@ -34,7 +34,7 @@
       "maxLength":63
     },
     "skuCapacity": {
-      "type":"int",
+      "type":"string",
       "defaultValue": 2
     },
     "skuFamily": {
