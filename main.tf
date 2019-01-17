@@ -5,7 +5,7 @@ locals {
   db_rules = "${null_resource.subnet_mappings.*.triggers}"
 
   # ideally we would do a breaking change to enforce subscription being passed through as vault is subscription scoped
-  prod_vault      = "${(var.env == "prod" || var.env == "prodv2") ? "infra-vault-prod" : ""}"
+  prod_vault      = "${(var.env == "prod" || var.env == "prodv2" || var.env == "idam-prod") ? "infra-vault-prod" : ""}"
   nonprod_vault   = "${(var.env == "demov2" || var.env == "aatv2" || var.env == "previewv2" || var.env == "demov2" || var.env == "aat" || var.env == "preview" || var.env == "demo" || var.env == "aat" || var.env == "preview" || var.env == "idam-demo" || var.env == "idam-aat" || var.env == "idam-preview") ? "infra-vault-nonprod" : ""}"
   sandbox_vault   = "${(var.env == "sandboxv2" || var.env == "saatv2" || var.env == "sprodv2" || var.env == "sandbox" || var.env == "saat" || var.env == "sprod" || var.env == "idam-sandbox" || var.env == "idam-saat" || var.env == "idam-sprod") ? "infra-vault-sandbox" : ""}"
   hmctsdemo_vault = "${var.env == "hmctsdemo" ? "infra-vault-hmctsdemo" : ""}"
