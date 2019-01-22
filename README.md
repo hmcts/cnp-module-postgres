@@ -1,4 +1,4 @@
-# moj-module-postgres
+# cnp-module-postgres
 
 A module that lets you create an Azure Database for PostgreSQL.
 Refer to the following links for a detailed explanation of the Azure Database for PostgreSQL.
@@ -60,14 +60,15 @@ The following example shows how to use the module to create an Azure Database fo
 
 ```terraform
 module "database" {
-  source              = "git@github.com:hmcts/moj-module-postgres?ref=master"
-  product             = "${var.product}"
-  location            = "${var.location}"
-  env                 = "${var.env}"
-  postgresql_user     = "${var.postgresql_user}"
-  database_name       = "myproduct"
-  postgresql_version  = "10"
-  common_tags         = "${var.common_tags}"
+  source                = "git@github.com:hmcts/cnp-module-postgres?ref=master"
+  product               = "${var.product}"
+  location              = "${var.location}"
+  env                   = "${var.env}"
+  postgresql_user       = "${var.postgresql_user}"
+  database_name         = "myproduct"
+  postgresql_version    = "10"
+  backup_retention_days = "35"
+  common_tags           = "${var.common_tags}"
 }
 
 module "backend" {
