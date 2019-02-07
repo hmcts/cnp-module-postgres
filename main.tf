@@ -80,7 +80,8 @@ resource "azurerm_template_deployment" "postgres-paas" {
     backupRetentionDays        = "${var.backup_retention_days}"
     geoRedundantBackup         = "${var.georedundant_backup}"
     charset                    = "${var.charset}"
-    collation                  = "${var.collation}.${var.charset}"
+    collation                  = "${var.collation}"
     dbRules                    = "${base64encode(jsonencode(local.db_rules))}"
+    commonTags                 = "${base64encode(jsonencode(var.common_tags))}"
   }
 }
