@@ -113,6 +113,9 @@
     },
     "dbRules": {
       "type": "string"
+    },
+    "commonTags": {
+      "type": "string"
     }
   },
   "resources": [
@@ -140,6 +143,7 @@
         "family": "[parameters('skuFamily')]"
       },
       "type": "Microsoft.DBforPostgreSQL/servers",
+      "tags": "[variables('tags')]",
       "resources":[
         {
           "name": "[parameters('dbName')]",
@@ -174,6 +178,7 @@
     }
   ],
   "variables": {
-      "dbRules": "[base64ToJson(parameters('dbRules'))]"
+      "dbRules": "[base64ToJson(parameters('dbRules'))]",
+      "tags": "[base64ToJson(parameters('commonTags'))]"
   }
 }

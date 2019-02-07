@@ -48,10 +48,9 @@ variable "sku_tier" {
 
 # This is actually the vCores when template is run
 variable "sku_capacity" {
-  type = "string"
+  type    = "string"
   default = "2"
 }
-
 
 # Valid values are 9.5, 9.6 and 10.
 variable "postgresql_version" {
