@@ -86,7 +86,7 @@ variable "ssl_enforcement" {
 # Min 7 days, max 35 days
 variable "backup_retention_days" {
   type    = "string"
-  default = "7"
+  default = "35"
 }
 
 # Possible values are Enabled and Disabled.

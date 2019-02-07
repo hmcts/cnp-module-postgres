@@ -22,10 +22,11 @@ The following parameters are optional
 
 - `sku_name` the size of the postgres instance, specifically cores. Default is "GP_Gen5_2".
 - `sku_tier` Basic, Generanl Purpose or Memory Optimised.  Note that the sku_name chosen must belong to the sku_tier. Default is "GeneralPurpose"
+- `sku_capacity` The number of vCores. Default is 2, note the database is charged per vCore/month
 - `postgresql_version` the postgres version. Currently 9.5, 9.6 and 10. Default is 9.6.
 - `storage_mb` the amount of storage available to the DB instance.  Default is "51200".
 - `ssl_enforcement` specifies whether SSL is enabled on the DB endpoint.  Default is "Enabled".
-- `backup_retention_days` number of days to retain a backup. Default is 7.
+- `backup_retention_days` number of days to retain a backup. Default is 35.
 - `georedundant_backup` specifies whether to use geo-redundant backup over local. Default is "Enabled".
 
 ### Access to databases
@@ -67,7 +68,6 @@ module "database" {
   postgresql_user       = "${var.postgresql_user}"
   database_name         = "myproduct"
   postgresql_version    = "10"
-  backup_retention_days = "35"
   common_tags           = "${var.common_tags}"
 }
 
