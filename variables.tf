@@ -102,7 +102,7 @@ variable "charset" {
 
 variable "collation" {
   type    = "string"
-  default = "en_GB"
+  default = "en-GB"
 }
 
 variable "database_name" {
