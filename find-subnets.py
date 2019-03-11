@@ -48,7 +48,8 @@ query = json.loads(line)
 
 github_token = query['github_token']
 
-url = 'https://raw.githubusercontent.com/hmcts/cnp-database-subnet-whitelisting/master/subnets.json'
+#url = 'https://raw.githubusercontent.com/hmcts/cnp-database-subnet-whitelisting/master/subnets.json'
+url = 'https://raw.githubusercontent.com/hmcts/cnp-database-subnet-whitelisting/cnp-1202/subnets.json'
 
 req = urllib.request.Request(
     url=url, headers={'Authorization': 'Bearer ' + github_token})
