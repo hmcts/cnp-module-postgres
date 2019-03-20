@@ -111,3 +111,8 @@ variable "database_name" {
 variable "common_tags" {
   type = "map"
 }
+
+variable "subscription" {
+  default     = ""
+  description = "the human friendly name of the subscription, ie. qa, or prod"
+}

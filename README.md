@@ -17,6 +17,7 @@ The following parameters are required by this module
 - `postgresql_user` the username for the admin database login. Cannot be 'azure_superuser', 'azure_pg_admin', 'admin', 'administrator', 'postgres', 'root', 'guest', or 'public'. It can't start with 'pg_'.
 - `database_name` the name of the database to create within the Postgres server.  Please note currently, hyphens are NOT allowed in the database name and will be removed automatically to ensure a successful deployment.
 - `common_tags` tags that need to be applied to every resource group, passed through by the jenkins-library
+- `subscription` the subscription this module is currently being run in
 
 The following parameters are optional
 
@@ -69,6 +70,7 @@ module "database" {
   database_name         = "myproduct"
   postgresql_version    = "10"
   common_tags           = "${var.common_tags}"
+  subscription          = "${var.subscription}"
 }
 
 module "backend" {
