@@ -10,7 +10,9 @@ locals {
   sandbox_vault   = "${(var.env == "sandboxv2" || var.env == "saatv2" || var.env == "sprodv2" || var.env == "sandbox" || var.env == "saat" || var.env == "sprod" || var.env == "idam-sandbox" || var.env == "idam-saat" || var.env == "idam-sprod") ? "infra-vault-sandbox" : ""}"
   hmctsdemo_vault = "${var.env == "hmctsdemo" ? "infra-vault-hmctsdemo" : ""}"
 
-  vaultName = "${var.subscription != "" ? "infra-vault-" + var.subscription : format("%s%s%s%s", local.prod_vault, local.nonprod_vault, local.sandbox_vault, local.hmctsdemo_vault)}"
+  vaultNameIfSubscriptionPresent = "infra-vault-${var.subscription}"
+
+  vaultName = "${var.subscription != "" ? local.vaultNameIfSubscriptionPresent : format("%s%s%s%s", local.prod_vault, local.nonprod_vault, local.sandbox_vault, local.hmctsdemo_vault)}"
 }
 
 data "azurerm_key_vault_secret" "github_api_key" {
