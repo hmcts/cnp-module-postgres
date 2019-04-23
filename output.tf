@@ -21,3 +21,7 @@ output "user_name" {
 output "db_subnet_rules" {
   value = "${local.db_rules}"
 }
+
+output "name" {
+  value = "${azurerm_template_deployment.postgres-paas.name}"
+}
