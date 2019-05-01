@@ -15,9 +15,14 @@ locals {
   vaultName = "${var.subscription != "" ? local.vaultNameIfSubscriptionPresent : format("%s%s%s%s", local.prod_vault, local.nonprod_vault, local.sandbox_vault, local.hmctsdemo_vault)}"
 }
 
+data "azurerm_key_vault" "infra_vault" {
+  name = "${local.vaultName}"
+  resource_group_name = "${var.env == "prod" ? "core-infra-prod" : "cnp-core-infra"}"
+}
+
 data "azurerm_key_vault_secret" "github_api_key" {
   name      = "hmcts-github-apikey"
-  vault_uri = "https://${local.vaultName}.vault.azure.net/"
+  key_vault_id = "${data.azurerm_key_vault.infra_vault.id}"
 }
 
 # https://gist.github.com/brikis98/f3fe2ae06f996b40b55eebcb74ed9a9e
