@@ -113,6 +113,5 @@ variable "common_tags" {
 }
 
 variable "subscription" {
-  default     = ""
   description = "the human friendly name of the subscription, ie. qa, or prod"
 }
