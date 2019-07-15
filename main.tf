@@ -6,13 +6,14 @@ locals {
 
   # TODO: once most people are passing the 'subscription' var through the hacky vault guessing code should be removed
   prod_vault      = "${(var.env == "prod" || var.env == "prodv2" || var.env == "idam-prod") ? "infra-vault-prod" : ""}"
+  ethosldata_vault      = "${(var.env == "ethosldata" || var.env == "idam-ethosldata") ? "infra-vault-ethosldata" : ""}"
   nonprod_vault   = "${(var.env == "demov2" || var.env == "aatv2" || var.env == "previewv2" || var.env == "demov2" || var.env == "aat" || var.env == "preview" || var.env == "demo" || var.env == "aat" || var.env == "preview" || var.env == "idam-demo" || var.env == "idam-aat" || var.env == "idam-preview") ? "infra-vault-nonprod" : ""}"
   sandbox_vault   = "${(var.env == "sandboxv2" || var.env == "saatv2" || var.env == "sprodv2" || var.env == "sandbox" || var.env == "saat" || var.env == "sprod" || var.env == "idam-sandbox" || var.env == "idam-saat" || var.env == "idam-sprod") ? "infra-vault-sandbox" : ""}"
   hmctsdemo_vault = "${var.env == "hmctsdemo" ? "infra-vault-hmctsdemo" : ""}"
 
   vaultNameIfSubscriptionPresent = "infra-vault-${var.subscription}"
 
-  vaultName = "${var.subscription != "" ? local.vaultNameIfSubscriptionPresent : format("%s%s%s%s", local.prod_vault, local.nonprod_vault, local.sandbox_vault, local.hmctsdemo_vault)}"
+  vaultName = "${var.subscription != "" ? local.vaultNameIfSubscriptionPresent : format("%s%s%s%s", local.prod_vault, local.ethosldata_vault, local.nonprod_vault, local.sandbox_vault, local.hmctsdemo_vault)}"
 }
 
 data "azurerm_key_vault" "infra_vault" {
