@@ -21,7 +21,7 @@ data "azurerm_key_vault_secret" "github_api_key" {
 resource "null_resource" "subnet_mappings" {
   count = "${length(local.list_of_subnets)}"
 
-  triggers {
+  triggers = {
     rule_name = "${element(local.list_of_rules, count.index)}"
     subnet_id = "${element(local.list_of_subnets, count.index)}"
   }
