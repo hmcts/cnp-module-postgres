@@ -9,7 +9,7 @@ locals {
 
 data "azurerm_key_vault" "infra_vault" {
   name = "${local.vaultName}"
-  resource_group_name = "${var.env == "prod" || var.env == "idam-prod" ? "core-infra-prod" : "cnp-core-infra"}"
+  resource_group_name = "${var.env == "prod" || var.env == "idam-prod" || var.env == "idam-prod2" ? "core-infra-prod" : "cnp-core-infra"}"
 }
 
 data "azurerm_key_vault_secret" "github_api_key" {
