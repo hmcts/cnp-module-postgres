@@ -83,7 +83,7 @@ resource "azurerm_postgresql_database" "postgres-db" {
   collation           = "${var.collation}"
 }
 
-resource "azurerm_postgresql_virtual_network_rule" "postgres-vnet-rule" {
+/*resource "azurerm_postgresql_virtual_network_rule" "postgres-vnet-rule" {
   for_each                             = "${local.db_rules}"
   name                                 = "${each.value.rule_name}"
   resource_group_name                  = "${azurerm_resource_group.data-resourcegroup.name}"
@@ -91,3 +91,4 @@ resource "azurerm_postgresql_virtual_network_rule" "postgres-vnet-rule" {
   subnet_id                            = "${each.value.subnet_id}"
   ignore_missing_vnet_service_endpoint = true
 }
+*/
