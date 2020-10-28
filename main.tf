@@ -85,9 +85,9 @@ resource "azurerm_postgresql_database" "postgres-db" {
 
 resource "azurerm_postgresql_virtual_network_rule" "postgres-vnet-rule" {
   count                                = "${length(local.db_rules)}"
-  name                                 = "${element(base64encode(local.db_rules.rule_name, count.index))}"
+  name                                 = "${element(base64encode(local.db_rules[rule_name], count.index))}"
   resource_group_name                  = "${azurerm_resource_group.data-resourcegroup.name}"
   server_name                          = "${var.product}-${var.env}"
-  subnet_id                            = "${element(base64encode(local.db_rules.subnet_id, count.index))}"
+  subnet_id                            = "${element(base64encode(local.db_rules[subnet_id], count.index))}"
   ignore_missing_vnet_service_endpoint = true
 }
