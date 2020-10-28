@@ -3,6 +3,7 @@ locals {
   list_of_rules   = "${split(";", data.external.subnet_rules.result.rule_names)}"
 
   db_rules = "${null_resource.subnet_mappings.*.triggers}"
+  dbrulesnew = "${base64encode(jsonencode(local.db_rules))}"
 
   vaultName = "infra-vault-${var.subscription}"
 }
@@ -83,12 +84,12 @@ resource "azurerm_postgresql_database" "postgres-db" {
   collation           = "${var.collation}"
 }
 
-/*resource "azurerm_postgresql_virtual_network_rule" "postgres-vnet-rule" {
-  for_each                             = "${local.db_rules}"
+resource "azurerm_postgresql_virtual_network_rule" "postgres-vnet-rule" {
+  for_each                             = "${local.dbrulesnew}"
   name                                 = "${each.value.rule_name}"
   resource_group_name                  = "${azurerm_resource_group.data-resourcegroup.name}"
   server_name                          = "${var.product}-${var.env}"
   subnet_id                            = "${each.value.subnet_id}"
   ignore_missing_vnet_service_endpoint = true
 }
-*/
+

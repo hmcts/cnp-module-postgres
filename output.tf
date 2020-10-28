@@ -14,14 +14,14 @@ output "postgresql_password" {
   value = "${random_string.password.result}"
 }
 
-output "user_name" {
+/*output "user_name" {
   value = "${var.postgresql_user}@${azurerm_template_deployment.postgres-paas.name}"
-}
+}*/
 
 output "db_subnet_rules" {
   value = "${local.db_rules}"
 }
 
-output "name" {
+/*/*output "name" {
   value = "${azurerm_template_deployment.postgres-paas.name}"
 }
