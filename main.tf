@@ -78,7 +78,7 @@ resource "azurerm_postgresql_server" "postgres-paas" {
 resource "azurerm_postgresql_database" "postgres-db" {
   name                = "${replace(var.database_name, "-", "")}"
   resource_group_name = "${azurerm_resource_group.data-resourcegroup.name}"
-  server_name         = azurerm_postgresql_server.posgres-paas.name
+  server_name         = azurerm_postgresql_server.postgres-paas.name
   charset             = "${var.charset}"
   collation           = "${var.collation}"
 }
@@ -87,7 +87,7 @@ resource "azurerm_postgresql_virtual_network_rule" "postgres-vnet-rule" {
   for_each                             = "${local.db_rules}"
   name                                 = each.value.rule_name
   resource_group_name                  = "${azurerm_resource_group.data-resourcegroup.name}"
-  server_name                          = azurerm_postgresql_server.posgres-paas.name
+  server_name                          = azurerm_postgresql_server.postgres-paas.name
   subnet_id                            = each.value.subnet_id
   ignore_missing_vnet_service_endpoint = true
 }
