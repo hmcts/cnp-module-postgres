@@ -1,6 +1,6 @@
-output "host_name" {
+/*output "host_name" {
   value = "${azurerm_template_deployment.postgres-paas.name}.postgres.database.azure.com"
-}
+}*/
 
 output "postgresql_listen_port" {
   value = "${var.postgresql_listen_port}"
