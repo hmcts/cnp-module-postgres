@@ -84,7 +84,7 @@ resource "azurerm_postgresql_database" "postgres-db" {
 }
 
 resource "azurerm_postgresql_virtual_network_rule" "postgres-vnet-rule" {
-  for_each                             = "${local.db_rules}"
+  for_each                             = local.db_rules
   name                                 = each.value.rule_name
   resource_group_name                  = "${azurerm_resource_group.data-resourcegroup.name}"
   server_name                          = "${var.product}-${var.env}"
