@@ -3,7 +3,7 @@ locals {
   list_of_rules   = "${split(";", data.external.subnet_rules.result.rule_names)}"
 
   db_rules = "${null_resource.subnet_mappings.*.triggers}"
-  dbrulesnew = "${base64encode(jsonencode(local.db_rules))}"
+  dbrulesnew = "${base64encode(local.db_rules)}"
 
   vaultName = "infra-vault-${var.subscription}"
 }
