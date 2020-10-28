@@ -8,12 +8,12 @@ locals {
 }
 
 data "azurerm_key_vault" "infra_vault" {
-  name = "${local.vaultName}"
+  name                = "${local.vaultName}"
   resource_group_name = "${var.env == "prod" || var.env == "idam-prod" || var.env == "idam-prod2" ? "core-infra-prod" : "cnp-core-infra"}"
 }
 
 data "azurerm_key_vault_secret" "github_api_key" {
-  name      = "hmcts-github-apikey"
+  name         = "hmcts-github-apikey"
   key_vault_id = "${data.azurerm_key_vault.infra_vault.id}"
 }
 
@@ -43,7 +43,7 @@ resource "azurerm_resource_group" "data-resourcegroup" {
 
   tags = "${merge(var.common_tags,
     map("lastUpdated", "${timestamp()}")
-    )}"
+  )}"
 }
 
 resource "random_string" "password" {
@@ -54,34 +54,40 @@ resource "random_string" "password" {
   number  = true
 }
 
-data "template_file" "postgrestemplate" {
-  template = "${file("${path.module}/templates/postgres-paas.json")}"
+resource "azurerm_postgresql_server" "postgres-paas" {
+  name                = "${var.product}-${var.env}"
+  location            = "${var.location}"
+  resource_group_name = "${azurerm_resource_group.data-resourcegroup.name}"
+
+  administrator_login          = "${var.postgresql_user}"
+  administrator_login_password = "${random_string.password.result}"
+
+  sku_name   = "${var.sku_name}"
+  sku_tier   = "${var.sku_tier}"
+  version    = "${var.postgresql_version}"
+  storage_mb = "${var.storage_mb}"
+
+  backup_retention_days        = "${var.backup_retention_days}"
+  geo_redundant_backup_enabled = "${var.georedundant_backup}"
+
+  ssl_enforcement_enabled = "${var.ssl_enforcement}"
+
+  tags = var.common_tags
 }
 
-resource "azurerm_template_deployment" "postgres-paas" {
-  template_body       = "${data.template_file.postgrestemplate.rendered}"
-  name                = "${var.product}-${var.env}"
+resource "azurerm_postgresql_database" "postgres-db" {
+  name                = "${replace(var.database_name, "-", "")}"
   resource_group_name = "${azurerm_resource_group.data-resourcegroup.name}"
-  deployment_mode     = "Incremental"
+  server_name         = azurerm_postgresql_server.posgres-paas.name
+  charset             = "${var.charset}"
+  collation           = "${var.collation}"
+}
 
-  parameters = {
-    administratorLogin         = "${var.postgresql_user}"
-    administratorLoginPassword = "${random_string.password.result}"
-    location                   = "${var.location}"
-    env                        = "${var.env}"
-    serverName                 = "${var.product}-${var.env}"
-    dbName                     = "${replace(var.database_name, "-", "")}"
-    skuName                    = "${var.sku_name}"
-    skuCapacity                = "${var.sku_capacity}"
-    skuTier                    = "${var.sku_tier}"
-    version                    = "${var.postgresql_version}"
-    skuSizeMB                  = "${var.storage_mb}"
-    sslEnforcement             = "${var.ssl_enforcement}"
-    backupRetentionDays        = "${var.backup_retention_days}"
-    geoRedundantBackup         = "${var.georedundant_backup}"
-    charset                    = "${var.charset}"
-    collation                  = "${var.collation}"
-    dbRules                    = "${base64encode(jsonencode(local.db_rules))}"
-    commonTags                 = "${base64encode(jsonencode(var.common_tags))}"
-  }
+resource "azurerm_postgresql_virtual_network_rule" "postgres-vnet-rule" {
+  for_each                             = local.db_rules
+  name                                 = each.value.rule_name
+  resource_group_name                  = "${azurerm_resource_group.data-resourcegroup.name}"
+  server_name                          = azurerm_postgresql_server.posgres-paas.name
+  subnet_id                            = each.value.subnet_id
+  ignore_missing_vnet_service_endpoint = true
 }
