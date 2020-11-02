@@ -78,7 +78,7 @@ variable "storage_mb" {
 
 # Possible values are Enabled and Disabled.
 variable "ssl_enforcement" {
-  type    = "bool"
+  type    = "string"
   default = "Enabled"
 }
 
@@ -90,7 +90,7 @@ variable "backup_retention_days" {
 
 # Possible values are Enabled and Disabled.
 variable "georedundant_backup" {
-  type    = "bool"
+  type    = "string"
   default = "Enabled"
 }
 
