@@ -76,10 +76,10 @@ variable "storage_mb" {
   default = "51200"
 }
 
-# Possible values are Enabled and Disabled.
+# Possible values are true and false.
 variable "ssl_enforcement" {
   type    = "string"
-  default = "Enabled"
+  default = "false"
 }
 
 # Min 7 days, max 35 days
@@ -88,10 +88,10 @@ variable "backup_retention_days" {
   default = "35"
 }
 
-# Possible values are Enabled and Disabled.
+# Possible values are true and false.
 variable "georedundant_backup" {
   type    = "string"
-  default = "Enabled"
+  default = "true"
 }
 
 variable "charset" {
