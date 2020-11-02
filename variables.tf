@@ -1,22 +1,22 @@
 variable "product" {
-  type = "string"
+  type = string
 }
 
 variable "location" {
-  type = "string"
+  type = string
 }
 
 variable "env" {
-  type = "string"
+  type = string
 }
 
 variable "postgresql_listen_port" {
-  type    = "string"
-  default = "5432"
+  type    = string
+  default = 5432
 }
 
 variable "postgresql_user" {
-  type = "string"
+  type = string
 }
 
 # sku supports the following:
@@ -37,25 +37,25 @@ variable "postgresql_user" {
 # - tier     : Specifies the SKU Tier for this PostgreSQL Server.
 #              Possible values are "Basic", "GeneralPurpose", "MemoryOptimized".
 variable "sku_name" {
-  type    = "string"
-  default = "GP_Gen5_2"
+  type    = string
+  default = GP_Gen5_2
 }
 
 variable "sku_tier" {
-  type    = "string"
-  default = "GeneralPurpose"
+  type    = string
+  default = GeneralPurpose
 }
 
 # This is actually the vCores when template is run
 variable "sku_capacity" {
-  type    = "string"
-  default = "2"
+  type    = string
+  default = 2
 }
 
 # Valid values are 9.5, 9.6, 10 and 11.
 variable "postgresql_version" {
-  type    = "string"
-  default = "9.6"
+  type    = string
+  default = 9.6
 }
 
 # storage_mb supports the following
@@ -72,44 +72,44 @@ variable "postgresql_version" {
 # max: 2097152
 
 variable "storage_mb" {
-  type    = "string"
-  default = "51200"
+  type    = bool
+  default = 51200
 }
 
 # Possible values are Enabled and Disabled.
 variable "ssl_enforcement" {
-  type    = "string"
-  default = "Enabled"
+  type    = string
+  default = Enabled
 }
 
 # Min 7 days, max 35 days
 variable "backup_retention_days" {
-  type    = "string"
-  default = "35"
+  type    = string
+  default = 35
 }
 
 # Possible values are Enabled and Disabled.
 variable "georedundant_backup" {
-  type    = "string"
-  default = "Enabled"
+  type    = bool
+  default = Enabled
 }
 
 variable "charset" {
-  type    = "string"
-  default = "utf8"
+  type    = string
+  default = utf8
 }
 
 variable "collation" {
-  type    = "string"
-  default = "en-GB"
+  type    = string
+  default = en-GB
 }
 
 variable "database_name" {
-  type = "string"
+  type = string
 }
 
 variable "common_tags" {
-  type = "map"
+  type = map
 }
 
 variable "subscription" {
