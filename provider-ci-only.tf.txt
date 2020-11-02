@@ -1,0 +1,6 @@
+#Copied from here
+#https://github.com/hmcts/cnp-module-key-vault/blob/7b2b72366b12b2d079c197d3467996a99b20cd8e/provider-ci-only.tf.txt
+
+provider "azurerm" { 
+    features {} 
+}

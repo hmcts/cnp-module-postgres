@@ -1,24 +1,24 @@
 #!groovy
 @Library('Infrastructure') _
 
-try {
-  node {
+node {
     env.PATH = "$env.PATH:/usr/local/bin"
 
     stage('Checkout') {
-      deleteDir()
-      checkout scm
+        deleteDir()
+        checkout scm
     }
 
     stage('Terraform init') {
-      sh 'terraform init'
+        sh '''
+      tfenv install
+      terraform --version
+      mv provider-ci-only.tf.txt provider.tf
+      terraform init
+      '''
     }
 
     stage('Terraform Linting Checks') {
-      sh 'terraform validate -check-variables=false -no-color'
+        sh 'terraform validate'
     }
-  }
-}
-catch (err) {
-  throw err
 }
