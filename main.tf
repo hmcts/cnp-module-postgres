@@ -31,8 +31,8 @@ resource "null_resource" "subnet_mappings" {
   for_each = local.list_of_subnets
 
   triggers = {
-    rule_name = each(local.list_of_rules)
-    subnet_id = each(local.list_of_subnets)
+    rule_name = each.local.list_of_rules
+    subnet_id = each.local.list_of_subnets
   }
 }
 
