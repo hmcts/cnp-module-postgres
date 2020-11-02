@@ -63,7 +63,6 @@ resource "azurerm_postgresql_server" "postgres-paas" {
   administrator_login_password = random_string.password.result
 
   sku_name   = var.sku_name
-  sku_tier   = var.sku_tier
   version    = var.postgresql_version
   storage_mb = var.storage_mb
 
