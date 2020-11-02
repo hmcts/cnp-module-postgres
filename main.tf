@@ -4,7 +4,7 @@ locals {
 
   db_rules = null_resource.subnet_mappings.*.triggers
 
-  vaultName = "infra-vault"-var.subscription
+  vaultName = "infra-vault-${var.subscription}"
 }
 
 data "azurerm_key_vault" "infra_vault" {
@@ -38,7 +38,7 @@ data "external" "subnet_rules" {
 }
 
 resource "azurerm_resource_group" "data-resourcegroup" {
-  name     = var.product-data-var.env
+  name     = "${var.product}-data-${var.env}"
   location = var.location
 
   tags = merge(var.common_tags,
