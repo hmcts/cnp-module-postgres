@@ -18,12 +18,21 @@ data "azurerm_key_vault_secret" "github_api_key" {
 }
 
 # https://gist.github.com/brikis98/f3fe2ae06f996b40b55eebcb74ed9a9e
-resource "null_resource" "subnet_mappings" {
+/*resource "null_resource" "subnet_mappings" {
   count = length(local.list_of_subnets)
 
   triggers = {
     rule_name = element(local.list_of_rules, count.index)
     subnet_id = element(local.list_of_subnets, count.index)
+  }
+}
+*/
+resource "null_resource" "subnet_mappings" {
+  for_each = local.list_of_subnets
+
+  triggers = {
+    rule_name = each(local.list_of_rules)
+    subnet_id = each(local.list_of_subnets)
   }
 }
 
