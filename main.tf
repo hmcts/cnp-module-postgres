@@ -28,12 +28,12 @@ resource "null_resource" "subnet_mappings" {
 }
 
 data "external" "subnet_rules" {
-  program = ["python3", path.module/find-subnets.py]
+  program = ["python3", "${path.module}/find-subnets.py"]
 
   query = {
-    env          = var.env
-    product      = var.product
-    github_token = data.azurerm_key_vault_secret.github_api_key.value
+    env          = "${var.env}"
+    product      = "${var.product}"
+    github_token = "${data.azurerm_key_vault_secret.github_api_key.value}"
   }
 }
 
@@ -55,7 +55,7 @@ resource "random_string" "password" {
 }
 
 resource "azurerm_postgresql_server" "postgres-paas" {
-  name                = var.product-var.env
+  name                = "${var.product}-${var.env}"
   location            = var.location
   resource_group_name = azurerm_resource_group.data-resourcegroup.name
 
@@ -78,7 +78,7 @@ resource "azurerm_postgresql_server" "postgres-paas" {
 resource "azurerm_postgresql_database" "postgres-db" {
   name                = replace(var.database_name, "-", "")
   resource_group_name = azurerm_resource_group.data-resourcegroup.name
-  server_name         = var.product-var.env
+  server_name         = "${var.product}-${var.env}"
   charset             = var.charset
   collation           = var.collation
 }
@@ -87,7 +87,7 @@ resource "azurerm_postgresql_virtual_network_rule" "postgres-vnet-rule" {
   for_each                             = local.db_rules
   name                                 = base64encode(each.value.rule_name)
   resource_group_name                  = azurerm_resource_group.data-resourcegroup.name
-  server_name                          = var.product-var.env
+  server_name                          = "${var.product}-${var.env}"
   subnet_id                            = base64encode(each.value.subnet_id)
   ignore_missing_vnet_service_endpoint = true
 }
