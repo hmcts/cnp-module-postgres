@@ -95,8 +95,8 @@ resource "azurerm_postgresql_virtual_network_rule" "postgres-vnet-rule" {
   //for_each                             = toset(jsondecode(local.db_rules))
   //for_each                             = toset([for r in base64decode(jsondecode(local.db_rules)): r.rule_name])
   //name                                 = each.key
-  for_each                             = { for db_rule in local.db_rules : db_rule.name => db_rule }
-  name                                 = each.value.rule_name
+  for_each                             = { for db_rule in local.db_rules : db_rule.rule_name => db_rule }
+  name                                 = each.value.key
   resource_group_name                  = azurerm_resource_group.data-resourcegroup.name
   server_name                          = "${var.product}-${var.env}"
   subnet_id                            = each.value.rule_name
