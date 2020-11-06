@@ -26,16 +26,7 @@ resource "null_resource" "subnet_mappings" {
     subnet_id = element(local.list_of_subnets, count.index)
   }
 }
-/*
-resource "null_resource" "subnet_mappings" {
-  for_each = local.list_of_subnets
 
-  triggers = {
-    rule_name = each.local.list_of_rules
-    subnet_id = each.local.list_of_subnets
-  }
-}
-*/
 data "external" "subnet_rules" {
   program = ["python3", "${path.module}/find-subnets.py"]
 
@@ -89,16 +80,21 @@ resource "azurerm_postgresql_database" "postgres-db" {
   server_name         = "${var.product}-${var.env}"
   charset             = var.charset
   collation           = var.collation
+
+  depends_on = [
+    azurerm_postgresql_server.postgres-paas
+  ]
 }
 
 resource "azurerm_postgresql_virtual_network_rule" "postgres-vnet-rule" {
-  //for_each                             = toset(jsondecode(local.db_rules))
-  //for_each                             = toset([for r in base64decode(jsondecode(local.db_rules)): r.rule_name])
-  //name                                 = each.key
   for_each                             = { for db_rule in local.db_rules : db_rule.rule_name => db_rule }
   name                                 = each.value.rule_name
   resource_group_name                  = azurerm_resource_group.data-resourcegroup.name
   server_name                          = "${var.product}-${var.env}"
   subnet_id                            = each.value.subnet_id
   ignore_missing_vnet_service_endpoint = true
+  
+  depends_on = [ 
+    azurerm_postgresql_database.postgres-db
+]
 }
