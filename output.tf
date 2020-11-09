@@ -15,9 +15,13 @@ output "postgresql_password" {
 }
 
 output "user_name" {
-  value = "${var.postgresql_user}"
+  value = "${var.postgresql_user}@${azurerm_postgresql_server.postgres-paas.name}"
 }
 
 output "db_subnet_rules" {
   value = "${local.db_rules}"
+}
+
+output "name" {
+  value = "${azurerm_postgresql_server.postgres-paas.name}"
 }
