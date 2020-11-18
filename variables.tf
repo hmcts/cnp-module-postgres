@@ -79,7 +79,7 @@ variable "storage_mb" {
 # Possible values are true and false.
 variable "ssl_enforcement" {
   type    = "string"
-  default = "false"
+  default = "true"
 }
 
 # Min 7 days, max 35 days
