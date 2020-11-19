@@ -8,12 +8,12 @@ locals {
 }
 
 data "azurerm_key_vault" "infra_vault" {
-  name = "${local.vaultName}"
+  name                = "${local.vaultName}"
   resource_group_name = "${var.env == "prod" || var.env == "idam-prod" || var.env == "idam-prod2" ? "core-infra-prod" : "cnp-core-infra"}"
 }
 
 data "azurerm_key_vault_secret" "github_api_key" {
-  name      = "hmcts-github-apikey"
+  name         = "hmcts-github-apikey"
   key_vault_id = "${data.azurerm_key_vault.infra_vault.id}"
 }
 
@@ -85,7 +85,7 @@ resource "azurerm_template_deployment" "postgres-paas" {
 }
 
 locals {
-  is_prod = length(regexall(".*(prod).*", var.env)) > 0
+  is_prod     = length(regexall(".*(prod).*", var.env)) > 0
   admin_group = local.is_prod ? "DTS Platform Operations SC" : "DTS Platform Operations"
 }
 
@@ -101,7 +101,7 @@ resource "azurerm_postgresql_active_directory_administrator" "admin" {
   login               = local.admin_group
   tenant_id           = data.azurerm_client_config.current.tenant_id
   object_id           = data.azuread_group.db_admin.object_id
-  
+
   depends_on = [
     azurerm_template_deployment.postgres-paas
   ]
