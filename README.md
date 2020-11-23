@@ -46,6 +46,20 @@ The password can be retrieved from vault if you've stored it there, or if you vi
 Currently developers can only access databases in the sandbox subscription
 The DevOps team can access nonprod databases from the preprod backup box and production databases from the production backup box
 
+We're currently working on rolling out access via Azure Active Directory, if you've been granted access you can authenticate with:
+
+- user <- AAD Group you have access with, escape any spaces with a backslash \, and include the server name
+
+```shell
+az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv
+PGPASSWORD=<paste-token-from-previous>
+POSTGRES_HOST=testing2-sandbox.postgres.database.azure.com
+DB_NAME='test'
+DB_USER=testing2-sandbox
+
+psql "sslmode=require host=${POSTGRES_HOST} dbname=${DB_NAME} user=DTS\ Platform\ Operations@${DB_USER}"
+```
+
 ### Output
 
 The following variables are provided by the module for use in other modules

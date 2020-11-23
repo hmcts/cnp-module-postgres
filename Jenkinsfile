@@ -1,8 +1,8 @@
 #!groovy
 @Library('Infrastructure') _
 
-try {
-  node {
+node {
+  try {
     env.PATH = "$env.PATH:/usr/local/bin"
 
     stage('Checkout') {
@@ -11,14 +11,25 @@ try {
     }
 
     stage('Terraform init') {
-      sh 'terraform init'
+      dir('example') {
+        sh '''
+          tfenv install
+          terraform --version
+          terraform init
+        '''
+      }
     }
 
     stage('Terraform Linting Checks') {
-      sh 'terraform validate -check-variables=false -no-color'
+      sh 'terraform fmt -recursive'
+
+      dir('example') {
+        sh 'terraform validate  -no-color'
+      }
     }
+  } catch (err) {
+    throw err
+  } finally {
+    deleteDir()
   }
-}
-catch (err) {
-  throw err
 }
