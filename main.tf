@@ -4,7 +4,7 @@ locals {
 
   db_rules = "${null_resource.subnet_mappings.*.triggers}"
 
-  vaultName = var.key_vault_name != "" ? var.key_vault_name : "infra-vault-${var.subscription}"
+  vaultName = var.key_vault_name != null ? var.key_vault_name : "infra-vault-${var.subscription}"
 }
 
 data "azurerm_key_vault" "infra_vault" {
