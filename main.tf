@@ -4,12 +4,12 @@ locals {
 
   db_rules = "${null_resource.subnet_mappings.*.triggers}"
 
-  vaultName = "infra-vault-${var.subscription}"
+  vaultName = "dtssharedservicessboxkv" #"infra-vault-${var.subscription}"
 }
 
 data "azurerm_key_vault" "infra_vault" {
   name                = "${local.vaultName}"
-  resource_group_name = "${var.env == "prod" || var.env == "idam-prod" || var.env == "idam-prod2" ? "core-infra-prod" : "cnp-core-infra"}"
+  resource_group_name = "genesis-rg" #"${var.env == "prod" || var.env == "idam-prod" || var.env == "idam-prod2" ? "core-infra-prod" : "cnp-core-infra"}"
 }
 
 data "azurerm_key_vault_secret" "github_api_key" {
