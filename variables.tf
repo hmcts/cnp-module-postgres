@@ -115,3 +115,13 @@ variable "common_tags" {
 variable "subscription" {
   description = "the human friendly name of the subscription, ie. qa, or prod"
 }
+
+variable "key_vault_name" {
+  description = "the human friendly name of the key vault where the github api key resides"
+  default     = ""
+}
+
+variable "key_vault_rg" {
+  description = "the human friendly name of the resource group where the key vault resides"
+  default     = ""
+}
