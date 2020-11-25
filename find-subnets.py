@@ -46,9 +46,10 @@ def get_all_subnets(env, product, subnets):
 line = sys.stdin.readline()
 query = json.loads(line)
 
+subnets_filename = query['subnets_filename']
 github_token = query['github_token']
 
-url = 'https://raw.githubusercontent.com/hmcts/cnp-database-subnet-whitelisting/master/subnets.json'
+url = 'https://raw.githubusercontent.com/hmcts/cnp-database-subnet-whitelisting/master/%s' % subnets_filename
 
 req = urllib.request.Request(
     url=url, headers={'Authorization': 'Bearer ' + github_token})

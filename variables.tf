@@ -133,3 +133,8 @@ variable "key_vault_rg" {
   description = "the human friendly name of the resource group where the key vault resides"
   default     = ""
 }
+
+variable "subnets_filename" {
+  description = "Filename of the subnets file in the cnp-database-subnet-whitelisting repo"
+  default     = "subnets.json"
+}
