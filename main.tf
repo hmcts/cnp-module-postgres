@@ -4,12 +4,15 @@ locals {
 
   db_rules = "${null_resource.subnet_mappings.*.triggers}"
 
-  vaultName = "infra-vault-${var.subscription}"
+  vaultName = var.key_vault_name != "" ? var.key_vault_name : "infra-vault-${var.subscription}"
+  vault_resource_group_name = var.key_vault_rg != "" ? var.key_vault_rg : (
+    local.is_prod ? "core-infra-prod" : "cnp-core-infra"
+  )
 }
 
 data "azurerm_key_vault" "infra_vault" {
-  name                = "${local.vaultName}"
-  resource_group_name = "${var.env == "prod" || var.env == "idam-prod" || var.env == "idam-prod2" ? "core-infra-prod" : "cnp-core-infra"}"
+  name                = local.vaultName
+  resource_group_name = local.vault_resource_group_name
 }
 
 data "azurerm_key_vault_secret" "github_api_key" {
