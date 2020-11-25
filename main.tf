@@ -8,6 +8,10 @@ locals {
   vault_resource_group_name = var.key_vault_rg != "" ? var.key_vault_rg : (
     local.is_prod ? "core-infra-prod" : "cnp-core-infra"
   )
+
+  default_name = var.component != "" ? "${var.product}-${var.component}" : var.product
+  name = var.name != "" ? var.name : local.default_name
+  server_name = "${local.name}-${var.env}"
 }
 
 data "azurerm_key_vault" "infra_vault" {
@@ -35,13 +39,13 @@ data "external" "subnet_rules" {
 
   query = {
     env          = "${var.env}"
-    product      = "${var.product}"
+    product      = "${var.name}"
     github_token = "${data.azurerm_key_vault_secret.github_api_key.value}"
   }
 }
 
 resource "azurerm_resource_group" "data-resourcegroup" {
-  name     = "${var.product}-data-${var.env}"
+  name     = "${local.name}-data-${var.env}"
   location = "${var.location}"
 
   tags = var.common_tags
@@ -61,7 +65,7 @@ data "template_file" "postgrestemplate" {
 
 resource "azurerm_template_deployment" "postgres-paas" {
   template_body       = "${data.template_file.postgrestemplate.rendered}"
-  name                = "${var.product}-${var.env}"
+  name                = local.server_name
   resource_group_name = "${azurerm_resource_group.data-resourcegroup.name}"
   deployment_mode     = "Incremental"
 
@@ -70,7 +74,7 @@ resource "azurerm_template_deployment" "postgres-paas" {
     administratorLoginPassword = "${random_string.password.result}"
     location                   = "${var.location}"
     env                        = "${var.env}"
-    serverName                 = "${var.product}-${var.env}"
+    serverName                 = local.server_name
     dbName                     = "${replace(var.database_name, "-", "")}"
     skuName                    = "${var.sku_name}"
     skuCapacity                = "${var.sku_capacity}"
@@ -90,6 +94,8 @@ resource "azurerm_template_deployment" "postgres-paas" {
 locals {
   is_prod     = length(regexall(".*(prod).*", var.env)) > 0
   admin_group = local.is_prod ? "DTS Platform Operations SC" : "DTS Platform Operations"
+  # psql needs spaces escaped in user names
+  escaped_admin_group = replace(local.admin_group, " ", "\\ ")
 }
 
 data "azurerm_client_config" "current" {}
@@ -99,7 +105,7 @@ data "azuread_group" "db_admin" {
 }
 
 resource "azurerm_postgresql_active_directory_administrator" "admin" {
-  server_name         = "${var.product}-${var.env}"
+  server_name         = local.server_name
   resource_group_name = azurerm_resource_group.data-resourcegroup.name
   login               = local.admin_group
   tenant_id           = data.azurerm_client_config.current.tenant_id

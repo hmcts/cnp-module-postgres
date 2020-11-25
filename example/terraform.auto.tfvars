@@ -5,3 +5,4 @@ env          = "sandbox"
 common_tags  = {}
 subscription = "sandbox"
 product      = "testing2"
+component    = "backend"
