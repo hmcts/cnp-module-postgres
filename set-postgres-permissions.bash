@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-CI_AZURE_FOLDER="${HOME}/.azure-${AZURE_SUBSCRIPTION_SHORT_NAME}"
+CI_AZURE_FOLDER="/opt/jenkins/.azure-${AZURE_SUBSCRIPTION_SHORT_NAME}"
 
 if [ -d "${CI_AZURE_FOLDER}" ]
 then
