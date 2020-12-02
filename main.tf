@@ -4,12 +4,19 @@ locals {
 
   db_rules = null_resource.subnet_mappings.*.triggers
 
-  vaultName = "infra-vault-${var.subscription}"
+  vaultName = var.key_vault_name != "" ? var.key_vault_name : "infra-vault-${var.subscription}"
+  vault_resource_group_name = var.key_vault_rg != "" ? var.key_vault_rg : (
+    local.is_prod ? "core-infra-prod" : "cnp-core-infra"
+  )
+
+  default_name = var.component != "" ? "${var.product}-${var.component}" : var.product
+  name = var.name != "" ? var.name : local.default_name
+  server_name = "${local.name}-${var.env}"
 }
 
 data "azurerm_key_vault" "infra_vault" {
   name                = local.vaultName
-  resource_group_name = var.env == "prod" || var.env == "idam-prod" || var.env == "idam-prod2" ? "core-infra-prod" : "cnp-core-infra"
+  resource_group_name = local.vault_resource_group_name
 }
 
 data "azurerm_key_vault_secret" "github_api_key" {
@@ -31,19 +38,18 @@ data "external" "subnet_rules" {
   program = ["python3", "${path.module}/find-subnets.py"]
 
   query = {
-    env          = "${var.env}"
-    product      = "${var.product}"
-    github_token = "${data.azurerm_key_vault_secret.github_api_key.value}"
+    env              = "${var.env}"
+    product          = "${var.product}"
+    github_token     = "${data.azurerm_key_vault_secret.github_api_key.value}"
+    subnets_filename = "${var.subnets_filename}"
   }
 }
 
 resource "azurerm_resource_group" "data-resourcegroup" {
-  name     = "${var.product}-data-${var.env}"
+  name     = "${local.name}-data-${var.env}"
   location = var.location
 
-  tags = merge(var.common_tags,
-    map("lastUpdated", timestamp())
-  )
+  tags = var.common_tags
 }
 
 resource "random_string" "password" {
@@ -90,11 +96,33 @@ resource "azurerm_postgresql_virtual_network_rule" "postgres-vnet-rule" {
   for_each                             = { for db_rule in local.db_rules : db_rule.rule_name => db_rule }
   name                                 = each.value.rule_name
   resource_group_name                  = azurerm_resource_group.data-resourcegroup.name
-  server_name                          = "${var.product}-${var.env}"
+  server_name                          = local.server_name
   subnet_id                            = each.value.subnet_id
   ignore_missing_vnet_service_endpoint = true
-  
-  depends_on = [ 
+
+  depends_on = [
     azurerm_postgresql_database.postgres-db
 ]
+}
+
+
+locals {
+  is_prod     = length(regexall(".*(prod).*", var.env)) > 0
+  admin_group = local.is_prod ? "DTS Platform Operations SC" : "DTS Platform Operations"
+  # psql needs spaces escaped in user names
+  escaped_admin_group = replace(local.admin_group, " ", "\\ ")
+}
+
+data "azurerm_client_config" "current" {}
+
+data "azuread_group" "db_admin" {
+  name = local.admin_group
+}
+
+resource "azurerm_postgresql_active_directory_administrator" "admin" {
+  server_name         = azurerm_postgresql_database.postgres-db.server_name
+  resource_group_name = azurerm_resource_group.data-resourcegroup.name
+  login               = local.admin_group
+  tenant_id           = data.azurerm_client_config.current.tenant_id
+  object_id           = data.azuread_group.db_admin.object_id
 }

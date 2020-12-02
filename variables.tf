@@ -2,6 +2,14 @@ variable "product" {
   type = "string"
 }
 
+variable "component" {
+  default = ""
+}
+
+variable "name" {
+  default = ""
+}
+
 variable "location" {
   type = "string"
 }
@@ -20,7 +28,7 @@ variable "postgresql_user" {
 }
 
 # sku supports the following:
-# - skuName: Possible values are:         
+# - skuName: Possible values are:
 #            B_Gen5_1    (Basic)
 #            B_Gen5_2    (Basic)
 #            GP_Gen5_2   (GeneralPurpose)
@@ -59,11 +67,11 @@ variable "postgresql_version" {
 }
 
 # storage_mb supports the following
-# When using a SKU Name of Basic: 
+# When using a SKU Name of Basic:
 # min: 5120
 # max: 1048576
 #
-# When using a SKU Name of GeneralPurpose: 
+# When using a SKU Name of GeneralPurpose:
 # min: 5120
 # max: 2097152
 #
@@ -114,4 +122,19 @@ variable "common_tags" {
 
 variable "subscription" {
   description = "the human friendly name of the subscription, ie. qa, or prod"
+}
+
+variable "key_vault_name" {
+  description = "the human friendly name of the key vault where the github api key resides"
+  default     = ""
+}
+
+variable "key_vault_rg" {
+  description = "the human friendly name of the resource group where the key vault resides"
+  default     = ""
+}
+
+variable "subnets_filename" {
+  description = "Filename of the subnets file in the cnp-database-subnet-whitelisting repo"
+  default     = "subnets.json"
 }

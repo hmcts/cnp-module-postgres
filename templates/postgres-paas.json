@@ -13,18 +13,10 @@
     "location": {
       "type":"string",
       "allowedValues":[
-        "East Asia",
-        "East US 2",
-        "East US",
-        "Japan East",
-        "Japan West",
-        "North Central US",
-        "North Europe",
-        "South Central US",
-        "Southeast Asia",
-        "West Europe",
-        "West US",
-        "UK South"
+        "UK West",
+        "ukwest",
+        "UK South",
+        "uksouth"
       ],
       "defaultValue":"UK South"
     },
