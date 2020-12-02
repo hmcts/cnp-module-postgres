@@ -1,14 +1,6 @@
 #!/usr/bin/env bash
 
-CI_AZURE_FOLDER="/opt/jenkins/.azure-${AZURE_SUBSCRIPTION_SHORT_NAME}"
-
-if [ -d "${CI_AZURE_FOLDER}" ]
-then
-    echo "Overriding AZURE_CONFIG_DIR to ${CI_AZURE_FOLDER}"
-    export AZURE_CONFIG_DIR="${CI_AZURE_FOLDER}"
-else
-    echo "Directory ${HOME}/.azure-${AZURE_SUBSCRIPTION_SHORT_NAME} does not exist."
-fi
+az login -u "${DB_MANAGER_USER_NAME}" -p "${DB_MANAGER_PASSWORD}" -t "${TENANT_ID}" > /dev/null
 
 # shellcheck disable=SC2155
 export PGPASSWORD=$(az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv)
