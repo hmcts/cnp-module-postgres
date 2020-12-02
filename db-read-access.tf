@@ -18,6 +18,9 @@ resource "null_resource" "set-user-permissions" {
       DB_USER                       = "${local.escaped_admin_group}@${azurerm_template_deployment.postgres-paas.name}"
       DB_READER_USER                = local.db_reader_user
       AZURE_SUBSCRIPTION_SHORT_NAME = var.subscription
+      DB_MANAGER_USER_NAME          = data.azurerm_key_vault_secret.db_manager_username.value
+      DB_MANAGER_PASSWORD           = data.azurerm_key_vault_secret.db_manager_password.value
+      TENANT_ID                     = data.azurerm_client_config.current.tenant_id
     }
   }
   depends_on = [
