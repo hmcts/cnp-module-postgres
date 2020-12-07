@@ -58,8 +58,7 @@ resource "azurerm_postgresql_database" "postgres-db" {
   collation           = var.collation
 
   depends_on = [
-    azurerm_postgresql_server.postgres-paas,
-    azurerm_resource_group.data-resourcegroup
+    azurerm_postgresql_server.postgres-paas
   ]
 }
 
