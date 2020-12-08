@@ -3,25 +3,21 @@ output "host_name" {
 }
 
 output "postgresql_listen_port" {
-  value = "${var.postgresql_listen_port}"
+  value = var.postgresql_listen_port
 }
 
 output "postgresql_database" {
-  value = "${replace(var.database_name, "-", "")}"
+  value = azurerm_postgresql_database.postgres-db.name
 }
 
 output "postgresql_password" {
-  value = "${random_string.password.result}"
+  value = random_password.password.result
 }
 
 output "user_name" {
   value = "${var.postgresql_user}@${azurerm_postgresql_server.postgres-paas.name}"
 }
 
-output "db_subnet_rules" {
-  value = "${local.db_rules}"
-}
-
 output "name" {
-  value = "${azurerm_postgresql_server.postgres-paas.name}"
+  value = azurerm_postgresql_server.postgres-paas.name
 }

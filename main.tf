@@ -1,9 +1,4 @@
 locals {
-  list_of_subnets = split(";", data.external.subnet_rules.result.subnets)
-  list_of_rules   = split(";", data.external.subnet_rules.result.rule_names)
-
-  db_rules = null_resource.subnet_mappings.*.triggers
-
   vaultName = var.key_vault_name != "" ? var.key_vault_name : "infra-vault-${var.subscription}"
   vault_resource_group_name = var.key_vault_rg != "" ? var.key_vault_rg : (
     local.is_prod ? "core-infra-prod" : "cnp-core-infra"
@@ -19,32 +14,6 @@ data "azurerm_key_vault" "infra_vault" {
   resource_group_name = local.vault_resource_group_name
 }
 
-data "azurerm_key_vault_secret" "github_api_key" {
-  name         = "hmcts-github-apikey"
-  key_vault_id = data.azurerm_key_vault.infra_vault.id
-}
-
-# https://gist.github.com/brikis98/f3fe2ae06f996b40b55eebcb74ed9a9e
-resource "null_resource" "subnet_mappings" {
-  count = length(local.list_of_subnets)
-
-  triggers = {
-    rule_name = element(local.list_of_rules, count.index)
-    subnet_id = element(local.list_of_subnets, count.index)
-  }
-}
-
-data "external" "subnet_rules" {
-  program = ["python3", "${path.module}/find-subnets.py"]
-
-  query = {
-    env              = "${var.env}"
-    product          = "${var.product}"
-    github_token     = "${data.azurerm_key_vault_secret.github_api_key.value}"
-    subnets_filename = "${var.subnets_filename}"
-  }
-}
-
 resource "azurerm_resource_group" "data-resourcegroup" {
   name     = "${local.name}-data-${var.env}"
   location = var.location
@@ -52,7 +21,7 @@ resource "azurerm_resource_group" "data-resourcegroup" {
   tags = var.common_tags
 }
 
-resource "random_string" "password" {
+resource "random_password" "password" {
   length  = 16
   special = true
   upper   = true
@@ -66,16 +35,17 @@ resource "azurerm_postgresql_server" "postgres-paas" {
   resource_group_name = azurerm_resource_group.data-resourcegroup.name
 
   administrator_login          = var.postgresql_user
-  administrator_login_password = random_string.password.result
+  administrator_login_password = random_password.password.result
 
   sku_name   = var.sku_name
   version    = var.postgresql_version
   storage_mb = var.storage_mb
 
-  backup_retention_days        = var.backup_retention_days
-  geo_redundant_backup_enabled = var.georedundant_backup
-
-  ssl_enforcement_enabled = var.ssl_enforcement
+  backup_retention_days            = var.backup_retention_days
+  geo_redundant_backup_enabled     = var.georedundant_backup
+  ssl_enforcement_enabled          = true
+  ssl_minimal_tls_version_enforced = "TLS1_2"
+  public_network_access_enabled    = var.subnet_id == "" ? true : false
 
   tags = var.common_tags
 }
@@ -91,20 +61,6 @@ resource "azurerm_postgresql_database" "postgres-db" {
     azurerm_postgresql_server.postgres-paas
   ]
 }
-
-resource "azurerm_postgresql_virtual_network_rule" "postgres-vnet-rule" {
-  for_each                             = { for db_rule in local.db_rules : db_rule.rule_name => db_rule }
-  name                                 = each.value.rule_name
-  resource_group_name                  = azurerm_resource_group.data-resourcegroup.name
-  server_name                          = local.server_name
-  subnet_id                            = each.value.subnet_id
-  ignore_missing_vnet_service_endpoint = true
-
-  depends_on = [
-    azurerm_postgresql_database.postgres-db
-]
-}
-
 
 locals {
   is_prod     = length(regexall(".*(prod).*", var.env)) > 0

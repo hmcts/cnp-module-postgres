@@ -1,7 +1,6 @@
-variable "product" {
-  type = "string"
-}
+variable "product" {}
 
+variable "location" {}
 variable "component" {
   default = ""
 }
@@ -10,22 +9,13 @@ variable "name" {
   default = ""
 }
 
-variable "location" {
-  type = "string"
-}
-
-variable "env" {
-  type = "string"
-}
+variable "env" {}
 
 variable "postgresql_listen_port" {
-  type    = "string"
   default = "5432"
 }
 
-variable "postgresql_user" {
-  type = "string"
-}
+variable "postgresql_user" {}
 
 # sku supports the following:
 # - skuName: Possible values are:
@@ -45,24 +35,20 @@ variable "postgresql_user" {
 # - tier     : Specifies the SKU Tier for this PostgreSQL Server.
 #              Possible values are "Basic", "GeneralPurpose", "MemoryOptimized".
 variable "sku_name" {
-  type    = "string"
   default = "GP_Gen5_2"
 }
 
 variable "sku_tier" {
-  type    = "string"
   default = "GeneralPurpose"
 }
 
 # This is actually the vCores when template is run
 variable "sku_capacity" {
-  type    = "string"
   default = "2"
 }
 
 # Valid values are 9.5, 9.6, 10 and 11.
 variable "postgresql_version" {
-  type    = "string"
   default = "9.6"
 }
 
@@ -80,48 +66,40 @@ variable "postgresql_version" {
 # max: 2097152
 
 variable "storage_mb" {
-  type    = "string"
   default = "51200"
-}
-
-# Possible values are true and false.
-variable "ssl_enforcement" {
-  type    = "string"
-  default = "true"
 }
 
 # Min 7 days, max 35 days
 variable "backup_retention_days" {
-  type    = "string"
   default = "35"
 }
 
 # Possible values are true and false.
 variable "georedundant_backup" {
-  type    = "string"
   default = "true"
 }
 
 variable "charset" {
-  type    = "string"
   default = "utf8"
 }
 
 variable "collation" {
-  type    = "string"
   default = "en-GB"
 }
 
-variable "database_name" {
-  type = "string"
-}
+variable "database_name" {}
 
 variable "common_tags" {
-  type = "map"
+  type = map
 }
 
 variable "subscription" {
   description = "the human friendly name of the subscription, ie. qa, or prod"
+}
+
+variable "subnet_id" {
+  default = ""
+  description = "the subnet to put the private endpoint in"
 }
 
 variable "key_vault_name" {
