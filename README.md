@@ -78,18 +78,42 @@ More process details to follow, it's currently being worked out.
 
 ### Non production:
 
-First you will need to request access to the bastion via [JIT](https://myaccess.microsoft.com/@CJSCommonPlatform.onmicrosoft.com#/access-packages),
-select the 'Non-Production Bastion Server Access' access package
+1. Connect to the VPN
+2. Request access to the bastion via [JIT](https://myaccess.microsoft.com/@CJSCommonPlatform.onmicrosoft.com#/access-packages),
+select the 'Non-Production Bastion Server Access' access package, this will be automatically approved, and lasts for 24 hours.
+3. Add SSH config if not done already, this goes in `~/.ssh/config`, create the file if it doesn't exist
+
+<details>
+
+<summary>Bastion configuration</summary>
+
+Update the user line to your email address
+
+```shell
+Host *.platform.hmcts.net
+  User <your-email>@hmcts.net # must be lower case
+  PubkeyAuthentication no
+  ForwardAgent yes
+```
+
+</details>
+
+4. Copy below script and update the variables (search for all references to draft-store and replace with your DB)
+5. Run script, note you won't get an interactive prompt for the bastion
 
 ```bash
+# you can get this from the portal, or determine it via the inputs your pass to this module in your code
 POSTGRES_HOST=rpe-draft-store-aat.postgres.database.azure.com
 
 ssh -N bastion-dev-nonprod.platform.hmcts.net -L 5440:${POSTGRES_HOST}:5432
 # expect no more output in this terminal you won't get an interactive prompt
 
 # in a separate terminal run:
-PGPASSWORD=$(az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv)
+export PGPASSWORD=$(az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv)
+# this matches the `database_name` parameter you pass in the module
 DB_NAME=draftstore
+
+# Update the suffix after the @ to the server name
 DB_USER="DTS\ CFT\ DB\ Access\ Reader@rpe-draft-store-aat" # read access
 #DB_USER="DTS\ Platform\ Operations@rpe-draft-store-aat" # operations team administrative access
 
@@ -98,26 +122,44 @@ psql "sslmode=require host=localhost port=5440 dbname=${DB_NAME} user=${DB_USER}
 
 ### Production
 
-First you will need to request access to the bastion via [JIT](https://myaccess.microsoft.com/@CJSCommonPlatform.onmicrosoft.com#/access-packages),
-select the 'DevOps Bastion Server Access'.
+1. Connect to the VPN
+2. Request access to the bastion via [JIT](https://myaccess.microsoft.com/@CJSCommonPlatform.onmicrosoft.com#/access-packages),
+select the 'DevOps Bastion Server Access', this will be automatically approved, and lasts for 24 hours.
+3. Add SSH config if not done already, this goes in `~/.ssh/config`, create the file if it doesn't exist
 
-The format for the reader group name is:
+<details>
 
-> DTS JIT Access ${var.product} DB Reader SC
+<summary>Bastion configuration</summary>
 
-Replace `var.product` with the product name of the db e.g. ccd
+Update the user line to your email address
 
-_Note: all spaces need to be escaped with a backslash (\) if you are using psql to authenticate_
+```shell
+Host *.platform.hmcts.net
+  User <your-email>@hmcts.net # must be lower case
+  PubkeyAuthentication no
+  ForwardAgent yes
+```
+
+</details>
+
+4. Copy below script and update the variables (search for all references to draft-store and replace with your DB)
+5. Run script, note you won't get an interactive prompt for the bastion
 
 ```bash
+# you can get this from the portal, or determine it via the inputs your pass to this module in your code
 POSTGRES_HOST=rpe-draft-store-prod.postgres.database.azure.com
 
 ssh -N bastion-devops-prod.platform.hmcts.net -L 5440:${POSTGRES_HOST}:5432
 # expect no more output in this terminal you won't get an interactive prompt
 
 # in a separate terminal run:
-PGPASSWORD=$(az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv)
+export PGPASSWORD=$(az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv)
+
+# this matches the `database_name` parameter you pass in the module
 DB_NAME=draftstore
+
+# make sure you update the product name in the middle to your product
+# and also update the suffix after the @ to the server name
 DB_USER="DTS\ JIT\ Access\ draft-store\ DB\ Reader\ SC@rpe-draft-store-prod" # read access
 #DB_USER="DTS\ Platform\ Operations\ SC@rpe-draft-store-prod" # operations team administrative access
 
