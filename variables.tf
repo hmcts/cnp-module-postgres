@@ -98,7 +98,7 @@ variable "subscription" {
 }
 
 variable "subnet_id" {
-  default = ""
+  default     = ""
   description = "the subnet to put the private endpoint in"
 }
 

@@ -20,7 +20,7 @@ resource "azurerm_private_dns_a_record" "postgres" {
   zone_name           = "privatelink.postgres.database.azure.com"
   resource_group_name = "core-infra-intsvc-rg"
   ttl                 = 300
-  records = [azurerm_private_endpoint.postgres[0].private_service_connection[0].private_ip_address]
+  records             = [azurerm_private_endpoint.postgres[0].private_service_connection[0].private_ip_address]
 
   count = var.subnet_id == "" ? 0 : 1
 }

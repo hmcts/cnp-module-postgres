@@ -5,8 +5,8 @@ locals {
   )
 
   default_name = var.component != "" ? "${var.product}-${var.component}" : var.product
-  name = var.name != "" ? var.name : local.default_name
-  server_name = "${local.name}-${var.env}"
+  name         = var.name != "" ? var.name : local.default_name
+  server_name  = "${local.name}-${var.env}"
 }
 
 data "azurerm_key_vault" "infra_vault" {
@@ -53,13 +53,9 @@ resource "azurerm_postgresql_server" "postgres-paas" {
 resource "azurerm_postgresql_database" "postgres-db" {
   name                = replace(var.database_name, "-", "")
   resource_group_name = azurerm_resource_group.data-resourcegroup.name
-  server_name         = "${var.product}-${var.env}"
+  server_name         = azurerm_postgresql_server.postgres-paas.name
   charset             = var.charset
   collation           = var.collation
-
-  depends_on = [
-    azurerm_postgresql_server.postgres-paas
-  ]
 }
 
 locals {
