@@ -78,10 +78,12 @@ More process details to follow, it's currently being worked out.
 
 ### Non production:
 
-1. Connect to the VPN
-2. Request access to the bastion via [JIT](https://myaccess.microsoft.com/@CJSCommonPlatform.onmicrosoft.com#/access-packages),
-select the 'Non-Production Bastion Server Access' access package, this will be automatically approved, and lasts for 24 hours.
-3. Add SSH config if not done already, this goes in `~/.ssh/config`, create the file if it doesn't exist
+#### First time setup
+
+1. Join the 'DTS CFT Developers' AAD group via [GitHub pull request](https://github.com/hmcts/devops-azure-ad/blob/master/users/prod_users.yml)
+2. Request access to production via [JIT](https://myaccess.microsoft.com/@HMCTS.NET#/access-packages/738a7496-7ad4-4004-8b05-0e98677f4a9f), this requires SC clearance, or an approved exception.
+   _Note: after this is approved it can take some time for the other packages to show up, try logging out and back in._
+3. Add SSH config, this goes in `~/.ssh/config`, create the file if it doesn't exist
 
 <details>
 
@@ -98,10 +100,41 @@ Host *.platform.hmcts.net
 
 </details>
 
-4. Copy below script and update the variables (search for all references to draft-store and replace with your DB)
-5. Run script, note you won't get an interactive prompt for the bastion
+#### Steps to access
+
+1. Connect to the VPN
+2. Request access to the bastion via [JIT](https://myaccess.microsoft.com/@CJSCommonPlatform.onmicrosoft.com#/access-packages),
+select the 'Non-Production Bastion Server Access' access package, this will be automatically approved, and lasts for 24 hours.
+3. Copy below script, update the variables (search for all references to draft-store and replace with your DB) and run it
 
 ```bash
+# this should give you a long JWT token, you will need this later on
+az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv
+
+ssh bastion-dev-nonprod.platform.hmcts.net
+
+export PGPASSWORD=<result-from-earlier>
+
+# you can get this from the portal, or determine it via the inputs your pass to this module in your code
+POSTGRES_HOST=rpe-draft-store-aat.postgres.database.azure.com
+
+# this matches the `database_name` parameter you pass in the module
+DB_NAME=draftstore
+
+# Update the suffix after the @ to the server name
+DB_USER="DTS\ CFT\ DB\ Access\ Reader@rpe-draft-store-aat" # read access
+#DB_USER="DTS\ Platform\ Operations@rpe-draft-store-aat" # operations team administrative access
+
+psql "sslmode=require host=${POSTGRES_HOST} dbname=${DB_NAME} user=${DB_USER}"
+```
+
+_Note: it's also possible to tunnel the connection to your own machine and use other tools to log in, IntelliJ database tools works, pgAdmin doesn't due to a hardcoded password length limit._
+
+<details>
+
+<summary>Tunnel version of the script</summary>
+
+```shell
 # you can get this from the portal, or determine it via the inputs your pass to this module in your code
 POSTGRES_HOST=rpe-draft-store-aat.postgres.database.azure.com
 
@@ -120,12 +153,17 @@ DB_USER="DTS\ CFT\ DB\ Access\ Reader@rpe-draft-store-aat" # read access
 psql "sslmode=require host=localhost port=5440 dbname=${DB_NAME} user=${DB_USER}"
 ```
 
+</details>
+
 ### Production
 
-1. Connect to the VPN
-2. Request access to the bastion via [JIT](https://myaccess.microsoft.com/@CJSCommonPlatform.onmicrosoft.com#/access-packages),
-select the 'DevOps Bastion Server Access', this will be automatically approved, and lasts for 24 hours.
-3. Add SSH config if not done already, this goes in `~/.ssh/config`, create the file if it doesn't exist
+#### First time setup
+
+1. Join the 'DTS CFT Developers' AAD group via [GitHub pull request](https://github.com/hmcts/devops-azure-ad/blob/master/users/prod_users.yml)
+2. Request access to production via [JIT](https://myaccess.microsoft.com/@HMCTS.NET#/access-packages/738a7496-7ad4-4004-8b05-0e98677f4a9f), this requires SC clearance, or an approved exception.
+   _Note: after this is approved it can take some time for the other packages to show up, try logging out and back in._
+
+3. Add SSH config, this goes in `~/.ssh/config`, create the file if it doesn't exist
 
 <details>
 
@@ -142,10 +180,44 @@ Host *.platform.hmcts.net
 
 </details>
 
-4. Copy below script and update the variables (search for all references to draft-store and replace with your DB)
-5. Run script, note you won't get an interactive prompt for the bastion
+#### Steps to access
+
+1. Request access to the database that you need via [JIT](https://myaccess.microsoft.com/@CJSCommonPlatform.onmicrosoft.com#/access-packages),
+   the naming convention is `Database - <product> (read|write) access`.
+2. Wait till it's approved, you can also message in #db-self-service on slack.
+3. Connect to the VPN
+4. Copy below script, update the variables (search for all references to draft-store and replace with your DB), and run it
 
 ```bash
+# this should give you a long JWT token, you will need this later on
+az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv
+
+# follow the prompts to login
+ssh bastion-devops-prod.platform.hmcts.net
+
+export PGPASSWORD=<result-from-earlier>
+
+# you can get this from the portal, or determine it via the inputs your pass to this module in your code
+POSTGRES_HOST=rpe-draft-store-prod.postgres.database.azure.com
+
+# this matches the `database_name` parameter you pass in the module
+DB_NAME=draftstore
+
+# make sure you update the product name in the middle to your product
+# and also update the suffix after the @ to the server name
+DB_USER="DTS\ JIT\ Access\ draft-store\ DB\ Reader\ SC@rpe-draft-store-prod" # read access
+#DB_USER="DTS\ Platform\ Operations\ SC@rpe-draft-store-prod" # operations team administrative access
+
+psql "sslmode=require host=${POSTGRES_HOST} dbname=${DB_NAME} user=${DB_USER}"
+```
+
+_Note: it's also possible to tunnel the connection to your own machine and use other tools to log in, IntelliJ database tools works, pgAdmin doesn't due to a hardcoded password length limit._
+
+<details>
+
+<summary>Tunnel version of the script</summary>
+
+```shell
 # you can get this from the portal, or determine it via the inputs your pass to this module in your code
 POSTGRES_HOST=rpe-draft-store-prod.postgres.database.azure.com
 
@@ -165,3 +237,5 @@ DB_USER="DTS\ JIT\ Access\ draft-store\ DB\ Reader\ SC@rpe-draft-store-prod" # r
 
 psql "sslmode=require host=localhost port=5440 dbname=${DB_NAME} user=${DB_USER}"
 ```
+
+</details>
