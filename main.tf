@@ -30,7 +30,7 @@ resource "random_password" "password" {
 }
 
 resource "azurerm_postgresql_server" "postgres-paas" {
-  name                = "${var.product}-${var.env}"
+  name                = local.server_name
   location            = var.location
   resource_group_name = azurerm_resource_group.data-resourcegroup.name
 
