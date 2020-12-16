@@ -106,6 +106,8 @@ this will be automatically approved, and lasts for 24 hours.
 3. Copy below script, update the variables (search for all references to draft-store and replace with your DB) and run it
 
 ```bash
+# If you haven't logged in before you may need to login, uncomment the below line:
+# az login 
 # this should give you a long JWT token, you will need this later on
 az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv
 
@@ -187,6 +189,8 @@ Host *.platform.hmcts.net
 4. Copy below script, update the variables (search for all references to draft-store and replace with your DB), and run it
 
 ```bash
+# If you haven't logged in before you may need to login, uncomment the below line:
+# az login 
 # this should give you a long JWT token, you will need this later on
 az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv
 
@@ -207,6 +211,9 @@ DB_USER="DTS\ JIT\ Access\ draft-store\ DB\ Reader\ SC@rpe-draft-store-prod" # r
 #DB_USER="DTS\ Platform\ Operations\ SC@rpe-draft-store-prod" # operations team administrative access
 
 psql "sslmode=require host=${POSTGRES_HOST} dbname=${DB_NAME} user=${DB_USER}"
+# note: some users have experienced caching issues with their AAD token:
+# psql: error: FATAL:  Azure AD access token not valid for role DTS JIT Access send-letter DB Reader SC (does not contain group ID c9e865ee-bc88-40d9-a5c1-23831f0ce255)
+# the fix is to clear the cache and login again: rm -rf ~/.azure && az login
 ```
 
 _Note: it's also possible to tunnel the connection to your own machine and use other tools to log in, IntelliJ database tools works, pgAdmin doesn't due to a hardcoded password length limit._
