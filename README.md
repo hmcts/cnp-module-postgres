@@ -101,8 +101,8 @@ Host *.platform.hmcts.net
 #### Steps to access
 
 1. Connect to the VPN
-2. Request access to the bastion via [JIT](https://myaccess.microsoft.com/@CJSCommonPlatform.onmicrosoft.com#/access-packages),
-select the 'Non-Production Bastion Server Access' access package, this will be automatically approved, and lasts for 24 hours.
+2. Request access to the non production bastion via [JIT](https://myaccess.microsoft.com/@HMCTS.NET#/access-packages/4894e58f-920e-404d-9db4-dc2ab8513794),
+this will be automatically approved, and lasts for 24 hours.
 3. Copy below script, update the variables (search for all references to draft-store and replace with your DB) and run it
 
 ```bash
