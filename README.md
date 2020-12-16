@@ -81,9 +81,7 @@ More process details to follow, it's currently being worked out.
 #### First time setup
 
 1. Join the 'DTS CFT Developers' AAD group via [GitHub pull request](https://github.com/hmcts/devops-azure-ad/blob/master/users/prod_users.yml)
-2. Request access to production via [JIT](https://myaccess.microsoft.com/@HMCTS.NET#/access-packages/738a7496-7ad4-4004-8b05-0e98677f4a9f), this requires SC clearance, or an approved exception.
-   _Note: after this is approved it can take some time for the other packages to show up, try logging out and back in._
-3. Add SSH config, this goes in `~/.ssh/config`, create the file if it doesn't exist
+2. Add SSH config, this goes in `~/.ssh/config`, create the file if it doesn't exist
 
 <details>
 
