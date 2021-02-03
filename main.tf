@@ -102,7 +102,7 @@ locals {
 data "azurerm_client_config" "current" {}
 
 data "azuread_group" "db_admin" {
-  name = local.admin_group
+  display_name = local.admin_group
 }
 
 resource "azurerm_postgresql_active_directory_administrator" "admin" {
