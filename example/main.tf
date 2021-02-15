@@ -5,9 +5,6 @@ data "azurerm_subnet" "postgres" {
 }
 
 module "db" {
-  providers = {
-    azurerm             = azurerm
-  }
 
   source             = "../"
 
