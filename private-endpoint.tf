@@ -13,7 +13,7 @@ resource "azurerm_private_endpoint" "postgres" {
 
  private_dns_zone_group {
     name                 = "postgres-endpoint-dnszonegroup"
-    private_dns_zone_ids = [data.azurerm_private_dns_zone.postgres.id]
+    private_dns_zone_ids = "/subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/core-infra-intsvc-rg/providers/Microsoft.Network/privateDnsZones/privatelink.postgres.database.azure.com"
   }
   count = var.subnet_id == "" ? 0 : 1
 }
