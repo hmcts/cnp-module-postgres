@@ -22,5 +22,5 @@ END
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO PUBLIC;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO \"${DB_READER_USER}\";
 "
-
+echo "hostname ${DB_HOST_NAME}"
 psql "sslmode=require host=${DB_HOST_NAME} dbname=${DB_NAME} user=${DB_USER}" -c "${SQL_COMMAND}"
