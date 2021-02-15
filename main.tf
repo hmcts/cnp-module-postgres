@@ -78,3 +78,9 @@ resource "azurerm_postgresql_active_directory_administrator" "admin" {
   tenant_id           = data.azurerm_client_config.current.tenant_id
   object_id           = data.azuread_group.db_admin.object_id
 }
+
+data "azurerm_private_dns_zone" "postgres" {
+  provider            = azurerm.private-dns
+  name                = "privatelink.postgres.database.azure.com"
+  resource_group_name = "core-infra-intsvc-rg"
+}
