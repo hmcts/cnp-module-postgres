@@ -10,17 +10,10 @@ resource "azurerm_private_endpoint" "postgres" {
     subresource_names              = ["postgresqlServer"]
     is_manual_connection           = false
   }
-  count = var.subnet_id == "" ? 0 : 1
-}
 
-resource "azurerm_private_dns_a_record" "postgres" {
-  provider = azurerm.private_dns
-
-  name                = azurerm_postgresql_server.postgres-paas.name
-  zone_name           = "privatelink.postgres.database.azure.com"
-  resource_group_name = "core-infra-intsvc-rg"
-  ttl                 = 300
-  records             = [azurerm_private_endpoint.postgres[0].private_service_connection[0].private_ip_address]
-
+ private_dns_zone_group {
+    name                 = "postgres-endpoint-dnszonegroup"
+    private_dns_zone_ids = ["/subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/core-infra-intsvc-rg/providers/Microsoft.Network/privateDnsZones/privatelink.postgres.database.azure.com"]
+  }
   count = var.subnet_id == "" ? 0 : 1
 }
