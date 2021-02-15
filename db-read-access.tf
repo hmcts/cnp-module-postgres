@@ -14,8 +14,7 @@ resource "null_resource" "set-user-permissions" {
 
     environment = {
       DB_NAME                       = replace(var.database_name, "-", "")
-      # DB_HOST_NAME                  = azurerm_postgresql_server.postgres-paas.fqdn
-      DB_HOST_NAME                  = "plum-v11-sandbox.privatelink.postgres.database.azure.com"
+      DB_HOST_NAME                  = azurerm_postgresql_server.postgres-paas.fqdn
       DB_USER                       = "${local.escaped_admin_group}@${azurerm_postgresql_server.postgres-paas.name}"
       DB_READER_USER                = local.db_reader_user
       AZURE_SUBSCRIPTION_SHORT_NAME = var.subscription
