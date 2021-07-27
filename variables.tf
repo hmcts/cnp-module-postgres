@@ -138,3 +138,8 @@ variable "subnets_filename" {
   description = "Filename of the subnets file in the cnp-database-subnet-whitelisting repo"
   default     = "subnets.json"
 }
+
+variable "business_area"{
+  description = "Business Area."
+  default = "CFT"
+}

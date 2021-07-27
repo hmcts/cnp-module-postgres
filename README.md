@@ -49,6 +49,7 @@ The following parameters are optional
 - `ssl_enforcement` specifies whether SSL is enabled on the DB endpoint.  Default is "Enabled".
 - `backup_retention_days` number of days to retain a backup. Default is 35.
 - `georedundant_backup` specifies whether to use geo-redundant backup over local. Default is "Enabled".
+- `business_area` Business area. Either CFT or SDS. Default is "CFT".
 
 ### Output
 
@@ -80,7 +81,7 @@ More process details to follow, it's currently being worked out.
 
 #### First time setup
 
-1. Join the 'DTS CFT Developers' AAD group via [GitHub pull request](https://github.com/hmcts/devops-azure-ad/blob/master/users/prod_users.yml)
+1. Join either  'DTS CFT Developers' or 'DTS SDS Developers'  AAD group via [GitHub pull request](https://github.com/hmcts/devops-azure-ad/blob/master/users/prod_users.yml)
 2. Add SSH config, this goes in `~/.ssh/config`, create the file if it doesn't exist
 
 <details>
@@ -107,7 +108,7 @@ this will be automatically approved, and lasts for 24 hours.
 
 ```bash
 # If you haven't logged in before you may need to login, uncomment the below line:
-# az login 
+# az login
 # this should give you a long JWT token, you will need this later on
 az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv
 
@@ -159,7 +160,7 @@ psql "sslmode=require host=localhost port=5440 dbname=${DB_NAME} user=${DB_USER}
 
 #### First time setup
 
-1. Join the 'DTS CFT Developers' AAD group via [GitHub pull request](https://github.com/hmcts/devops-azure-ad/blob/master/users/prod_users.yml)
+1. Join either 'DTS CFT Developers' or 'DTS SDS Developers' AAD group via [GitHub pull request](https://github.com/hmcts/devops-azure-ad/blob/master/users/prod_users.yml)
 2. Request access to production via [JIT](https://myaccess.microsoft.com/@HMCTS.NET#/access-packages/738a7496-7ad4-4004-8b05-0e98677f4a9f), this requires SC clearance, or an approved exception.
    _Note: after this is approved it can take some time for the other packages to show up, try logging out and back in._
 
@@ -190,7 +191,7 @@ Host *.platform.hmcts.net
 
 ```bash
 # If you haven't logged in before you may need to login, uncomment the below line:
-# az login 
+# az login
 # this should give you a long JWT token, you will need this later on
 az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv
 
