@@ -139,7 +139,7 @@ variable "subnets_filename" {
   default     = "subnets.json"
 }
 
-variable "business_unit"{
+variable "business_area"{
   description = "Business Unit."
   default = "CFT"
 }

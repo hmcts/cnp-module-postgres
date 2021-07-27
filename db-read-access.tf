@@ -1,5 +1,5 @@
 locals {
-  db_reader_user = local.is_prod ? "DTS JIT Access ${var.product} DB Reader SC" : "DTS ${var.business_unit} DB Access Reader"
+  db_reader_user = local.is_prod ? "DTS JIT Access ${var.product} DB Reader SC" : "DTS ${var.business_area} DB Access Reader"
 }
 
 resource "null_resource" "set-user-permissions" {
