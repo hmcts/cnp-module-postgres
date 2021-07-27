@@ -140,6 +140,6 @@ variable "subnets_filename" {
 }
 
 variable "business_area"{
-  description = "Business Unit."
+  description = "Business Area."
   default = "CFT"
 }
