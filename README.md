@@ -49,7 +49,7 @@ The following parameters are optional
 - `ssl_enforcement` specifies whether SSL is enabled on the DB endpoint.  Default is "Enabled".
 - `backup_retention_days` number of days to retain a backup. Default is 35.
 - `georedundant_backup` specifies whether to use geo-redundant backup over local. Default is "Enabled".
-- `business_unit` Business Unit. Either CFT or SDS. Default is "CFT".
+- `business_area` Business area. Either CFT or SDS. Default is "CFT".
 
 ### Output
 
