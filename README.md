@@ -88,14 +88,11 @@ More process details to follow, it's currently being worked out.
 
 <summary>Bastion configuration</summary>
 
-Update the user line to your email address
+Run 'az login'
 
-```shell
-Host *.platform.hmcts.net
-  User <your-email>@hmcts.net # must be lower case
-  PubkeyAuthentication no
-  ForwardAgent yes
-```
+Ensure ssh extension for the Azure CLI is installed: 'az extension add --name ssh'
+
+Run 'az ssh config --ip \* --file ~/.ssh/config'
 
 </details>
 
@@ -112,7 +109,7 @@ this will be automatically approved, and lasts for 24 hours.
 # this should give you a long JWT token, you will need this later on
 az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv
 
-ssh bastion-dev-nonprod.platform.hmcts.net
+ssh bastion-nonprod.platform.hmcts.net
 
 export PGPASSWORD=<result-from-earlier>
 
@@ -139,7 +136,7 @@ _Note: it's also possible to tunnel the connection to your own machine and use o
 # you can get this from the portal, or determine it via the inputs your pass to this module in your code
 POSTGRES_HOST=rpe-draft-store-aat.postgres.database.azure.com
 
-ssh -N bastion-dev-nonprod.platform.hmcts.net -L 5440:${POSTGRES_HOST}:5432
+ssh bastion-nonprod.platform.hmcts.net -L 5440:${POSTGRES_HOST}:5432
 # expect no more output in this terminal you won't get an interactive prompt
 
 # in a separate terminal run:
@@ -168,16 +165,11 @@ psql "sslmode=require host=localhost port=5440 dbname=${DB_NAME} user=${DB_USER}
 
 <details>
 
-<summary>Bastion configuration</summary>
+Run 'az login'
 
-Update the user line to your email address
+Ensure ssh extension for the Azure CLI is installed: 'az extension add --name ssh'
 
-```shell
-Host *.platform.hmcts.net
-  User <your-email>@hmcts.net # must be lower case
-  PubkeyAuthentication no
-  ForwardAgent yes
-```
+Run 'az ssh config --ip \* --file ~/.ssh/config'
 
 </details>
 
@@ -196,7 +188,7 @@ Host *.platform.hmcts.net
 az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv
 
 # follow the prompts to login
-ssh bastion-devops-prod.platform.hmcts.net
+ssh bastion-prod.platform.hmcts.net
 
 export PGPASSWORD=<result-from-earlier>
 
@@ -227,7 +219,7 @@ _Note: it's also possible to tunnel the connection to your own machine and use o
 # you can get this from the portal, or determine it via the inputs your pass to this module in your code
 POSTGRES_HOST=rpe-draft-store-prod.postgres.database.azure.com
 
-ssh -N bastion-devops-prod.platform.hmcts.net -L 5440:${POSTGRES_HOST}:5432
+ssh bastion-prod.platform.hmcts.net -L 5440:${POSTGRES_HOST}:5432
 # expect no more output in this terminal you won't get an interactive prompt
 
 # in a separate terminal run:
