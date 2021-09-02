@@ -88,6 +88,8 @@ More process details to follow, it's currently being worked out.
 
 <summary>Bastion configuration</summary>
 
+Ensure you have Azure CLI version 2.22.1 or later installed
+
 Run 'az login'
 
 Ensure ssh extension for the Azure CLI is installed: 'az extension add --name ssh'
@@ -164,6 +166,8 @@ psql "sslmode=require host=localhost port=5440 dbname=${DB_NAME} user=${DB_USER}
 3. Add SSH config, this goes in `~/.ssh/config`, create the file if it doesn't exist
 
 <details>
+
+Ensure you have Azure CLI version 2.22.1 or later installed
 
 Run 'az login'
 
