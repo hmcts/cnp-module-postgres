@@ -138,7 +138,7 @@ _Note: it's also possible to tunnel the connection to your own machine and use o
 # you can get this from the portal, or determine it via the inputs your pass to this module in your code
 POSTGRES_HOST=rpe-draft-store-aat.postgres.database.azure.com
 
-ssh bastion-nonprod.platform.hmcts.net -L 5440:${POSTGRES_HOST}:5432
+ssh -N bastion-nonprod.platform.hmcts.net -L 5440:${POSTGRES_HOST}:5432
 # expect no more output in this terminal you won't get an interactive prompt
 
 # in a separate terminal run:
