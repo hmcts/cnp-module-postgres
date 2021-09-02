@@ -92,7 +92,7 @@ Run 'az login'
 
 Ensure ssh extension for the Azure CLI is installed: 'az extension add --name ssh'
 
-Run 'az ssh config --ip \* --file ~/.ssh/config'
+Run `az ssh config --ip \*.platform.hmcts.net --file ~/.ssh/config`
 
 </details>
 
