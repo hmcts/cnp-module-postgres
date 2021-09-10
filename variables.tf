@@ -117,7 +117,7 @@ variable "database_name" {
 }
 
 variable "common_tags" {
-  type = map
+  type = map(any)
 }
 
 variable "subscription" {
@@ -139,7 +139,7 @@ variable "subnets_filename" {
   default     = "subnets.json"
 }
 
-variable "business_area"{
+variable "business_area" {
   description = "Business Area."
-  default = "CFT"
+  default     = "CFT"
 }
