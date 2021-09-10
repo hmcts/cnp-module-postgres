@@ -103,6 +103,7 @@ data "azurerm_client_config" "current" {}
 
 data "azuread_group" "db_admin" {
   display_name = local.admin_group
+  security_enabled = true
 }
 
 resource "azurerm_postgresql_active_directory_administrator" "admin" {
