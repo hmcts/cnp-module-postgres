@@ -1,8 +1,8 @@
 locals {
-  list_of_subnets = "${split(";", data.external.subnet_rules.result.subnets)}"
-  list_of_rules   = "${split(";", data.external.subnet_rules.result.rule_names)}"
+  list_of_subnets = split(";", data.external.subnet_rules.result.subnets)
+  list_of_rules   = split(";", data.external.subnet_rules.result.rule_names)
 
-  db_rules = "${null_resource.subnet_mappings.*.triggers}"
+  db_rules = null_resource.subnet_mappings.*.triggers
 
   vaultName = var.key_vault_name != "" ? var.key_vault_name : "infra-vault-${var.subscription}"
   vault_resource_group_name = var.key_vault_rg != "" ? var.key_vault_rg : (
@@ -10,8 +10,8 @@ locals {
   )
 
   default_name = var.component != "" ? "${var.product}-${var.component}" : var.product
-  name = var.name != "" ? var.name : local.default_name
-  server_name = "${local.name}-${var.env}"
+  name         = var.name != "" ? var.name : local.default_name
+  server_name  = "${local.name}-${var.env}"
 }
 
 data "azurerm_key_vault" "infra_vault" {
@@ -21,12 +21,12 @@ data "azurerm_key_vault" "infra_vault" {
 
 data "azurerm_key_vault_secret" "github_api_key" {
   name         = "hmcts-github-apikey"
-  key_vault_id = "${data.azurerm_key_vault.infra_vault.id}"
+  key_vault_id = data.azurerm_key_vault.infra_vault.id
 }
 
 # https://gist.github.com/brikis98/f3fe2ae06f996b40b55eebcb74ed9a9e
 resource "null_resource" "subnet_mappings" {
-  count = "${length(local.list_of_subnets)}"
+  count = length(local.list_of_subnets)
 
   triggers = {
     rule_name = "${element(local.list_of_rules, count.index)}"
@@ -47,7 +47,7 @@ data "external" "subnet_rules" {
 
 resource "azurerm_resource_group" "data-resourcegroup" {
   name     = "${local.name}-data-${var.env}"
-  location = "${var.location}"
+  location = var.location
 
   tags = var.common_tags
 }
@@ -61,13 +61,13 @@ resource "random_string" "password" {
 }
 
 data "template_file" "postgrestemplate" {
-  template = "${file("${path.module}/templates/postgres-paas.json")}"
+  template = file("${path.module}/templates/postgres-paas.json")
 }
 
 resource "azurerm_template_deployment" "postgres-paas" {
-  template_body       = "${data.template_file.postgrestemplate.rendered}"
+  template_body       = data.template_file.postgrestemplate.rendered
   name                = local.server_name
-  resource_group_name = "${azurerm_resource_group.data-resourcegroup.name}"
+  resource_group_name = azurerm_resource_group.data-resourcegroup.name
   deployment_mode     = "Incremental"
 
   parameters = {
@@ -102,7 +102,7 @@ locals {
 data "azurerm_client_config" "current" {}
 
 data "azuread_group" "db_admin" {
-  display_name = local.admin_group
+  display_name     = local.admin_group
   security_enabled = true
 }
 
