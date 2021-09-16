@@ -117,7 +117,7 @@ variable "subnets_filename" {
   default     = "subnets.json"
 }
 
-variable "business_area"{
+variable "business_area" {
   description = "Business Area."
-  default = "CFT"
+  default     = "CFT"
 }
