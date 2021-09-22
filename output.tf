@@ -25,3 +25,7 @@ output "db_subnet_rules" {
 output "name" {
   value = azurerm_template_deployment.postgres-paas.name
 }
+
+output "resource_group_name" {
+  value = azurerm_template_deployment.postgres-paas.resource_group_name
+}
