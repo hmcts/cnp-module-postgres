@@ -60,6 +60,8 @@ The following variables are provided by the module for use in other modules
 - `user_name` the username given in `postgresql_user` combined with the server name in the format postgresql_user@postgres-paas.name
 - `postgresql_database`
 - `postgresql_password` the randomly generated password for the admin login. It will be 16 characters and contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers (0 through 9), and nonalphanumeric characters (!, $, #, %, etc.).
+- `resource_group_name` the resource group name of the PostgreSQL database resource
+- `name` the server name of the PostgreSQL database resource
 
 
 ## Access to databases
