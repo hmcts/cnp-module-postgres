@@ -23,5 +23,5 @@ output "name" {
 }
 
 output "resource_group_name" {
-  value = azurerm_template_deployment.postgres-paas.resource_group_name
+  value = azurerm_postgresql_server.postgres-paas.resource_group_name
 }
