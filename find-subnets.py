@@ -28,7 +28,7 @@ def get_all_subnets(env, product, subnets):
 
     if len(env_subnets_list_of_lists) == 0 and len(app_subnets_list_of_lists) == 0:
         # terraform will say "command "python3" failed with no error message"
-        # still better to fail here I think
+        # still better to fail here I think
         print('No subnets found')
         sys.exit(1)
 
@@ -46,10 +46,9 @@ def get_all_subnets(env, product, subnets):
 line = sys.stdin.readline()
 query = json.loads(line)
 
-subnets_filename = query['subnets_filename']
 github_token = query['github_token']
 
-url = 'https://raw.githubusercontent.com/hmcts/cnp-database-subnet-whitelisting/master/%s' % subnets_filename
+url = 'https://raw.githubusercontent.com/hmcts/cnp-database-subnet-whitelisting/master/subnets.json'
 
 req = urllib.request.Request(
     url=url, headers={'Authorization': 'Bearer ' + github_token})
