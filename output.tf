@@ -21,3 +21,7 @@ output "user_name" {
 output "name" {
   value = azurerm_postgresql_server.postgres-paas.name
 }
+
+output "resource_group_name" {
+  value = azurerm_postgresql_server.postgres-paas.resource_group_name
+}
