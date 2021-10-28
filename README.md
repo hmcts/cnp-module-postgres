@@ -39,6 +39,12 @@ The following parameters are required by this module
 - `common_tags` tags that need to be applied to every resource group, passed through by the jenkins-library
 - `subscription` the subscription this module is currently being run in
 
+**If you are using the SDS platform then you will need to add Key Vault parameters as per below**
+```terraform
+  key_vault_rg       = "genesis-rg"
+  key_vault_name     = "dtssharedservices${var.environment}kv"
+```
+
 The following parameters are optional
 
 - `sku_name` the size of the postgres instance, specifically cores. Default is "GP_Gen5_2".
