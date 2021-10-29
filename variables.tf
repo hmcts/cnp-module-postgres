@@ -64,7 +64,6 @@ variable "sku_capacity" {
 # https://docs.microsoft.com/en-us/azure/postgresql/concepts-version-policy
 variable "postgresql_version" {
   type    = string
-  default = "10"
 }
 
 # storage_mb supports the following
