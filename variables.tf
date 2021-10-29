@@ -60,10 +60,11 @@ variable "sku_capacity" {
   default = "2"
 }
 
-# Valid values are 9.5, 9.6, 10 and 11.
+# Valid values are 10 and 11.
+# https://docs.microsoft.com/en-us/azure/postgresql/concepts-version-policy
 variable "postgresql_version" {
   type    = string
-  default = "9.6"
+  default = "10"
 }
 
 # storage_mb supports the following
