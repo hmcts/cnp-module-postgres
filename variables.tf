@@ -47,9 +47,9 @@ variable "sku_capacity" {
   default = "2"
 }
 
-# Valid values are 9.5, 9.6, 10 and 11.
+# Valid values are 10 and 11.
 variable "postgresql_version" {
-  default = "9.6"
+  type = string
 }
 
 # storage_mb supports the following
