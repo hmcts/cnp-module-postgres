@@ -28,9 +28,10 @@ data "external" "subnet_rules" {
 
   program = ["python3", "${path.module}/find-subnets.py"]
   query = {
-    env          = var.env
-    product      = var.product
-    github_token = data.azurerm_key_vault_secret.github_api_key[0].value
+    env              = var.env
+    product          = var.product
+    github_token     = data.azurerm_key_vault_secret.github_api_key[0].value
+    subnets_filename = var.subnets_filename
   }
 }
 
