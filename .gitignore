@@ -6,3 +6,4 @@
 *.kitchen/
 .vscode
 tfplan
+.terraform.lock.hcl

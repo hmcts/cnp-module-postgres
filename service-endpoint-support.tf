@@ -28,9 +28,10 @@ data "external" "subnet_rules" {
 
   program = ["python3", "${path.module}/find-subnets.py"]
   query = {
-    env          = var.env
-    product      = var.product
-    github_token = data.azurerm_key_vault_secret.github_api_key[0].value
+    env              = var.env
+    product          = var.product
+    github_token     = data.azurerm_key_vault_secret.github_api_key[0].value
+    subnets_filename = var.subnets_filename
   }
 }
 
@@ -38,7 +39,7 @@ resource "azurerm_postgresql_virtual_network_rule" "postgres-vnet-rule" {
   for_each                             = { for db_rule in var.subnet_id == "" ? local.db_rules : [] : db_rule.rule_name => db_rule }
   name                                 = each.value.rule_name
   resource_group_name                  = azurerm_resource_group.data-resourcegroup.name
-  server_name                          = "${var.product}-${var.env}"
+  server_name                          = local.server_name
   subnet_id                            = each.value.subnet_id
   ignore_missing_vnet_service_endpoint = true
 

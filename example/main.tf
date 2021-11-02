@@ -6,20 +6,20 @@ data "azurerm_subnet" "postgres" {
 
 module "db" {
 
-  source             = "../"
+  source = "../"
 
-  product            = var.product
-  component          = var.component
-  name               = var.product
-  subscription       = var.subscription
-  env                = var.env
+  product      = var.product
+  component    = var.component
+  name         = var.product
+  subscription = var.subscription
+  env          = var.env
 
   database_name      = "test"
   postgresql_user    = "test"
   postgresql_version = "11"
 
-  subnet_id          = data.azurerm_subnet.postgres.id
+  subnet_id = data.azurerm_subnet.postgres.id
 
-  location           = var.location
-  common_tags        = var.common_tags
+  location    = var.location
+  common_tags = var.common_tags
 }

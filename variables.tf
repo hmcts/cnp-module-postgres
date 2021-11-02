@@ -90,7 +90,7 @@ variable "collation" {
 variable "database_name" {}
 
 variable "common_tags" {
-  type = map
+  type = map(any)
 }
 
 variable "subscription" {
