@@ -31,10 +31,10 @@ while true; do
    if [[ $? -eq 0 ]]; then
       break
    fi
-   if [[ $COUNT -eq $MAX ]] then
+   if [[ $COUNT -eq $MAX ]]; then
       break
    else
-      $COUNT = $COUNT + 1
+      COUNT=$[$COUNT+1]
    fi
    sleep 5
 done
