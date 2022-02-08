@@ -29,8 +29,8 @@ resource "null_resource" "subnet_mappings" {
   count = length(local.list_of_subnets)
 
   triggers = {
-    rule_name = "${element(local.list_of_rules, count.index)}"
-    subnet_id = "${element(local.list_of_subnets, count.index)}"
+    rule_name = element(local.list_of_rules, count.index)
+    subnet_id = element(local.list_of_subnets, count.index)
   }
 }
 
@@ -38,10 +38,10 @@ data "external" "subnet_rules" {
   program = ["python3", "${path.module}/find-subnets.py"]
 
   query = {
-    env              = "${var.env}"
-    product          = "${var.product}"
-    github_token     = "${data.azurerm_key_vault_secret.github_api_key.value}"
-    subnets_filename = "${var.subnets_filename}"
+    env              = var.env
+    product          = var.product
+    github_token     = data.azurerm_key_vault_secret.github_api_key.value
+    subnets_filename = var.subnets_filename
   }
 }
 
@@ -71,24 +71,24 @@ resource "azurerm_template_deployment" "postgres-paas" {
   deployment_mode     = "Incremental"
 
   parameters = {
-    administratorLogin         = "${var.postgresql_user}"
-    administratorLoginPassword = "${random_string.password.result}"
-    location                   = "${var.location}"
-    env                        = "${var.env}"
+    administratorLogin         = var.postgresql_user
+    administratorLoginPassword = random_string.password.result
+    location                   = var.location
+    env                        = var.env
     serverName                 = local.server_name
-    dbName                     = "${replace(var.database_name, "-", "")}"
-    skuName                    = "${var.sku_name}"
-    skuCapacity                = "${var.sku_capacity}"
-    skuTier                    = "${var.sku_tier}"
-    version                    = "${var.postgresql_version}"
-    skuSizeMB                  = "${var.storage_mb}"
-    sslEnforcement             = "${var.ssl_enforcement}"
-    backupRetentionDays        = "${var.backup_retention_days}"
-    geoRedundantBackup         = "${var.georedundant_backup}"
-    charset                    = "${var.charset}"
-    collation                  = "${var.collation}"
-    dbRules                    = "${base64encode(jsonencode(local.db_rules))}"
-    commonTags                 = "${base64encode(jsonencode(var.common_tags))}"
+    dbName                     = replace(var.database_name, "-", "")
+    skuName                    = var.sku_name
+    skuCapacity                = var.sku_capacity
+    skuTier                    = var.sku_tier
+    version                    = var.postgresql_version
+    skuSizeMB                  = var.storage_mb
+    sslEnforcement             = var.ssl_enforcement
+    backupRetentionDays        = var.backup_retention_days
+    geoRedundantBackup         = var.georedundant_backup
+    charset                    = var.charset
+    collation                  = var.collation
+    dbRules                    = base64encode(jsonencode(local.db_rules))
+    commonTags                 = base64encode(jsonencode(var.common_tags))
   }
 }
 
