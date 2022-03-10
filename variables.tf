@@ -121,3 +121,9 @@ variable "business_area" {
   description = "Business Area."
   default     = "CFT"
 }
+
+variable "auto_grow_enabled" {
+  description = "auto grow Storage."
+  type = bool
+  default = true
+}
