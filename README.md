@@ -55,7 +55,7 @@ The following parameters are optional
 - `ssl_enforcement` specifies whether SSL is enabled on the DB endpoint, options are "true" and "false"  Default is "true".
 - `backup_retention_days` number of days to retain a backup. Default is 35.
 - `georedundant_backup` specifies whether to use geo-redundant backup over local. Default is "Enabled".
-
+- `auto_grow_enabled` specifies whether to grow underlying storage automatically. Default is "true"
 ### Output
 
 The following variables are provided by the module for use in other modules

@@ -46,7 +46,7 @@ resource "azurerm_postgresql_server" "postgres-paas" {
   ssl_enforcement_enabled          = true
   ssl_minimal_tls_version_enforced = "TLS1_2"
   public_network_access_enabled    = var.subnet_id == "" ? true : false
-
+  auto_grow_enabled                = var.auto_grow_enabled
   tags = var.common_tags
 }
 
