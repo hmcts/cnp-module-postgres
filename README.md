@@ -11,14 +11,14 @@ The following example shows how to use the module to create an Azure Database fo
 
 ```terraform
 module "database" {
-  source                = "git@github.com:hmcts/cnp-module-postgres?ref=master"
+  source                = "git@github.com:hmcts/cnp-module-postgres?ref=postgresql_tf"
   product               = var.product
   component             = var.component
   location              = var.location
   env                   = var.env
   postgresql_user       = var.postgresql_user
   database_name         = myproduct
-  postgresql_version    = 10
+  postgresql_version    = 11
   common_tags           = var.common_tags
   subscription          = var.subscription
 }
