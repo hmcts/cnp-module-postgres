@@ -136,7 +136,7 @@ DB_USER="DTS\ CFT\ DB\ Access\ Reader@rpe-draft-store-aat" # read access
 psql "sslmode=require host=${POSTGRES_HOST} dbname=${DB_NAME} user=${DB_USER}"
 ```
 
-_Note: it's also possible to tunnel the connection to your own machine and use other tools to log in, IntelliJ database tools works, pgAdmin doesn't due to a hardcoded password length limit._
+_Note: it's also possible to tunnel the connection to your own machine and use other tools to log in, IntelliJ database tools works, pgAdmin 4 works with a workaround for the password field length limit, when creating a new connection untick the "Connect now?" option and don't set the password, save the connection, afterwards when trying to connect a newly created db connection, the password pop up will accept the long password token generated._
 
 <details>
 
@@ -219,7 +219,7 @@ psql "sslmode=require host=${POSTGRES_HOST} dbname=${DB_NAME} user=${DB_USER}"
 # the fix is to clear the cache and login again: rm -rf ~/.azure && az login
 ```
 
-_Note: it's also possible to tunnel the connection to your own machine and use other tools to log in, IntelliJ database tools works, pgAdmin 4 works with a workaround for the password field lenght limit, when creating a new connection untick the "Connect now?" option and don't set the password, save the connection, afterwards when trying to connect a newly created db connection, the password pop up will accept the long password token generated._
+_Note: it's also possible to tunnel the connection to your own machine and use other tools to log in, IntelliJ database tools works, pgAdmin 4 works with a workaround for the password field length limit, when creating a new connection untick the "Connect now?" option and don't set the password, save the connection, afterwards when trying to connect a newly created db connection, the password pop up will accept the long password token generated._
 
 <details>
 
