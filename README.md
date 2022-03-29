@@ -218,7 +218,7 @@ psql "sslmode=require host=${POSTGRES_HOST} dbname=${DB_NAME} user=${DB_USER}"
 # the fix is to clear the cache and login again: rm -rf ~/.azure && az login
 ```
 
-_Note: it's also possible to tunnel the connection to your own machine and use other tools to log in, IntelliJ database tools works, pgAdmin doesn't due to a hardcoded password length limit._
+_Note: it's also possible to tunnel the connection to your own machine and use other tools to log in, IntelliJ database tools works, pgAdmin 4 works with a workaround explained below._
 
 <details>
 
@@ -245,4 +245,35 @@ DB_USER="DTS\ JIT\ Access\ draft-store\ DB\ Reader\ SC@rpe-draft-store-prod" # r
 psql "sslmode=require host=localhost port=5440 dbname=${DB_NAME} user=${DB_USER}"
 ```
 
+</details>
+
+<summary>Tunnel to pgAdmin (e.g. AAT for accessing ccd-data-store-api)</summary>
+  
+  Connection details
+  untick "Connect now?"
+  
+  Hostname/address: localhost
+  Port: 7000
+  Maintenance database: ccd_data_store
+  Username: DTS CFT DB Access Reader@ccd-data-store-api-postgres-db-v11-aat
+  
+  Save the connection then on a Terminal run the following
+  
+```shell
+# Login to Azure
+az login
+
+# Get SSH public keys sorted
+az ssh config --ip \*.platform.hmcts.net --file ~/.ssh/config
+
+# Tunnel through Bastion
+ssh -L 7000:ccd-data-store-api-postgres-db-v11-aat.postgres.database.azure.com:5432 bastion-nonprod.platform.hmcts.net
+  
+# Copy password
+az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv | pbcopy
+```
+
+Click on the new database connection and paste the password copied on your clipboard
+  
+  
 </details>
