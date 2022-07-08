@@ -184,7 +184,7 @@ Run `az ssh config --ip \*.platform.hmcts.net --file ~/.ssh/config`
 </details>
 
 #### Steps to access
-1. Request access to the production bastion via JIT, this will be automatically approved, and lasts for 24 hours.
+1. Request access to the production bastion via [JIT](https://myaccess.microsoft.com/@HMCTS.NET#/access-packages/258764fb-d85d-415b-b0de-e1005ef6e06c), this will be automatically approved, and lasts for 24 hours.
 2. Request access to the database that you need via [JIT](https://myaccess.microsoft.com/@CJSCommonPlatform.onmicrosoft.com#/access-packages),
    the naming convention is `Database - <product> (read|write) access`.
 3. Wait till it's approved, you can also message in #db-self-service on slack.
