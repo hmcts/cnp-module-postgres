@@ -18,6 +18,12 @@ variable "env" {
   type = string
 }
 
+variable "second_database" {
+  default     = false
+  type        = bool
+  description = "If a second database is required in the postgres database. (This has been added for cft demo environment."
+}
+
 variable "postgresql_listen_port" {
   type    = string
   default = "5432"
@@ -63,7 +69,7 @@ variable "sku_capacity" {
 # Valid values are 10 and 11.
 # https://docs.microsoft.com/en-us/azure/postgresql/concepts-version-policy
 variable "postgresql_version" {
-  type    = string
+  type = string
 }
 
 # storage_mb supports the following
@@ -113,6 +119,10 @@ variable "collation" {
 }
 
 variable "database_name" {
+  type = string
+}
+
+variable "database_name2" {
   type = string
 }
 

@@ -92,6 +92,19 @@ resource "azurerm_template_deployment" "postgres-paas" {
   }
 }
 
+resource "azurerm_postgresql_database" "postgres-db2" {
+  count               = var.second_database == true ? 1 : 0
+  name                = replace(var.database_name2, "-", "")
+  resource_group_name = azurerm_resource_group.data-resourcegroup.name
+  server_name         = local.server_name
+  charset             = var.charset
+  collation           = var.collation
+
+  depends_on = [
+    azurerm_template_deployment.postgres-paas
+  ]
+}
+
 locals {
   is_prod     = length(regexall(".*(prod).*", var.env)) > 0
   admin_group = local.is_prod ? "DTS Platform Operations SC" : "DTS Platform Operations"
