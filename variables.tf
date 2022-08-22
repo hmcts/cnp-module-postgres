@@ -122,10 +122,6 @@ variable "database_name" {
   type = string
 }
 
-variable "database_name2" {
-  type = string
-}
-
 variable "common_tags" {
   type = map(any)
 }

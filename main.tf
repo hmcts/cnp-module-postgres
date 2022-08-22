@@ -94,7 +94,7 @@ resource "azurerm_template_deployment" "postgres-paas" {
 
 resource "azurerm_postgresql_database" "postgres-db2" {
   count               = var.second_database == true ? 1 : 0
-  name                = replace(var.database_name2, "-", "")
+  name                = replace("${var.database_name}2", "-", "")
   resource_group_name = azurerm_resource_group.data-resourcegroup.name
   server_name         = local.server_name
   charset             = var.charset
