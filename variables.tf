@@ -18,10 +18,9 @@ variable "env" {
   type = string
 }
 
-variable "second_database" {
-  default     = false
-  type        = bool
-  description = "If a second database is required in the postgres database. (This has been added for cft demo environment."
+variable "additional_databases" {
+  default     = []
+  description = "Pass variable if additional databases are required within the postgres server."
 }
 
 variable "postgresql_listen_port" {
