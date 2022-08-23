@@ -47,11 +47,21 @@ resource "azurerm_postgresql_server" "postgres-paas" {
   ssl_minimal_tls_version_enforced = "TLS1_2"
   public_network_access_enabled    = var.subnet_id == "" ? true : false
   auto_grow_enabled                = var.auto_grow_enabled
-  tags = var.common_tags
+  tags                             = var.common_tags
 }
 
 resource "azurerm_postgresql_database" "postgres-db" {
   name                = replace(var.database_name, "-", "")
+  resource_group_name = azurerm_resource_group.data-resourcegroup.name
+  server_name         = azurerm_postgresql_server.postgres-paas.name
+  charset             = var.charset
+  collation           = var.collation
+}
+
+resource "azurerm_postgresql_database" "additional_databases" {
+  for_each = toset(var.additional_databases)
+
+  name                = replace("${each.key}", "-", "")
   resource_group_name = azurerm_resource_group.data-resourcegroup.name
   server_name         = azurerm_postgresql_server.postgres-paas.name
   charset             = var.charset
