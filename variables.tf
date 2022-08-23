@@ -20,7 +20,6 @@ variable "env" {
 
 variable "additional_databases" {
   default     = []
-  description = "Pass variable if additional databases are required within the postgres server."
 }
 
 variable "postgresql_listen_port" {
