@@ -17,6 +17,9 @@ variable "postgresql_listen_port" {
 
 variable "postgresql_user" {}
 
+variable "additional_databases" {
+  default = []
+}
 # sku supports the following:
 # - skuName: Possible values are:
 #            B_Gen5_1    (Basic)
@@ -124,6 +127,6 @@ variable "business_area" {
 
 variable "auto_grow_enabled" {
   description = "auto grow Storage."
-  type = bool
-  default = true
+  type        = bool
+  default     = true
 }

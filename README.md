@@ -24,6 +24,35 @@ module "database" {
 }
 ```
 
+### Additional databases in PostgreSQL instance
+
+The following example shows how to create additional databases within the PostgreSQL instance
+
+```terraform
+module "database" {
+  source                = "git@github.com:hmcts/cnp-module-postgres?ref=master"
+  product               = var.product
+  component             = var.component
+  location              = var.location
+  env                   = var.env
+  postgresql_user       = var.postgresql_user
+  database_name         = myproduct
+  postgresql_version    = 10
+  common_tags           = var.common_tags
+  subscription          = var.subscription
+  additional_databases  = var.additional_databases
+}
+```
+
+Example of the variable `additional_databases` being referenced
+
+```terraform
+additional_databases = [
+    "postgresql-db2",
+    "postgresql-db3",
+]
+```
+
 ## Variables
 
 ### Configuration
@@ -57,6 +86,7 @@ The following parameters are optional
 - `georedundant_backup` specifies whether to use geo-redundant backup over local. Default is "Enabled".
 - `auto_grow_enabled` specifies whether to grow underlying storage automatically. Default is "true"
 - `business_area` Business area. Either CFT or SDS. Default is "CFT".
+- `additional_databases` if additional databases are required within the postgres server
 
 ### Output
 
