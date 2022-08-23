@@ -92,6 +92,20 @@ resource "azurerm_template_deployment" "postgres-paas" {
   }
 }
 
+resource "azurerm_postgresql_database" "additional_databases" {
+  for_each = toset(var.additional_databases)
+
+  name                = replace("${each.key}", "-", "")
+  resource_group_name = azurerm_resource_group.data-resourcegroup.name
+  server_name         = local.server_name
+  charset             = var.charset
+  collation           = var.collation
+
+  depends_on = [
+    azurerm_template_deployment.postgres-paas
+  ]
+}
+
 locals {
   is_prod     = length(regexall(".*(prod).*", var.env)) > 0
   admin_group = local.is_prod ? "DTS Platform Operations SC" : "DTS Platform Operations"

@@ -18,6 +18,10 @@ variable "env" {
   type = string
 }
 
+variable "additional_databases" {
+  default     = []
+}
+
 variable "postgresql_listen_port" {
   type    = string
   default = "5432"
@@ -63,7 +67,7 @@ variable "sku_capacity" {
 # Valid values are 10 and 11.
 # https://docs.microsoft.com/en-us/azure/postgresql/concepts-version-policy
 variable "postgresql_version" {
-  type    = string
+  type = string
 }
 
 # storage_mb supports the following
