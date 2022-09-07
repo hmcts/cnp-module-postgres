@@ -33,7 +33,7 @@ resource "null_resource" "set-user-permissions" {
   count = (var.component != "" || var.name != "") ? 1 : 0
 }
 
-resource "null_resource" "set-user-permissions" {
+resource "null_resource" "set-user-permissions-additionaldbs" {
   for_each = toset(var.additional_databases)
   triggers = {
     script_hash    = filesha256("${path.module}/set-postgres-permissions.bash")
