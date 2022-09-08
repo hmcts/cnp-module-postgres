@@ -22,7 +22,7 @@ resource "azurerm_postgresql_server" "replica" {
     {}
   )
 
-  name                = "local.server_name-${each.key}"
+  name                = "${local.server_name}-${each.key}"
   location            = azurerm_resource_group.data-resourcegroup.location
   resource_group_name = azurerm_resource_group.data-resourcegroup.name
 
