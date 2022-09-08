@@ -23,7 +23,6 @@ variable "additional_databases" {
 }
 
 variable "replica_enable" {
-  type    = boolean
   default = false
 }
 
