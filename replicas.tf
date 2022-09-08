@@ -45,7 +45,7 @@ resource "azurerm_postgresql_server" "replica" {
   tags = var.common_tags
 }
 
-resource "azurerm_postgresql_virtual_network_rule" "example" {
+resource "azurerm_postgresql_virtual_network_rule" "replica_rules" {
 
   for_each = (
     var.create_replica == true ?
