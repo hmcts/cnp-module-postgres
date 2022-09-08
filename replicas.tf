@@ -31,9 +31,9 @@ resource "azurerm_postgresql_server" "replica" {
   storage_mb = var.storage_mb
 
   backup_retention_days        = var.backup_retention_days
-  geo_redundant_backup_enabled = var.georedundant_backup
+  geo_redundant_backup_enabled = var.georedundant_backup == "Enabled" ? true : false
 
-  ssl_enforcement_enabled          = var.ssl_enforcement
+  ssl_enforcement_enabled          = var.ssl_enforcement == "Enabled" ? true : false
   ssl_minimal_tls_version_enforced = "TLS1_2"
 
   administrator_login          = var.postgresql_user
