@@ -19,7 +19,16 @@ variable "env" {
 }
 
 variable "additional_databases" {
-  default     = []
+  default = []
+}
+
+variable "replica_enable" {
+  type    = boolean
+  default = false
+}
+
+variable "replica_name" {
+  default = []
 }
 
 variable "postgresql_listen_port" {
