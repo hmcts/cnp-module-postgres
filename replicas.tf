@@ -48,7 +48,7 @@ resource "azurerm_postgresql_server" "replica" {
 resource "azurerm_postgresql_virtual_network_rule" "replica_rules" {
 
   for_each = (
-    var.create_replica == true ?
+    var.replica_enable == true ?
     { for db_rule in local.replica_db_rules : db_rule.rule_name => db_rule } :
     {}
   )
