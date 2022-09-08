@@ -23,8 +23,8 @@ resource "azurerm_postgresql_server" "replica" {
   )
 
   name                = "local.server_name-${each.key}"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.data-resourcegroup.location
+  resource_group_name = azurerm_resource_group.data-resourcegroup.name
 
   sku_name   = var.sku_name
   version    = var.postgresql_version
@@ -54,7 +54,7 @@ resource "azurerm_postgresql_virtual_network_rule" "replica_rules" {
   )
 
   name                                 = each.value.rule_name
-  resource_group_name                  = azurerm_resource_group.rg.name
+  resource_group_name                  = azurerm_resource_group.data-resourcegroup.name
   server_name                          = azurerm_postgresql_server.replica[each.value.server_name].name
   subnet_id                            = each.value.subnet_id
   ignore_missing_vnet_service_endpoint = true
