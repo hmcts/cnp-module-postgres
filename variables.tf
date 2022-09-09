@@ -22,13 +22,11 @@ variable "additional_databases" {
   default = []
 }
 
-variable "replica_enable" {
-  default = false
+variable "replicas" {
+  description = "Names of any database replicas"
+  default     = []
 }
 
-variable "replica_name" {
-  default = []
-}
 
 variable "postgresql_listen_port" {
   type    = string

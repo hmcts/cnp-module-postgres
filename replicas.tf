@@ -1,5 +1,5 @@
 locals {
-  replica_db_rules = flatten([for replica in var.replica_name :
+  replica_db_rules = flatten([for replica in var.replicas :
     [for network_rule in local.db_rules :
       {
         "rule_name"   = "${replica}-${network_rule.rule_name}"
@@ -16,11 +16,7 @@ data "azurerm_postgresql_server" "replica" {
 }
 
 resource "azurerm_postgresql_server" "replica" {
-  for_each = (
-    var.replica_enable == true ?
-    { for replica in var.replica_name : replica => replica } :
-    {}
-  )
+  for_each = toset(var.replicas)
 
   name                = "${local.server_name}-${each.key}"
   location            = azurerm_resource_group.data-resourcegroup.location
@@ -31,7 +27,7 @@ resource "azurerm_postgresql_server" "replica" {
   storage_mb = var.storage_mb
 
   backup_retention_days        = var.backup_retention_days
-  geo_redundant_backup_enabled = var.georedundant_backup == "Enabled" ? true : false
+  geo_redundant_backup_enabled = false
 
   ssl_enforcement_enabled          = var.ssl_enforcement == "Enabled" ? true : false
   ssl_minimal_tls_version_enforced = "TLS1_2"
@@ -47,11 +43,7 @@ resource "azurerm_postgresql_server" "replica" {
 
 resource "azurerm_postgresql_virtual_network_rule" "replica_rules" {
 
-  for_each = (
-    var.replica_enable == true ?
-    { for db_rule in local.replica_db_rules : db_rule.rule_name => db_rule } :
-    {}
-  )
+  for_each = { for db_rule in local.replica_db_rules : db_rule.rule_name => db_rule }
 
   name                                 = each.value.rule_name
   resource_group_name                  = azurerm_resource_group.data-resourcegroup.name
