@@ -19,6 +19,11 @@ variable "env" {
 }
 
 variable "additional_databases" {
+  default = []
+}
+
+variable "replicas" {
+  description = "Names of any database replicas"
   default     = []
 }
 
