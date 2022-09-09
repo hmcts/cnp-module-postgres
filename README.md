@@ -52,6 +52,18 @@ additional_databases = [
     "postgresql-db3",
 ]
 ```
+### Creating replicas of PostgreSQL instance 
+
+Replicas of PostgreSQL instance can be created by using the variable `replicas`
+
+Example of variable `replicas` being referenced
+
+```terraform
+replicas = [
+    "replica01",
+    "replica02",
+]
+```
 
 ## Variables
 
