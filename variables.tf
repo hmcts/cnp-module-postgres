@@ -27,7 +27,6 @@ variable "replicas" {
   default     = []
 }
 
-
 variable "postgresql_listen_port" {
   type    = string
   default = "5432"
