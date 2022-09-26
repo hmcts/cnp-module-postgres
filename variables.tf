@@ -105,6 +105,10 @@ variable "backup_retention_days" {
   default = "35"
 }
 
+variable "replica_geo_redundant_backup_enabled" {
+  default = true
+}
+
 # Possible values are Enabled and Disabled.
 variable "georedundant_backup" {
   type    = string
