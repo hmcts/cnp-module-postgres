@@ -1,4 +1,4 @@
-**Warning** Deprecated, do not use for new services.
+> **Warning** Deprecated, do not use for new services.
 
 All new teams are to deploy [Postgres Flexible server](https://github.com/hmcts/terraform-module-postgresql-flexible). 
 
