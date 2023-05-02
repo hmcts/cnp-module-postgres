@@ -1,6 +1,6 @@
 # **Warning** Deprecated, do not use for new services.
 
-All new teams to deploy Postgres Flexible server using this module [here](https://github.com/hmcts/terraform-module-postgresql-flexible). 
+All new teams are to deploy [Postgres Flexible server](https://github.com/hmcts/terraform-module-postgresql-flexible). 
 
 This module will be archived once all teams have migrated to Flexible server.
 
