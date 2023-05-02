@@ -2,7 +2,7 @@
 
 All new teams to deploy Postgres Flexible server using this module [here](https://github.com/hmcts/terraform-module-postgresql-flexible). 
 
-This module will be moved into read-only/deprecated once teams have migrated to Flexible server.
+This module will be archived once all teams have migrated to Flexible server.
 
 # cnp-module-postgres
 
