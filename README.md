@@ -1,10 +1,12 @@
-> **Warning** Deprecated, do not use for new services.
+# cnp-module-postgres (deprecated)
 
-All new teams are to deploy [Postgres Flexible server](https://github.com/hmcts/terraform-module-postgresql-flexible). 
+> **Warning** do not use for new services.
 
-This module will be archived once all teams have migrated to Flexible server.
+All new teams are to deploy [PostgreSQL Flexible server](https://github.com/hmcts/terraform-module-postgresql-flexible). 
 
-# cnp-module-postgres
+This module will be archived once all teams have migrated.
+
+## Description
 
 A module that lets you create an Azure Database for PostgreSQL.
 Refer to the following links for a detailed explanation of the Azure Database for PostgreSQL.
