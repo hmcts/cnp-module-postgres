@@ -1,4 +1,4 @@
-# Do not use this module of you are creating a new database / new team starting to deploy etc.
+# **Warning** Deprecated, do not use for new services.
 
 All new teams to deploy Postgres Flexible server using this module [here](https://github.com/hmcts/terraform-module-postgresql-flexible). 
 
