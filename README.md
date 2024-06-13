@@ -222,12 +222,12 @@ Run `az ssh config --ip \*.platform.hmcts.net --file ~/.ssh/config`
 </details>
 
 #### Steps to access
-
-1. Request access to the database that you need via [JIT](https://myaccess.microsoft.com/@CJSCommonPlatform.onmicrosoft.com#/access-packages),
+1. Request access to the production bastion via [JIT](https://myaccess.microsoft.com/@HMCTS.NET#/access-packages/258764fb-d85d-415b-b0de-e1005ef6e06c), this will be automatically approved, and lasts for 24 hours.
+2. Request access to the database that you need via [JIT](https://myaccess.microsoft.com/@CJSCommonPlatform.onmicrosoft.com#/access-packages),
    the naming convention is `Database - <product> (read|write) access`.
-2. Wait till it's approved, you can also message in #db-self-service on slack.
-3. Connect to the VPN
-4. Copy below script, update the variables (search for all references to draft-store and replace with your DB), and run it
+3. Wait till it's approved, you can also message in #db-self-service on slack.
+4. Connect to the VPN
+5. Copy below script, update the variables (search for all references to draft-store and replace with your DB), and run it
 
 ```bash
 # If you haven't logged in before you may need to login, uncomment the below line:
